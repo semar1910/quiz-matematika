@@ -52,13 +52,6 @@
             border-bottom: 2px solid #e9ecef;
         }
 
-        .timer {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #dc3545;
-            margin-bottom: 10px;
-        }
-
         .progress-info {
             font-size: 1.1em;
             color: #495057;
@@ -267,22 +260,21 @@
     <div class="container">
         <div class="header">
             <h1>🧮 Quiz Matematika</h1>
-            <p>Perkalian Pecahan - Kelas 6 SD</p>
+            <p>Operasi Hitung Pecahan (Campuran) - Kelas 6 SD</p>
         </div>
 
         <!-- Quiz Section -->
         <div class="quiz-section" id="quiz-section">
             <div class="quiz-info">
-                <div class="timer" id="timer">⏰ Waktu: 30:00</div>
                 <div class="progress-info">
-                    Soal <span id="current-question">1</span> dari 10
+                    Soal <span id="current-question">1</span> dari 15
                 </div>
                 <div class="progress-bar">
                     <div class="progress" id="progress"></div>
                 </div>
             </div>
 
-            <!-- Soal 1 -->
+            <!-- Soal 1 - Cerita -->
             <div class="question-container active" data-question="1">
                 <div class="question-number">Soal 1</div>
                 <div class="question">
@@ -296,7 +288,7 @@
                 </ul>
             </div>
 
-            <!-- Soal 2 -->
+            <!-- Soal 2 - Cerita -->
             <div class="question-container" data-question="2">
                 <div class="question-number">Soal 2</div>
                 <div class="question">
@@ -310,7 +302,7 @@
                 </ul>
             </div>
 
-            <!-- Soal 3 -->
+            <!-- Soal 3 - Cerita -->
             <div class="question-container" data-question="3">
                 <div class="question-number">Soal 3</div>
                 <div class="question">
@@ -324,7 +316,7 @@
                 </ul>
             </div>
 
-            <!-- Soal 4 -->
+            <!-- Soal 4 - Cerita -->
             <div class="question-container" data-question="4">
                 <div class="question-number">Soal 4</div>
                 <div class="question">
@@ -338,7 +330,7 @@
                 </ul>
             </div>
 
-            <!-- Soal 5 -->
+            <!-- Soal 5 - Cerita -->
             <div class="question-container" data-question="5">
                 <div class="question-number">Soal 5</div>
                 <div class="question">
@@ -352,7 +344,7 @@
                 </ul>
             </div>
 
-            <!-- Soal 6 -->
+            <!-- Soal 6 - Cerita -->
             <div class="question-container" data-question="6">
                 <div class="question-number">Soal 6</div>
                 <div class="question">
@@ -366,7 +358,7 @@
                 </ul>
             </div>
 
-            <!-- Soal 7 -->
+            <!-- Soal 7 - Cerita -->
             <div class="question-container" data-question="7">
                 <div class="question-number">Soal 7</div>
                 <div class="question">
@@ -380,7 +372,7 @@
                 </ul>
             </div>
 
-            <!-- Soal 8 -->
+            <!-- Soal 8 - Cerita -->
             <div class="question-container" data-question="8">
                 <div class="question-number">Soal 8</div>
                 <div class="question">
@@ -394,7 +386,7 @@
                 </ul>
             </div>
 
-            <!-- Soal 9 -->
+            <!-- Soal 9 - Cerita -->
             <div class="question-container" data-question="9">
                 <div class="question-number">Soal 9</div>
                 <div class="question">
@@ -408,7 +400,7 @@
                 </ul>
             </div>
 
-            <!-- Soal 10 -->
+            <!-- Soal 10 - Cerita -->
             <div class="question-container" data-question="10">
                 <div class="question-number">Soal 10</div>
                 <div class="question">
@@ -419,6 +411,76 @@
                     <li><label><input type="radio" name="q10" value="B"> B. 38½ liter</label></li>
                     <li><label><input type="radio" name="q10" value="C"> C. 39 liter</label></li>
                     <li><label><input type="radio" name="q10" value="D"> D. 40 liter</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 11 - Operasi Pecahan -->
+            <div class="question-container" data-question="11">
+                <div class="question-number">Soal 11</div>
+                <div class="question">
+                    Hasil dari <strong>³⁄₄ + ¹⁄₆</strong> adalah ...
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q11" value="A"> A. ⁴⁄₁₀</label></li>
+                    <li><label><input type="radio" name="q11" value="B"> B. ⁸⁄₁₂</label></li>
+                    <li><label><input type="radio" name="q11" value="C"> C. ¹¹⁄₁₂</label></li>
+                    <li><label><input type="radio" name="q11" value="D"> D. ⁹⁄₁₀</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 12 - Operasi Pecahan -->
+            <div class="question-container" data-question="12">
+                <div class="question-number">Soal 12</div>
+                <div class="question">
+                    Hasil dari <strong>⁴⁄₇ - ²⁄₇</strong> adalah ...
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q12" value="A"> A. ²⁄₇</label></li>
+                    <li><label><input type="radio" name="q12" value="B"> B. ³⁄₇</label></li>
+                    <li><label><input type="radio" name="q12" value="C"> C. ⁶⁄₇</label></li>
+                    <li><label><input type="radio" name="q12" value="D"> D. ¹⁄₇</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 13 - Operasi Pecahan -->
+            <div class="question-container" data-question="13">
+                <div class="question-number">Soal 13</div>
+                <div class="question">
+                    Hasil dari <strong>2 × ³⁄₈ + ¹⁄₈</strong> adalah ...
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q13" value="A"> A. ⁶⁄₈</label></li>
+                    <li><label><input type="radio" name="q13" value="B"> B. ⁷⁄₈</label></li>
+                    <li><label><input type="radio" name="q13" value="C"> C. ⁵⁄₈</label></li>
+                    <li><label><input type="radio" name="q13" value="D"> D. 1</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 14 - Operasi Pecahan -->
+            <div class="question-container" data-question="14">
+                <div class="question-number">Soal 14</div>
+                <div class="question">
+                    Hasil dari <strong>⁵⁄₆ - ¹⁄₃ + ¹⁄₂</strong> adalah ...
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q14" value="A"> A. ¾</label></li>
+                    <li><label><input type="radio" name="q14" value="B"> B. 1</label></li>
+                    <li><label><input type="radio" name="q14" value="C"> C. ⅚</label></li>
+                    <li><label><input type="radio" name="q14" value="D"> D. ⅔</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 15 - Operasi Pecahan -->
+            <div class="question-container" data-question="15">
+                <div class="question-number">Soal 15</div>
+                <div class="question">
+                    Hasil dari <strong>⁵⁄₆ - 3 + 5 × ²⁄₇ + ¹⁄₃</strong> adalah ...
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q15" value="A"> A. 1¹⁄₄₂</label></li>
+                    <li><label><input type="radio" name="q15" value="B"> B. 1⁵⁄₂₁</label></li>
+                    <li><label><input type="radio" name="q15" value="C"> C. ¹³⁄₄₂</label></li>
+                    <li><label><input type="radio" name="q15" value="D"> D. 1¹⁄₆</label></li>
                 </ul>
             </div>
 
@@ -439,13 +501,12 @@
 
     <script>
         let currentQuestion = 1;
-        const totalQuestions = 10;
-        let timeLeft = 30 * 60; // 30 menit
-        let timerInterval;
+        const totalQuestions = 15;
         let quizStartTime;
 
         // Kunci Jawaban
         const correctAnswers = {
+            // Soal Cerita (1-10)
             q1: 'C',  // 8 × 2¾ = 8 × 11/4 = 88/4 = 22 kg
             q2: 'D',  // 6 × 5½ = 6 × 11/2 = 66/2 = 33 liter
             q3: 'D',  // 9 × 3⅓ = 9 × 10/3 = 90/3 = 30 liter
@@ -455,36 +516,47 @@
             q7: 'C',  // 4 × 3¾ = 4 × 15/4 = 60/4 = 15 kg
             q8: 'B',  // 6 × 2⅚ = 6 × 17/6 = 102/6 = 17 kg
             q9: 'C',  // 5 × 5⅗ = 5 × 28/5 = 140/5 = 28 kg
-            q10: 'C' // 8 × 4⅞ = 8 × 39/8 = 312/8 = 39 liter
+            q10: 'C', // 8 × 4⅞ = 8 × 39/8 = 312/8 = 39 liter
+            // Soal Operasi Pecahan (11-15)
+            q11: 'C', // ¾ + ⅙ = 9/12 + 2/12 = 11/12
+            q12: 'A', // ⁴⁄₇ - ²⁄₇ = ²⁄₇
+            q13: 'B', // 2 × ³⁄₈ + ¹⁄₈ = ⁶⁄₈ + ¹⁄₈ = ⁷⁄₈
+            q14: 'B', // ⁵⁄₆ - ¹⁄₃ + ¹⁄₂ = 5/6 - 2/6 + 3/6 = 6/6 = 1
+            q15: 'A'  // ⁵⁄₆ - 3 + 5 × ²⁄₇ + ¹⁄₃ = 5/6 - 3 + 10/7 + 1/3 = 35/42 - 126/42 + 60/42 + 14/42 = -17/42 = 1¹⁄₄₂
         };
 
         // Mulai quiz otomatis saat halaman dimuat
         window.onload = function() {
             quizStartTime = new Date();
-            startTimer();
             updateProgress();
         };
 
-        // ========== TIMER FUNCTIONS ==========
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    finishQuiz();
+        // ========== FINISH QUIZ ==========
+        function finishQuiz() {
+            // Hitung skor
+            let score = 0;
+            let totalAnswered = 0;
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) {
+                    totalAnswered++;
+                    if (selected.value === correctAnswers[`q${i}`]) {
+                        score++;
+                    }
                 }
-            }, 1000);
+            }
+            
+            // Hitung waktu pengerjaan
+            const quizEndTime = new Date();
+            const timeTaken = Math.floor((quizEndTime - quizStartTime) / 1000); // dalam detik
+            const minutesTaken = Math.floor(timeTaken / 60);
+            const secondsTaken = timeTaken % 60;
+            const timeString = `${minutesTaken} menit ${secondsTaken} detik`;
+            
+            // Tampilkan hasil
+            displayResults(score, totalAnswered, timeString);
         }
-
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            document.getElementById('timer').textContent = 
-                `⏰ Waktu: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-
         // ========== PROGRESS & NAVIGATION ==========
         function updateProgress() {
             const progress = (currentQuestion / totalQuestions) * 100;
@@ -590,7 +662,6 @@
         // ========== RESTART QUIZ ==========
         function restartQuiz() {
             currentQuestion = 1;
-            timeLeft = 30 * 60;
             
             document.querySelectorAll('input[type="radio"]').forEach(input => {
                 input.checked = false;
@@ -601,7 +672,6 @@
             
             showQuestion(1);
             quizStartTime = new Date();
-            startTimer();
         }
     </script>
 </body>
