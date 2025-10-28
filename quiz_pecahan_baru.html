@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Matematika Kelas 6 - Perkalian Pecahan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* Form Identitas */
+        .identity-form {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .identity-form h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .start-quiz-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .start-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .start-quiz-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            display: none;
+        }
+
+        .quiz-info {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .student-name {
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .timer {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #dc3545;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-container {
+            padding: 30px;
+            display: none;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .options {
+            list-style: none;
+        }
+
+        .options li {
+            margin-bottom: 15px;
+        }
+
+        .options label {
+            display: block;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        .options label:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+
+        .options input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .navigation {
+            padding: 20px 30px;
+            text-align: center;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .results {
+            padding: 40px;
+            text-align: center;
+            display: none;
+        }
+
+        .score {
+            font-size: 3em;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .score.low {
+            color: #dc3545;
+        }
+
+        .score.medium {
+            color: #ffc107;
+        }
+
+        .feedback {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1em;
+            color: #667eea;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .fraction .numerator {
+            display: block;
+            border-bottom: 1px solid #333;
+            padding-bottom: 2px;
+        }
+
+        .fraction .denominator {
+            display: block;
+            padding-top: 2px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .question {
+                font-size: 1.1em;
+            }
+
+            .btn {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Quiz Matematika Kelas 6</h1>
+            <p>Perkalian Bilangan Bulat dengan Pecahan Campuran</p>
+        </div>
+
+        <!-- Form Identitas -->
+        <div class="identity-form" id="identity-form">
+            <h2>✏️ Identitas Siswa</h2>
+            <div class="form-group">
+                <label for="student-name">Nama Lengkap:</label>
+                <input type="text" id="student-name" placeholder="Masukkan nama lengkap Anda" required>
+            </div>
+            <button class="start-quiz-btn" onclick="startQuiz()">🚀 Mulai Quiz</button>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quiz-section">
+            <div class="quiz-info">
+                <div class="student-name" id="display-name"></div>
+                <div class="timer" id="timer">⏰ Waktu: 30:00</div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <div>Soal <span id="current-question">1</span> dari <span id="total-questions">10</span></div>
+            </div>
+
+            <!-- Soal 1 -->
+            <div class="question-container active" data-question="1">
+                <div class="question-number">Soal 1</div>
+                <div class="question">
+                    Ibu Rina membuat kue setiap hari untuk dijual. Setiap hari Ibu Rina menggunakan tepung sebanyak 2¾ kg. Jika Ibu Rina membuat kue selama 8 hari, berapa kg tepung yang digunakan?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q1" value="A"> A. 20 kg</label></li>
+                    <li><label><input type="radio" name="q1" value="B"> B. 21 kg</label></li>
+                    <li><label><input type="radio" name="q1" value="C"> C. 22 kg</label></li>
+                    <li><label><input type="radio" name="q1" value="D"> D. 23 kg</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 2 -->
+            <div class="question-container" data-question="2">
+                <div class="question-number">Soal 2</div>
+                <div class="question">
+                    Pak Ahmad seorang penjual susu sapi. Setiap hari Pak Ahmad menghasilkan susu sebanyak 5½ liter. Jika Pak Ahmad berjualan selama 6 hari, berapa liter total susu yang dihasilkan?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q2" value="A"> A. 30 liter</label></li>
+                    <li><label><input type="radio" name="q2" value="B"> B. 31 liter</label></li>
+                    <li><label><input type="radio" name="q2" value="C"> C. 32 liter</label></li>
+                    <li><label><input type="radio" name="q2" value="D"> D. 33 liter</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 3 -->
+            <div class="question-container" data-question="3">
+                <div class="question-number">Soal 3</div>
+                <div class="question">
+                    Bu Sari membuat jus jeruk setiap pagi. Setiap pagi Bu Sari membuat 3⅓ liter jus jeruk. Jika Bu Sari membuat jus selama 9 hari, berapa liter total jus yang dibuat?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q3" value="A"> A. 27 liter</label></li>
+                    <li><label><input type="radio" name="q3" value="B"> B. 28 liter</label></li>
+                    <li><label><input type="radio" name="q3" value="C"> C. 29 liter</label></li>
+                    <li><label><input type="radio" name="q3" value="D"> D. 30 liter</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 4 -->
+            <div class="question-container" data-question="4">
+                <div class="question-number">Soal 4</div>
+                <div class="question">
+                    Seorang peternak ayam memberikan pakan setiap hari. Setiap hari ayam-ayam diberi pakan sebanyak 4⅕ kg. Jika peternak memberi pakan selama 10 hari, berapa kg total pakan yang diberikan?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q4" value="A"> A. 40 kg</label></li>
+                    <li><label><input type="radio" name="q4" value="B"> B. 41 kg</label></li>
+                    <li><label><input type="radio" name="q4" value="C"> C. 42 kg</label></li>
+                    <li><label><input type="radio" name="q4" value="D"> D. 43 kg</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 5 -->
+            <div class="question-container" data-question="5">
+                <div class="question-number">Soal 5</div>
+                <div class="question">
+                    Pak Budi membuat es teh manis setiap hari. Setiap hari Pak Budi menggunakan gula sebanyak 1⅔ kg. Jika Pak Budi membuat es teh selama 12 hari, berapa kg gula yang digunakan?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q5" value="A"> A. 18 kg</label></li>
+                    <li><label><input type="radio" name="q5" value="B"> B. 19 kg</label></li>
+                    <li><label><input type="radio" name="q5" value="C"> C. 20 kg</label></li>
+                    <li><label><input type="radio" name="q5" value="D"> D. 21 kg</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 6 -->
+            <div class="question-container" data-question="6">
+                <div class="question-number">Soal 6</div>
+                <div class="question">
+                    Ibu Lina membuat sirup setiap minggu. Setiap minggu Ibu Lina menggunakan 2⅖ liter air. Jika Ibu Lina membuat sirup selama 5 minggu, berapa liter air yang digunakan?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q6" value="A"> A. 10 liter</label></li>
+                    <li><label><input type="radio" name="q6" value="B"> B. 11 liter</label></li>
+                    <li><label><input type="radio" name="q6" value="C"> C. 12 liter</label></li>
+                    <li><label><input type="radio" name="q6" value="D"> D. 13 liter</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 7 -->
+            <div class="question-container" data-question="7">
+                <div class="question-number">Soal 7</div>
+                <div class="question">
+                    Pak Hadi seorang pembuat roti. Setiap hari Pak Hadi menggunakan mentega sebanyak 3¾ kg. Jika Pak Hadi membuat roti selama 4 hari, berapa kg mentega yang digunakan?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q7" value="A"> A. 13 kg</label></li>
+                    <li><label><input type="radio" name="q7" value="B"> B. 14 kg</label></li>
+                    <li><label><input type="radio" name="q7" value="C"> C. 15 kg</label></li>
+                    <li><label><input type="radio" name="q7" value="D"> D. 16 kg</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 8 -->
+            <div class="question-container" data-question="8">
+                <div class="question-number">Soal 8</div>
+                <div class="question">
+                    Bu Ani membuat dodol setiap hari. Setiap hari Bu Ani menggunakan ketan sebanyak 2⅚ kg. Jika Bu Ani membuat dodol selama 6 hari, berapa kg ketan yang digunakan?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q8" value="A"> A. 16 kg</label></li>
+                    <li><label><input type="radio" name="q8" value="B"> B. 17 kg</label></li>
+                    <li><label><input type="radio" name="q8" value="C"> C. 18 kg</label></li>
+                    <li><label><input type="radio" name="q8" value="D"> D. 19 kg</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 9 -->
+            <div class="question-container" data-question="9">
+                <div class="question-number">Soal 9</div>
+                <div class="question">
+                    Pak Joko membuat kerupuk setiap minggu. Setiap minggu Pak Joko menggunakan tepung tapioka sebanyak 5⅗ kg. Jika Pak Joko membuat kerupuk selama 5 minggu, berapa kg tepung tapioka yang digunakan?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q9" value="A"> A. 26 kg</label></li>
+                    <li><label><input type="radio" name="q9" value="B"> B. 27 kg</label></li>
+                    <li><label><input type="radio" name="q9" value="C"> C. 28 kg</label></li>
+                    <li><label><input type="radio" name="q9" value="D"> D. 29 kg</label></li>
+                </ul>
+            </div>
+
+            <!-- Soal 10 -->
+            <div class="question-container" data-question="10">
+                <div class="question-number">Soal 10</div>
+                <div class="question">
+                    Ibu Ratih membuat kopi susu setiap hari. Setiap hari Ibu Ratih menggunakan susu sebanyak 4⅞ liter. Jika Ibu Ratih membuat kopi susu selama 8 hari, berapa liter susu yang digunakan?
+                </div>
+                <ul class="options">
+                    <li><label><input type="radio" name="q10" value="A"> A. 37 liter</label></li>
+                    <li><label><input type="radio" name="q10" value="B"> B. 38 liter</label></li>
+                    <li><label><input type="radio" name="q10" value="C"> C. 39 liter</label></li>
+                    <li><label><input type="radio" name="q10" value="D"> D. 40 liter</label></li>
+                </ul>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary" id="prev-btn" onclick="previousQuestion()" disabled>← Sebelumnya</button>
+                <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Selanjutnya →</button>
+                <button class="btn btn-success" id="finish-btn" onclick="finishQuiz()" style="display: none;">🏁 Selesai</button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            ⏳ Sedang mengirim data ke Google Sheets...
+        </div>
+
+        <div class="results" id="results">
+            <div class="score" id="final-score">0/10</div>
+            <div class="feedback" id="feedback"></div>
+            <button class="restart-btn" onclick="restartQuiz()">🔄 Ulangi Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 10;
+        let timeLeft = 30 * 60;
+        let timerInterval;
+        let studentName = '';
+        let quizStartTime;
+
+        // Kunci Jawaban
+        const correctAnswers = {
+            q1: 'C',  // 8 × 2¾ = 8 × 11/4 = 88/4 = 22 kg
+            q2: 'D',  // 6 × 5½ = 6 × 11/2 = 66/2 = 33 liter
+            q3: 'D',  // 9 × 3⅓ = 9 × 10/3 = 90/3 = 30 liter
+            q4: 'C',  // 10 × 4⅕ = 10 × 21/5 = 210/5 = 42 kg
+            q5: 'C',  // 12 × 1⅔ = 12 × 5/3 = 60/3 = 20 kg
+            q6: 'C',  // 5 × 2⅖ = 5 × 12/5 = 60/5 = 12 liter
+            q7: 'C',  // 4 × 3¾ = 4 × 15/4 = 60/4 = 15 kg
+            q8: 'B',  // 6 × 2⅚ = 6 × 17/6 = 102/6 = 17 kg
+            q9: 'C',  // 5 × 5⅗ = 5 × 28/5 = 140/5 = 28 kg
+            q10: 'C'  // 8 × 4⅞ = 8 × 39/8 = 312/8 = 39 liter
+        };
+
+        // ========== GOOGLE SHEETS CONFIGURATION ==========
+        // PENTING: Ganti URL ini dengan Web App URL dari Google Apps Script Anda
+        const GOOGLE_SHEETS_URL = 'MASUKKAN_WEB_APP_URL_ANDA_DISINI';
+        
+        // ========== START QUIZ ==========
+        function startQuiz() {
+            const nameInput = document.getElementById('student-name');
+            studentName = nameInput.value.trim();
+            
+            if (studentName === '') {
+                alert('⚠️ Mohon masukkan nama lengkap Anda!');
+                nameInput.focus();
+                return;
+            }
+            
+            // Simpan waktu mulai quiz
+            quizStartTime = new Date();
+            
+            // Tampilkan nama siswa
+            document.getElementById('display-name').textContent = '👤 ' + studentName;
+            
+            // Sembunyikan form identitas dan tampilkan quiz
+            document.getElementById('identity-form').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            
+            // Mulai timer
+            showQuestion(1);
+            startTimer();
+        }
+
+        // ========== TIMER FUNCTIONS ==========
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `⏰ Waktu: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // ========== PROGRESS & NAVIGATION ==========
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('current-question').textContent = currentQuestion;
+        }
+
+        function showQuestion(questionNum) {
+            document.querySelectorAll('.question-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            document.querySelector(`[data-question="${questionNum}"]`).classList.add('active');
+            
+            document.getElementById('prev-btn').disabled = questionNum === 1;
+            document.getElementById('next-btn').style.display = questionNum === totalQuestions ? 'none' : 'inline-block';
+            document.getElementById('finish-btn').style.display = questionNum === totalQuestions ? 'inline-block' : 'none';
+            
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        // ========== FINISH QUIZ & SEND TO GOOGLE SHEETS ==========
+        async function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            // Hitung skor
+            let score = 0;
+            let totalAnswered = 0;
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) {
+                    totalAnswered++;
+                    if (selected.value === correctAnswers[`q${i}`]) {
+                        score++;
+                    }
+                }
+            }
+            
+            // Hitung waktu pengerjaan
+            const quizEndTime = new Date();
+            const timeTaken = Math.floor((quizEndTime - quizStartTime) / 1000); // dalam detik
+            const minutesTaken = Math.floor(timeTaken / 60);
+            const secondsTaken = timeTaken % 60;
+            const timeString = `${minutesTaken} menit ${secondsTaken} detik`;
+            
+            // Kirim data ke Google Sheets
+            await sendToGoogleSheets(studentName, score, timeString);
+            
+            // Tampilkan hasil
+            displayResults(score, totalAnswered, timeString);
+        }
+
+        // ========== SEND DATA TO GOOGLE SHEETS ==========
+        async function sendToGoogleSheets(nama, nilai, waktu) {
+            // Tampilkan loading
+            document.getElementById('loading').classList.add('active');
+            
+            try {
+                const data = {
+                    nama: nama,
+                    nilai: nilai,
+                    waktu: waktu,
+                    timestamp: new Date().toLocaleString('id-ID', {
+                        timeZone: 'Asia/Jakarta',
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    })
+                };
+                
+                const response = await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                console.log('✅ Data berhasil dikirim ke Google Sheets');
+            } catch (error) {
+                console.error('❌ Error mengirim data:', error);
+                alert('⚠️ Terjadi kesalahan saat mengirim data. Silakan screenshot hasil Anda.');
+            } finally {
+                // Sembunyikan loading
+                document.getElementById('loading').classList.remove('active');
+            }
+        }
+
+        // ========== DISPLAY RESULTS ==========
+        function displayResults(score, totalAnswered, timeString) {
+            // Sembunyikan quiz section
+            document.getElementById('quiz-section').style.display = 'none';
+            
+            const resultsDiv = document.getElementById('results');
+            const scoreElement = document.getElementById('final-score');
+            const feedbackElement = document.getElementById('feedback');
+            
+            scoreElement.textContent = `${score}/${totalQuestions}`;
+            
+            const percentage = (score / totalQuestions) * 100;
+            
+            let feedbackText = '';
+            
+            if (percentage >= 80) {
+                scoreElement.className = 'score';
+                feedbackText = '🎉 Luar biasa! Anda menguasai materi dengan sangat baik!';
+            } else if (percentage >= 60) {
+                scoreElement.className = 'score medium';
+                feedbackText = '👍 Bagus! Anda sudah cukup menguasai materi ini.';
+            } else {
+                scoreElement.className = 'score low';
+                feedbackText = '💪 Tetap semangat! Mari belajar lagi untuk hasil yang lebih baik.';
+            }
+            
+            if (totalAnswered < totalQuestions) {
+                feedbackText += ` (${totalQuestions - totalAnswered} soal tidak dijawab)`;
+            }
+            
+            feedbackText += `<br><br>📊 Nilai Anda: ${percentage.toFixed(0)}%`;
+            feedbackText += `<br>⏱️ Waktu Pengerjaan: ${timeString}`;
+            feedbackText += `<br><br>✅ Data Anda telah tersimpan di Google Sheets!`;
+            
+            feedbackElement.innerHTML = feedbackText;
+            
+            resultsDiv.style.display = 'block';
+        }
+
+        // ========== RESTART QUIZ ==========
+        function restartQuiz() {
+            currentQuestion = 1;
+            timeLeft = 30 * 60;
+            studentName = '';
+            
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+            });
+            
+            document.getElementById('student-name').value = '';
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('identity-form').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
