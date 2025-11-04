@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Matematika - Perkalian Pecahan</title>
+    <title>Kuis Matematika Kelas 6</title>
     <style>
         * {
             margin: 0;
@@ -12,26 +12,27 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
             color: white;
-            padding: 30px;
             text-align: center;
+            padding: 30px;
         }
 
         .header h1 {
@@ -44,214 +45,214 @@
             opacity: 0.9;
         }
 
-        /* Quiz Info */
-        .quiz-info {
-            background: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid #e9ecef;
-        }
-
-        .progress-info {
-            font-size: 1.1em;
-            color: #495057;
-            margin: 10px 0;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #e9ecef;
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #28a745, #20c997);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .question-container {
+        .quiz-container {
             padding: 30px;
-            display: none;
         }
 
-        .question-container.active {
-            display: block;
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #4ecdc4;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .question-number {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
+            color: #667eea;
             font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .question {
-            font-size: 1.3em;
-            margin-bottom: 25px;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .options {
-            list-style: none;
-        }
-
-        .options li {
+            font-size: 1.1em;
             margin-bottom: 15px;
         }
 
-        .options label {
-            display: block;
-            padding: 15px 20px;
-            background: #f8f9fa;
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            background: white;
             border: 2px solid #e9ecef;
-            border-radius: 10px;
+            border-radius: 8px;
+            padding: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1.1em;
-        }
-
-        .options label:hover {
-            background: #e3f2fd;
-            border-color: #2196f3;
-        }
-
-        .options input[type="radio"] {
-            margin-right: 12px;
-            transform: scale(1.2);
-        }
-
-        .navigation {
-            padding: 20px 30px;
             text-align: center;
-            background: #f8f9fa;
-            border-top: 1px solid #e9ecef;
+        }
+
+        .option:hover {
+            border-color: #4ecdc4;
+            background: #f0fdfc;
+            transform: translateY(-2px);
+        }
+
+        .option.selected {
+            border-color: #4ecdc4;
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #28a745;
+            color: white;
+        }
+
+        .option.incorrect {
+            border-color: #dc3545;
+            background: #dc3545;
+            color: white;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 12px 30px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
-            margin: 0 10px;
+            font-size: 1em;
+            font-weight: bold;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: #667eea;
             color: white;
         }
 
         .btn-primary:hover {
+            background: #5a6fd8;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-success {
-            background: linear-gradient(135deg, #28a745, #20c997);
+        .btn-secondary {
+            background: #6c757d;
             color: white;
         }
 
-        .btn-success:hover {
+        .btn-secondary:hover {
+            background: #5a6268;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
         }
 
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
+        .btn-info {
+            background: #17a2b8;
+            color: white;
         }
 
-        /* Results */
-        .results {
+        .btn-info:hover {
+            background: #138496;
+            transform: translateY(-2px);
+        }
+
+        .example-section {
             display: none;
-            padding: 50px;
-            text-align: center;
-            background: white;
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 5px solid #2196f3;
         }
 
-        .results.show {
-            display: block;
+        .example-title {
+            color: #1976d2;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .example-title::before {
+            content: "💡";
+            margin-right: 10px;
+            font-size: 1.5em;
+        }
+
+        .solution-steps {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .step {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 3px solid #2196f3;
+            background: #f8f9fa;
+        }
+
+        .step-title {
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 5px;
+        }
+
+        .result-section {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
         }
 
         .score {
-            font-size: 4em;
+            font-size: 3em;
             font-weight: bold;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #4ecdc4;
+            margin-bottom: 15px;
         }
 
-        .score.medium {
-            background: linear-gradient(135deg, #ffa726, #ff8a65);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .score.low {
-            background: linear-gradient(135deg, #ff6b6b, #ff5722);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .feedback {
+        .score-text {
             font-size: 1.3em;
-            color: #495057;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
         }
 
-        .restart-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .fruit-display {
+            font-size: 2em;
+            margin: 10px 0;
+            display: block;
         }
 
-        .restart-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 10px;
-            }
-            
             .header h1 {
                 font-size: 2em;
             }
             
-            .question {
-                font-size: 1.1em;
+            .quiz-container {
+                padding: 20px;
             }
             
-            .btn {
-                padding: 10px 20px;
-                font-size: 1em;
-                margin: 5px;
+            .question-card {
+                padding: 20px;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .buttons {
+                flex-direction: column;
             }
         }
     </style>
@@ -259,514 +260,365 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🧮 Quiz Matematika</h1>
-            <p>Operasi Hitung Pecahan & Aplikasinya - Kelas 6 SD</p>
+            <h1>🧮 Kuis Matematika</h1>
+            <p>Latihan Soal untuk Siswa Kelas 6</p>
         </div>
 
-        <!-- Quiz Section -->
-        <div class="quiz-section" id="quiz-section">
-            <div class="quiz-info">
-                <div class="progress-info">
-                    Soal <span id="current-question">1</span> dari 20
-                </div>
-                <div class="progress-bar">
-                    <div class="progress" id="progress"></div>
-                </div>
-            </div>
-
-            <!-- Soal 1 - Cerita -->
-            <div class="question-container active" data-question="1">
+        <div class="quiz-container">
+            <!-- Soal 1 -->
+            <div class="question-card">
                 <div class="question-number">Soal 1</div>
-                <div class="question">
-                    🛒 Ibu membeli 8 kantong gula. Setiap kantong berisi 2¾ kg gula. Berapa kg gula yang dibeli ibu?
+                <div class="question-text">
+                    Di sebuah taman bermain terdapat 180 anak yang sedang bermain, yang terdiri dari 60 anak perempuan dan sisanya anak laki-laki. Rasio banyak anak laki-laki terhadap seluruh anak adalah...
                 </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q1" value="A"> A. 16 kg</label></li>
-                    <li><label><input type="radio" name="q1" value="B"> B. 20 kg</label></li>
-                    <li><label><input type="radio" name="q1" value="C"> C. 22 kg</label></li>
-                    <li><label><input type="radio" name="q1" value="D"> D. 24 kg</label></li>
-                </ul>
+                <div class="options" data-question="1">
+                    <div class="option" data-answer="A">A. 1 : 3</div>
+                    <div class="option" data-answer="B">B. 1 : 2</div>
+                    <div class="option" data-answer="C">C. 2 : 3</div>
+                    <div class="option" data-answer="D">D. 3 : 4</div>
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-primary" onclick="checkAnswer(1, 'C')">Periksa Jawaban</button>
+                    <button class="btn btn-info" onclick="showExample(1)">Lihat Contoh Soal</button>
+                </div>
+                
+                <div class="example-section" id="example-1">
+                    <div class="example-title">Contoh Soal Serupa</div>
+                    <div class="question-text">
+                        <strong>Soal Contoh:</strong> Dalam suatu perpustakaan terdapat 150 pengunjung, yang terdiri dari 30 orang pengunjung dewasa dan sisanya pengunjung anak-anak. Rasio banyak pengunjung anak-anak terhadap seluruh pengunjung adalah...
+                    </div>
+                    <div class="solution-steps">
+                        <div class="step">
+                            <div class="step-title">Langkah 1: Hitung pengunjung anak-anak</div>
+                            Pengunjung anak-anak = Total pengunjung - Pengunjung dewasa<br>
+                            Pengunjung anak-anak = 150 - 30 = 120 orang
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Langkah 2: Buat rasio</div>
+                            Rasio = Pengunjung anak-anak : Total pengunjung<br>
+                            Rasio = 120 : 150
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Langkah 3: Sederhanakan rasio</div>
+                            120 dan 150 dibagi 30<br>
+                            120 ÷ 30 = 4<br>
+                            150 ÷ 30 = 5<br>
+                            <strong>Jawaban: 4 : 5</strong>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Soal 2 - Cerita -->
-            <div class="question-container" data-question="2">
+            <!-- Soal 2 -->
+            <div class="question-card">
                 <div class="question-number">Soal 2</div>
-                <div class="question">
-                    🏺 Ayah membeli 6 jerigen minyak. Setiap jerigen berisi 5½ liter minyak. Berapa liter minyak yang dibeli ayah?
+                <div class="question-text">
+                    Dengan 4 lembar uang sepuluh ribuan Ibu dapat membeli 5 kg gula pasir. Tentukan harga 1 kg gula pasir tersebut..
                 </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q2" value="A"> A. 30 liter</label></li>
-                    <li><label><input type="radio" name="q2" value="B"> B. 31 liter</label></li>
-                    <li><label><input type="radio" name="q2" value="C"> C. 32 liter</label></li>
-                    <li><label><input type="radio" name="q2" value="D"> D. 33 liter</label></li>
-                </ul>
+                <div class="options" data-question="2">
+                    <div class="option" data-answer="A">A. Rp. 6.000,-</div>
+                    <div class="option" data-answer="B">B. Rp. 7.000,-</div>
+                    <div class="option" data-answer="C">C. Rp. 8.000,-</div>
+                    <div class="option" data-answer="D">D. Rp. 9.000,-</div>
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-primary" onclick="checkAnswer(2, 'C')">Periksa Jawaban</button>
+                    <button class="btn btn-info" onclick="showExample(2)">Lihat Contoh Soal</button>
+                </div>
+                
+                <div class="example-section" id="example-2">
+                    <div class="example-title">Contoh Soal Serupa</div>
+                    <div class="question-text">
+                        <strong>Soal Contoh:</strong> Dengan 3 lembar uang dua puluh ribuan Ayah dapat membeli 4 kg beras. Tentukan harga 1 kg beras tersebut..
+                    </div>
+                    <div class="solution-steps">
+                        <div class="step">
+                            <div class="step-title">Langkah 1: Hitung total uang</div>
+                            Total uang = 3 lembar × Rp. 20.000<br>
+                            Total uang = Rp. 60.000
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Langkah 2: Hitung harga per kg</div>
+                            Harga 1 kg beras = Total uang ÷ Jumlah kg<br>
+                            Harga 1 kg beras = Rp. 60.000 ÷ 4 kg<br>
+                            Harga 1 kg beras = Rp. 15.000
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Pembuktian:</div>
+                            4 kg × Rp. 15.000 = Rp. 60.000 ✓
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Soal 3 - Cerita -->
-            <div class="question-container" data-question="3">
+            <!-- Soal 3 -->
+            <div class="question-card">
                 <div class="question-number">Soal 3</div>
-                <div class="question">
-                    🥛 Sebuah toko memiliki 9 botol susu. Setiap botol berisi 3⅓ liter susu. Berapa liter susu seluruhnya?
+                <div class="question-text">
+                    Perbandingan umur Ani dan Budi adalah 3 : 7. Jika jumlah umur mereka 40 tahun maka umur Ani adalah....
                 </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q3" value="A"> A. 27 liter</label></li>
-                    <li><label><input type="radio" name="q3" value="B"> B. 28 liter</label></li>
-                    <li><label><input type="radio" name="q3" value="C"> C. 29 liter</label></li>
-                    <li><label><input type="radio" name="q3" value="D"> D. 30 liter</label></li>
-                </ul>
+                <div class="options" data-question="3">
+                    <div class="option" data-answer="A">A. 10 Tahun</div>
+                    <div class="option" data-answer="B">B. 15 Tahun</div>
+                    <div class="option" data-answer="C">C. 12 Tahun</div>
+                    <div class="option" data-answer="D">D. 18 Tahun</div>
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-primary" onclick="checkAnswer(3, 'C')">Periksa Jawaban</button>
+                    <button class="btn btn-info" onclick="showExample(3)">Lihat Contoh Soal</button>
+                </div>
+                
+                <div class="example-section" id="example-3">
+                    <div class="example-title">Contoh Soal Serupa</div>
+                    <div class="question-text">
+                        <strong>Soal Contoh:</strong> Perbandingan umur Sari dan Deni adalah 2 : 5. Jika jumlah umur mereka 35 tahun maka umur Sari adalah....
+                    </div>
+                    <div class="solution-steps">
+                        <div class="step">
+                            <div class="step-title">Langkah 1: Tentukan total bagian</div>
+                            Perbandingan Sari : Deni = 2 : 5<br>
+                            Total bagian = 2 + 5 = 7 bagian
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Langkah 2: Hitung nilai satu bagian</div>
+                            Jumlah umur = 35 tahun<br>
+                            Satu bagian = 35 ÷ 7 = 5 tahun
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Langkah 3: Hitung umur masing-masing</div>
+                            Umur Sari = 2 bagian = 2 × 5 = 10 tahun<br>
+                            Umur Deni = 5 bagian = 5 × 5 = 25 tahun<br>
+                            <strong>Jawaban: 10 tahun</strong>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Soal 4 - Cerita -->
-            <div class="question-container" data-question="4">
+            <!-- Soal 4 -->
+            <div class="question-card">
                 <div class="question-number">Soal 4</div>
-                <div class="question">
-                    📦 Pak Budi memiliki 10 kotak berisi beras. Setiap kotak berisi 4⅕ kg beras. Berapa kg beras seluruhnya?
+                <div class="question-text">
+                    Perhatikan gambar berikut!<br>
+                    <div class="fruit-display">
+                        🍊🍊🍊🍊🍊🍊🍊🍊<br>
+                        🍊🍊🍊🍊🍊🍊🍊🍊<br><br>
+                        🍇🍇🍇🍇🍇🍇🍇🍇🍇🍇🍇🍇<br>
+                        🍇🍇🍇🍇🍇🍇🍇🍇🍇🍇🍇🍇
+                    </div>
+                    Rasio banyak buah jeruk dan anggur adalah......
                 </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q4" value="A"> A. 40 kg</label></li>
-                    <li><label><input type="radio" name="q4" value="B"> B. 41 kg</label></li>
-                    <li><label><input type="radio" name="q4" value="C"> C. 42 kg</label></li>
-                    <li><label><input type="radio" name="q4" value="D"> D. 43 kg</label></li>
-                </ul>
+                <div class="options" data-question="4">
+                    <div class="option" data-answer="A">A. 2 : 3</div>
+                    <div class="option" data-answer="B">B. 4 : 6</div>
+                    <div class="option" data-answer="C">C. 3 : 4</div>
+                    <div class="option" data-answer="D">D. 8 : 12</div>
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-primary" onclick="checkAnswer(4, 'A')">Periksa Jawaban</button>
+                    <button class="btn btn-info" onclick="showExample(4)">Lihat Contoh Soal</button>
+                </div>
+                
+                <div class="example-section" id="example-4">
+                    <div class="example-title">Contoh Soal Serupa</div>
+                    <div class="question-text">
+                        <strong>Soal Contoh:</strong> Perhatikan gambar berikut!<br>
+                        <div class="fruit-display">
+                            🍎🍎🍎🍎🍎🍎<br>
+                            🍎🍎🍎🍎🍎🍎<br><br>
+                            🍌🍌🍌🍌🍌🍌🍌🍌<br>
+                            🍌🍌🍌🍌🍌🍌🍌🍌<br>
+                            🍌🍌🍌🍌🍌🍌🍌🍌
+                        </div>
+                        Rasio banyak buah apel dan pisang adalah......
+                    </div>
+                    <div class="solution-steps">
+                        <div class="step">
+                            <div class="step-title">Langkah 1: Hitung jumlah masing-masing buah</div>
+                            Apel = 12 buah (2 baris × 6 buah)<br>
+                            Pisang = 24 buah (3 baris × 8 buah)
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Langkah 2: Buat rasio</div>
+                            Rasio = Apel : Pisang = 12 : 24
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Langkah 3: Sederhanakan rasio</div>
+                            12 dan 24 sama-sama dibagi 12<br>
+                            12 ÷ 12 = 1<br>
+                            24 ÷ 12 = 2<br>
+                            <strong>Jawaban: 1 : 2</strong>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Soal 5 - Cerita -->
-            <div class="question-container" data-question="5">
+            <!-- Soal 5 -->
+            <div class="question-card">
                 <div class="question-number">Soal 5</div>
-                <div class="question">
-                    🍎 Bu Sari membeli 12 kantong apel. Setiap kantong berisi 1⅔ kg apel. Berapa kg apel yang dibeli Bu Sari?
+                <div class="question-text">
+                    Bentuk desimal dari 7/8 adalah ......
                 </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q5" value="A"> A. 18 kg</label></li>
-                    <li><label><input type="radio" name="q5" value="B"> B. 19 kg</label></li>
-                    <li><label><input type="radio" name="q5" value="C"> C. 20 kg</label></li>
-                    <li><label><input type="radio" name="q5" value="D"> D. 21 kg</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 6 - Cerita -->
-            <div class="question-container" data-question="6">
-                <div class="question-number">Soal 6</div>
-                <div class="question">
-                    🧴 Terdapat 5 botol shampo. Setiap botol berisi 2⅖ liter shampo. Berapa liter shampo seluruhnya?
+                <div class="options" data-question="5">
+                    <div class="option" data-answer="A">A. 0,625</div>
+                    <div class="option" data-answer="B">B. 0,75</div>
+                    <div class="option" data-answer="C">C. 0,875</div>
+                    <div class="option" data-answer="D">D. 0,925</div>
                 </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q6" value="A"> A. 10 liter</label></li>
-                    <li><label><input type="radio" name="q6" value="B"> B. 11 liter</label></li>
-                    <li><label><input type="radio" name="q6" value="C"> C. 12 liter</label></li>
-                    <li><label><input type="radio" name="q6" value="D"> D. 13 liter</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 7 - Cerita -->
-            <div class="question-container" data-question="7">
-                <div class="question-number">Soal 7</div>
-                <div class="question">
-                    🎂 Ibu membuat 4 kue. Setiap kue membutuhkan 3¾ kg tepung. Berapa kg tepung yang dibutuhkan seluruhnya?
+                <div class="buttons">
+                    <button class="btn btn-primary" onclick="checkAnswer(5, 'C')">Periksa Jawaban</button>
+                    <button class="btn btn-info" onclick="showExample(5)">Lihat Contoh Soal</button>
                 </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q7" value="A"> A. 12 kg</label></li>
-                    <li><label><input type="radio" name="q7" value="B"> B. 14 kg</label></li>
-                    <li><label><input type="radio" name="q7" value="C"> C. 15 kg</label></li>
-                    <li><label><input type="radio" name="q7" value="D"> D. 16 kg</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 8 - Cerita -->
-            <div class="question-container" data-question="8">
-                <div class="question-number">Soal 8</div>
-                <div class="question">
-                    🍊 Pak Ahmad memiliki 6 keranjang jeruk. Setiap keranjang berisi 2⅚ kg jeruk. Berapa kg jeruk seluruhnya?
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q8" value="A"> A. 16 kg</label></li>
-                    <li><label><input type="radio" name="q8" value="B"> B. 17 kg</label></li>
-                    <li><label><input type="radio" name="q8" value="C"> C. 18 kg</label></li>
-                    <li><label><input type="radio" name="q8" value="D"> D. 19 kg</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 9 - Cerita -->
-            <div class="question-container" data-question="9">
-                <div class="question-number">Soal 9</div>
-                <div class="question">
-                    🥔 Bu Rina membeli 5 karung kentang. Setiap karung berisi 5⅗ kg kentang. Berapa kg kentang yang dibeli Bu Rina?
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q9" value="A"> A. 26 kg</label></li>
-                    <li><label><input type="radio" name="q9" value="B"> B. 27 kg</label></li>
-                    <li><label><input type="radio" name="q9" value="C"> C. 28 kg</label></li>
-                    <li><label><input type="radio" name="q9" value="D"> D. 29 kg</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 10 - Cerita -->
-            <div class="question-container" data-question="10">
-                <div class="question-number">Soal 10</div>
-                <div class="question">
-                    ⛽ Pak Dodi mengisi 8 tangki bensin. Setiap tangki berisi 4⅞ liter bensin. Berapa liter bensin seluruhnya?
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q10" value="A"> A. 38 liter</label></li>
-                    <li><label><input type="radio" name="q10" value="B"> B. 38½ liter</label></li>
-                    <li><label><input type="radio" name="q10" value="C"> C. 39 liter</label></li>
-                    <li><label><input type="radio" name="q10" value="D"> D. 40 liter</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 11 - Operasi Pecahan -->
-            <div class="question-container" data-question="11">
-                <div class="question-number">Soal 11</div>
-                <div class="question">
-                    Hasil dari <strong>³⁄₄ + ¹⁄₆</strong> adalah ...
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q11" value="A"> A. ⁴⁄₁₀</label></li>
-                    <li><label><input type="radio" name="q11" value="B"> B. ⁸⁄₁₂</label></li>
-                    <li><label><input type="radio" name="q11" value="C"> C. ¹¹⁄₁₂</label></li>
-                    <li><label><input type="radio" name="q11" value="D"> D. ⁹⁄₁₀</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 12 - Operasi Pecahan -->
-            <div class="question-container" data-question="12">
-                <div class="question-number">Soal 12</div>
-                <div class="question">
-                    Hasil dari <strong>⁴⁄₇ - ²⁄₇</strong> adalah ...
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q12" value="A"> A. ²⁄₇</label></li>
-                    <li><label><input type="radio" name="q12" value="B"> B. ³⁄₇</label></li>
-                    <li><label><input type="radio" name="q12" value="C"> C. ⁶⁄₇</label></li>
-                    <li><label><input type="radio" name="q12" value="D"> D. ¹⁄₇</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 13 - Operasi Pecahan -->
-            <div class="question-container" data-question="13">
-                <div class="question-number">Soal 13</div>
-                <div class="question">
-                    Hasil dari <strong>2 × ³⁄₈ + ¹⁄₈</strong> adalah ...
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q13" value="A"> A. ⁶⁄₈</label></li>
-                    <li><label><input type="radio" name="q13" value="B"> B. ⁷⁄₈</label></li>
-                    <li><label><input type="radio" name="q13" value="C"> C. ⁵⁄₈</label></li>
-                    <li><label><input type="radio" name="q13" value="D"> D. 1</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 14 - Operasi Pecahan -->
-            <div class="question-container" data-question="14">
-                <div class="question-number">Soal 14</div>
-                <div class="question">
-                    Hasil dari <strong>⁵⁄₆ - ¹⁄₃ + ¹⁄₂</strong> adalah ...
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q14" value="A"> A. ¾</label></li>
-                    <li><label><input type="radio" name="q14" value="B"> B. 1</label></li>
-                    <li><label><input type="radio" name="q14" value="C"> C. ⅚</label></li>
-                    <li><label><input type="radio" name="q14" value="D"> D. ⅔</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 15 - Operasi Pecahan -->
-            <div class="question-container" data-question="15">
-                <div class="question-number">Soal 15</div>
-                <div class="question">
-                    Hasil dari <strong>⁵⁄₆ - 3 + 5 × ²⁄₇ + ¹⁄₃</strong> adalah ...
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q15" value="A"> A. 1¹⁄₄₂</label></li>
-                    <li><label><input type="radio" name="q15" value="B"> B. 1⁵⁄₂₁</label></li>
-                    <li><label><input type="radio" name="q15" value="C"> C. ¹³⁄₄₂</label></li>
-                    <li><label><input type="radio" name="q15" value="D"> D. 1¹⁄₆</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 16 - Diskon dengan Penyelesaian -->
-            <div class="question-container" data-question="16">
-                <div class="question-number">Soal 16</div>
-                <div class="question">
-                    🏪 Toko Elektronik Jaya memberikan diskon 20%. Harga headphone adalah 0,4 kali harga laptop, sedangkan harga mouse adalah 1,2 kali harga laptop. Jika harga laptop Rp2.500.000,00, maka harga headphone + mouse setelah diskon adalah ...
-                    
-                    <div style="background: #f0f8ff; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
-                        <strong>💡 Cara Pengerjaan:</strong><br>
-                        1. Cari harga headphone: 0,4 × Rp2.500.000 = Rp1.000.000<br>
-                        2. Cari harga mouse: 1,2 × Rp2.500.000 = Rp3.000.000<br>
-                        3. Total harga sebelum diskon: Rp1.000.000 + Rp3.000.000 = Rp4.000.000<br>
-                        4. Diskon 20% = 20/100 × Rp4.000.000 = Rp800.000<br>
-                        5. Harga setelah diskon: Rp4.000.000 - Rp800.000 = Rp3.200.000
+                
+                <div class="example-section" id="example-5">
+                    <div class="example-title">Contoh Soal Serupa</div>
+                    <div class="question-text">
+                        <strong>Soal Contoh:</strong> Bentuk desimal dari 5/8 adalah ......
+                    </div>
+                    <div class="solution-steps">
+                        <div class="step">
+                            <div class="step-title">Langkah 1: Ubah pecahan ke bentuk pembagian</div>
+                            5/8 = 5 ÷ 8
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Langkah 2: Lakukan pembagian</div>
+                            <pre>
+    0,625
+  ________
+8 │ 5,000
+    4 8
+    ___
+      20
+      16
+      ___
+       40
+       40
+       ___
+        0
+                            </pre>
+                        </div>
+                        <div class="step">
+                            <div class="step-title">Langkah 3: Hasil pembagian</div>
+                            5 ÷ 8 = 0,625<br>
+                            <strong>Jawaban: 0,625</strong>
+                        </div>
                     </div>
                 </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q16" value="A"> A. Rp3.100.000,00</label></li>
-                    <li><label><input type="radio" name="q16" value="B"> B. Rp3.200.000,00</label></li>
-                    <li><label><input type="radio" name="q16" value="C"> C. Rp3.300.000,00</label></li>
-                    <li><label><input type="radio" name="q16" value="D"> D. Rp3.400.000,00</label></li>
-                </ul>
             </div>
 
-            <!-- Soal 17 - Diskon -->
-            <div class="question-container" data-question="17">
-                <div class="question-number">Soal 17</div>
-                <div class="question">
-                    🛍️ Toko Pakaian Cantik memberikan diskon 25%. Harga celana adalah 0,6 kali harga baju, sedangkan harga kaos kaki adalah 1,8 kali harga baju. Jika harga baju Rp80.000,00, maka harga celana + kaos kaki setelah diskon adalah ...
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q17" value="A"> A. Rp144.000,00</label></li>
-                    <li><label><input type="radio" name="q17" value="B"> B. Rp148.000,00</label></li>
-                    <li><label><input type="radio" name="q17" value="C"> C. Rp152.000,00</label></li>
-                    <li><label><input type="radio" name="q17" value="D"> D. Rp156.000,00</label></li>
-                </ul>
+            <!-- Section Hasil -->
+            <div class="result-section" id="result-section">
+                <div class="score" id="score">0/5</div>
+                <div class="score-text" id="score-text">Selamat! Anda telah menyelesaikan kuis.</div>
+                <button class="btn btn-primary" onclick="resetQuiz()">Ulangi Kuis</button>
             </div>
-
-            <!-- Soal 18 - Diskon dengan Penyelesaian -->
-            <div class="question-container" data-question="18">
-                <div class="question-number">Soal 18</div>
-                <div class="question">
-                    📚 Toko Buku Pintar memberikan diskon 18%. Harga pensil adalah ¾ dari harga buku, sedangkan harga penggaris adalah 1,6 kali harga buku. Jika harga buku Rp24.000,00, maka harga pensil + penggaris setelah diskon adalah ...
-                    
-                    <div style="background: #f0f8ff; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
-                        <strong>💡 Cara Pengerjaan:</strong><br>
-                        1. Cari harga pensil: ¾ × Rp24.000 = Rp18.000<br>
-                        2. Cari harga penggaris: 1,6 × Rp24.000 = Rp38.400<br>
-                        3. Total harga sebelum diskon: Rp18.000 + Rp38.400 = Rp56.400<br>
-                        4. Diskon 18% = 18/100 × Rp56.400 = Rp10.152<br>
-                        5. Harga setelah diskon: Rp56.400 - Rp10.152 = Rp46.248
-                    </div>
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q18" value="A"> A. Rp45.120,00</label></li>
-                    <li><label><input type="radio" name="q18" value="B"> B. Rp46.248,00</label></li>
-                    <li><label><input type="radio" name="q18" value="C"> C. Rp47.340,00</label></li>
-                    <li><label><input type="radio" name="q18" value="D"> D. Rp48.200,00</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 19 - Diskon -->
-            <div class="question-container" data-question="19">
-                <div class="question-number">Soal 19</div>
-                <div class="question">
-                    🍔 Restoran Lezat memberikan diskon 22%. Harga kentang goreng adalah 0,5 kali harga burger, sedangkan harga minuman adalah 1,3 kali harga burger. Jika harga burger Rp35.000,00, maka harga kentang goreng + minuman setelah diskon adalah ...
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q19" value="A"> A. Rp49.140,00</label></li>
-                    <li><label><input type="radio" name="q19" value="B"> B. Rp50.310,00</label></li>
-                    <li><label><input type="radio" name="q19" value="C"> C. Rp51.480,00</label></li>
-                    <li><label><input type="radio" name="q19" value="D"> D. Rp52.650,00</label></li>
-                </ul>
-            </div>
-
-            <!-- Soal 20 - Diskon -->
-            <div class="question-container" data-question="20">
-                <div class="question-number">Soal 20</div>
-                <div class="question">
-                    🎮 Toko Game Center memberikan diskon 16%. Harga controller adalah ⅖ dari harga console, sedangkan harga game adalah 1,7 kali harga console. Jika harga console Rp3.000.000,00, maka harga controller + game setelah diskon adalah ...
-                </div>
-                <ul class="options">
-                    <li><label><input type="radio" name="q20" value="A"> A. Rp5.292.000,00</label></li>
-                    <li><label><input type="radio" name="q20" value="B"> B. Rp5.544.000,00</label></li>
-                    <li><label><input type="radio" name="q20" value="C"> C. Rp5.796.000,00</label></li>
-                    <li><label><input type="radio" name="q20" value="D"> D. Rp6.048.000,00</label></li>
-                </ul>
-            </div>
-
-            <div class="navigation">
-                <button class="btn btn-primary" id="prev-btn" onclick="previousQuestion()" disabled>⬅️ Sebelumnya</button>
-                <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Selanjutnya ➡️</button>
-                <button class="btn btn-success" id="finish-btn" onclick="finishQuiz()" style="display: none;">🏁 Selesai</button>
-            </div>
-        </div>
-
-        <!-- Results -->
-        <div class="results" id="results">
-            <div class="score" id="final-score">0/10</div>
-            <div class="feedback" id="feedback"></div>
-            <button class="restart-btn" onclick="restartQuiz()">🔄 Ulangi Quiz</button>
         </div>
     </div>
 
     <script>
-        let currentQuestion = 1;
-        const totalQuestions = 20;
-        let quizStartTime;
+        let userAnswers = {};
+        let correctAnswers = {1: 'C', 2: 'C', 3: 'C', 4: 'A', 5: 'C'};
+        let score = 0;
 
-        // Kunci Jawaban
-        const correctAnswers = {
-            // Soal Cerita (1-10)
-            q1: 'C',  // 8 × 2¾ = 8 × 11/4 = 88/4 = 22 kg
-            q2: 'D',  // 6 × 5½ = 6 × 11/2 = 66/2 = 33 liter
-            q3: 'D',  // 9 × 3⅓ = 9 × 10/3 = 90/3 = 30 liter
-            q4: 'C',  // 10 × 4⅕ = 10 × 21/5 = 210/5 = 42 kg
-            q5: 'C',  // 12 × 1⅔ = 12 × 5/3 = 60/3 = 20 kg
-            q6: 'C',  // 5 × 2⅖ = 5 × 12/5 = 60/5 = 12 liter
-            q7: 'C',  // 4 × 3¾ = 4 × 15/4 = 60/4 = 15 kg
-            q8: 'B',  // 6 × 2⅚ = 6 × 17/6 = 102/6 = 17 kg
-            q9: 'C',  // 5 × 5⅗ = 5 × 28/5 = 140/5 = 28 kg
-            q10: 'C', // 8 × 4⅞ = 8 × 39/8 = 312/8 = 39 liter
-            // Soal Operasi Pecahan (11-15)
-            q11: 'C', // ¾ + ⅙ = 9/12 + 2/12 = 11/12
-            q12: 'A', // ⁴⁄₇ - ²⁄₇ = ²⁄₇
-            q13: 'B', // 2 × ³⁄₈ + ¹⁄₈ = ⁶⁄₈ + ¹⁄₈ = ⁷⁄₈
-            q14: 'B', // ⁵⁄₆ - ¹⁄₃ + ¹⁄₂ = 5/6 - 2/6 + 3/6 = 6/6 = 1
-            q15: 'A', // ⁵⁄₆ - 3 + 5 × ²⁄₇ + ¹⁄₃ = 5/6 - 3 + 10/7 + 1/3 = 35/42 - 126/42 + 60/42 + 14/42 = -17/42 = 1¹⁄₄₂
-            // Soal Diskon (16-20)
-            q16: 'B', // Headphone: 1.000.000, Mouse: 3.000.000, Total: 4.000.000, Diskon 20%: 3.200.000
-            q17: 'A', // Celana: 48.000, Kaos kaki: 144.000, Total: 192.000, Diskon 25%: 144.000
-            q18: 'B', // Pensil: 18.000, Penggaris: 38.400, Total: 56.400, Diskon 18%: 46.248
-            q19: 'B', // Kentang: 17.500, Minuman: 45.500, Total: 63.000, Diskon 22%: 49.140
-            q20: 'B'  // Controller: 1.200.000, Game: 5.100.000, Total: 6.300.000, Diskon 16%: 5.292.000
-        };
-
-        // Mulai quiz otomatis saat halaman dimuat
-        window.onload = function() {
-            quizStartTime = new Date();
-            updateProgress();
-        };
-
-        // ========== FINISH QUIZ ==========
-        function finishQuiz() {
-            // Hitung skor
-            let score = 0;
-            let totalAnswered = 0;
+        function selectOption(questionNum, answer) {
+            const options = document.querySelectorAll(`[data-question="${questionNum}"] .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
             
-            for (let i = 1; i <= totalQuestions; i++) {
-                const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                if (selected) {
-                    totalAnswered++;
-                    if (selected.value === correctAnswers[`q${i}`]) {
-                        score++;
-                    }
+            const selectedOption = document.querySelector(`[data-question="${questionNum}"] [data-answer="${answer}"]`);
+            selectedOption.classList.add('selected');
+            
+            userAnswers[questionNum] = answer;
+        }
+
+        function checkAnswer(questionNum, correctAnswer) {
+            const options = document.querySelectorAll(`[data-question="${questionNum}"] .option`);
+            
+            options.forEach(opt => {
+                const answer = opt.getAttribute('data-answer');
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                
+                if (answer === correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (userAnswers[questionNum] === answer) {
+                    opt.classList.add('incorrect');
                 }
-            }
-            
-            // Hitung waktu pengerjaan
-            const quizEndTime = new Date();
-            const timeTaken = Math.floor((quizEndTime - quizStartTime) / 1000); // dalam detik
-            const minutesTaken = Math.floor(timeTaken / 60);
-            const secondsTaken = timeTaken % 60;
-            const timeString = `${minutesTaken} menit ${secondsTaken} detik`;
-            
-            // Tampilkan hasil
-            displayResults(score, totalAnswered, timeString);
-        }
-        // ========== PROGRESS & NAVIGATION ==========
-        function updateProgress() {
-            const progress = (currentQuestion / totalQuestions) * 100;
-            document.getElementById('progress').style.width = progress + '%';
-            document.getElementById('current-question').textContent = currentQuestion;
-        }
-
-        function showQuestion(questionNum) {
-            document.querySelectorAll('.question-container').forEach(container => {
-                container.classList.remove('active');
+                
+                opt.style.pointerEvents = 'none';
             });
-            
-            document.querySelector(`[data-question="${questionNum}"]`).classList.add('active');
-            
-            document.getElementById('prev-btn').disabled = questionNum === 1;
-            document.getElementById('next-btn').style.display = questionNum === totalQuestions ? 'none' : 'inline-block';
-            document.getElementById('finish-btn').style.display = questionNum === totalQuestions ? 'inline-block' : 'none';
-            
-            updateProgress();
-        }
 
-        function nextQuestion() {
-            if (currentQuestion < totalQuestions) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
+            if (userAnswers[questionNum] === correctAnswer) {
+                score++;
+            }
+
+            // Check if all questions are answered
+            if (Object.keys(userAnswers).length === 5) {
+                showResult();
             }
         }
 
-        function previousQuestion() {
-            if (currentQuestion > 1) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-            }
-        }
-
-        // ========== FINISH QUIZ ==========
-        function finishQuiz() {
-            clearInterval(timerInterval);
-            
-            // Hitung skor
-            let score = 0;
-            let totalAnswered = 0;
-            
-            for (let i = 1; i <= totalQuestions; i++) {
-                const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                if (selected) {
-                    totalAnswered++;
-                    if (selected.value === correctAnswers[`q${i}`]) {
-                        score++;
-                    }
-                }
-            }
-            
-            // Hitung waktu pengerjaan
-            const quizEndTime = new Date();
-            const timeTaken = Math.floor((quizEndTime - quizStartTime) / 1000); // dalam detik
-            const minutesTaken = Math.floor(timeTaken / 60);
-            const secondsTaken = timeTaken % 60;
-            const timeString = `${minutesTaken} menit ${secondsTaken} detik`;
-            
-            // Tampilkan hasil
-            displayResults(score, totalAnswered, timeString);
-        }
-
-        // ========== DISPLAY RESULTS ==========
-        function displayResults(score, totalAnswered, timeString) {
-            // Sembunyikan quiz section
-            document.getElementById('quiz-section').style.display = 'none';
-            
-            const resultsDiv = document.getElementById('results');
-            const scoreElement = document.getElementById('final-score');
-            const feedbackElement = document.getElementById('feedback');
-            
-            scoreElement.textContent = `${score}/${totalQuestions}`;
-            
-            const percentage = (score / totalQuestions) * 100;
-            
-            let feedbackText = '';
-            
-            if (percentage >= 80) {
-                scoreElement.className = 'score';
-                feedbackText = '🎉 Luar biasa! Anda menguasai materi dengan sangat baik!';
-            } else if (percentage >= 60) {
-                scoreElement.className = 'score medium';
-                feedbackText = '👍 Bagus! Anda sudah cukup menguasai materi ini.';
+        function showExample(questionNum) {
+            const exampleSection = document.getElementById(`example-${questionNum}`);
+            if (exampleSection.style.display === 'none' || exampleSection.style.display === '') {
+                exampleSection.style.display = 'block';
             } else {
-                scoreElement.className = 'score low';
-                feedbackText = '💪 Tetap semangat! Mari belajar lagi untuk hasil yang lebih baik.';
+                exampleSection.style.display = 'none';
             }
-            
-            if (totalAnswered < totalQuestions) {
-                feedbackText += ` (${totalQuestions - totalAnswered} soal tidak dijawab)`;
-            }
-            
-            feedbackText += `<br><br>📊 Nilai Anda: ${percentage.toFixed(0)}%`;
-            feedbackText += `<br>⏱️ Waktu Pengerjaan: ${timeString}`;
-            
-            feedbackElement.innerHTML = feedbackText;
-            
-            resultsDiv.classList.add('show');
         }
 
-        // ========== RESTART QUIZ ==========
-        function restartQuiz() {
-            currentQuestion = 1;
+        function showResult() {
+            const resultSection = document.getElementById('result-section');
+            const scoreElement = document.getElementById('score');
+            const scoreTextElement = document.getElementById('score-text');
             
-            document.querySelectorAll('input[type="radio"]').forEach(input => {
-                input.checked = false;
+            scoreElement.textContent = `${score}/5`;
+            
+            let message = '';
+            if (score === 5) {
+                message = '🎉 Sempurna! Anda menguasai semua materi!';
+            } else if (score >= 3) {
+                message = '👍 Bagus! Anda sudah memahami sebagian besar materi.';
+            } else {
+                message = '💪 Terus belajar! Lihat contoh soal untuk memahami lebih baik.';
+            }
+            
+            scoreTextElement.textContent = message;
+            resultSection.style.display = 'block';
+            
+            // Scroll to result
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            userAnswers = {};
+            score = 0;
+            
+            // Reset all options
+            const allOptions = document.querySelectorAll('.option');
+            allOptions.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+                opt.style.pointerEvents = 'auto';
             });
             
-            document.getElementById('results').classList.remove('show');
-            document.getElementById('quiz-section').style.display = 'block';
+            // Hide examples and results
+            const examples = document.querySelectorAll('.example-section');
+            examples.forEach(ex => ex.style.display = 'none');
             
-            showQuestion(1);
-            quizStartTime = new Date();
+            document.getElementById('result-section').style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Add click event listeners to options
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionNum = this.closest('[data-question]').getAttribute('data-question');
+                    const answer = this.getAttribute('data-answer');
+                    selectOption(questionNum, answer);
+                });
+            });
+        });
     </script>
 </body>
 </html>
