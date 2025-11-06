@@ -209,6 +209,62 @@
             border: 1px solid #dee2e6;
         }
 
+        .multiple-choice {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 10px;
+            border-left: 5px solid #28a745;
+        }
+
+        .multiple-choice h4 {
+            color: #28a745;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .option:hover {
+            background: #28a745;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .option.selected {
+            background: #28a745;
+            color: white;
+        }
+
+        .final-answer-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 10px;
+            border-left: 5px solid #ffc107;
+            display: none;
+        }
+
+        .final-answer-section.show {
+            display: block;
+        }
+
         .progress-bar {
             background: #e9ecef;
             border-radius: 10px;
@@ -252,6 +308,10 @@
             
             .math-input.wide {
                 width: 100px;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -307,11 +367,20 @@
                             150 ÷ 30 = <input type="number" class="math-input" id="q1_step3b" placeholder="?">
                             <button class="check-btn" onclick="checkAnswer('q1_step3a', 4, 'q1_step3b', 5, 'q1_feedback3')">Periksa</button>
                             <div class="feedback" id="q1_feedback3"></div>
-                            <div style="margin-top: 15px; font-weight: bold; color: #28a745; font-size: 1.2em;">
-                                Jawaban: <span id="q1_final">4 : 5</span>
-                            </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="multiple-choice">
+                    <h4>Pilih jawaban yang benar:</h4>
+                    <div class="options" data-question="1">
+                        <div class="option" data-answer="A" onclick="selectOption(1, 'A')">A. 3 : 4</div>
+                        <div class="option" data-answer="B" onclick="selectOption(1, 'B')">B. 4 : 5</div>
+                        <div class="option" data-answer="C" onclick="selectOption(1, 'C')">C. 2 : 3</div>
+                        <div class="option" data-answer="D" onclick="selectOption(1, 'D')">D. 1 : 2</div>
+                    </div>
+                    <button class="check-btn" onclick="checkFinalAnswer(1, 'B')">Periksa Jawaban</button>
+                    <div class="feedback" id="q1_final_feedback"></div>
                 </div>
             </div>
 
@@ -343,11 +412,20 @@
                             Harga 1 kg beras = Rp. <input type="number" class="math-input wide" id="q2_result" placeholder="?">
                             <button class="check-btn" onclick="checkThreeAnswers('q2_step2a', 60000, 'q2_step2b', 4, 'q2_result', 15000, 'q2_feedback2')">Periksa</button>
                             <div class="feedback" id="q2_feedback2"></div>
-                            <div style="margin-top: 15px; font-weight: bold; color: #28a745; font-size: 1.2em;">
-                                Jawaban: <span id="q2_final">Rp. 15.000</span>
-                            </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="multiple-choice">
+                    <h4>Pilih jawaban yang benar:</h4>
+                    <div class="options" data-question="2">
+                        <div class="option" data-answer="A" onclick="selectOption(2, 'A')">A. Rp. 10.000,-</div>
+                        <div class="option" data-answer="B" onclick="selectOption(2, 'B')">B. Rp. 12.000,-</div>
+                        <div class="option" data-answer="C" onclick="selectOption(2, 'C')">C. Rp. 15.000,-</div>
+                        <div class="option" data-answer="D" onclick="selectOption(2, 'D')">D. Rp. 18.000,-</div>
+                    </div>
+                    <button class="check-btn" onclick="checkFinalAnswer(2, 'C')">Periksa Jawaban</button>
+                    <div class="feedback" id="q2_final_feedback"></div>
                 </div>
             </div>
 
@@ -382,17 +460,25 @@
                     </div>
                     
                     <div class="step">
-                        <div class="step-title">Langkah 3: Hitung umur masing-masing</div>
+                        <div class="step-title">Langkah 3: Hitung umur Sari</div>
                         <div class="step-content">
-                            Umur Sari = <input type="number" class="math-input" id="q3_step3a" placeholder="?"> × 5 = <input type="number" class="math-input" id="q3_step3b" placeholder="?"> tahun<br>
-                            Umur Deni = <input type="number" class="math-input" id="q3_step3c" placeholder="?"> × 5 = <input type="number" class="math-input" id="q3_step3d" placeholder="?"> tahun
-                            <button class="check-btn" onclick="checkFourAnswers('q3_step3a', 2, 'q3_step3b', 10, 'q3_step3c', 5, 'q3_step3d', 25, 'q3_feedback3')">Periksa</button>
+                            Umur Sari = <input type="number" class="math-input" id="q3_step3a" placeholder="?"> bagian × <input type="number" class="math-input" id="q3_step3b" placeholder="?"> tahun = <input type="number" class="math-input" id="q3_step3c" placeholder="?"> tahun
+                            <button class="check-btn" onclick="checkThreeAnswers('q3_step3a', 2, 'q3_step3b', 5, 'q3_step3c', 10, 'q3_feedback3')">Periksa</button>
                             <div class="feedback" id="q3_feedback3"></div>
-                            <div style="margin-top: 15px; font-weight: bold; color: #28a745; font-size: 1.2em;">
-                                Jawaban: <span id="q3_final">10 tahun</span>
-                            </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="multiple-choice">
+                    <h4>Pilih jawaban yang benar:</h4>
+                    <div class="options" data-question="3">
+                        <div class="option" data-answer="A" onclick="selectOption(3, 'A')">A. 8 tahun</div>
+                        <div class="option" data-answer="B" onclick="selectOption(3, 'B')">B. 10 tahun</div>
+                        <div class="option" data-answer="C" onclick="selectOption(3, 'C')">C. 12 tahun</div>
+                        <div class="option" data-answer="D" onclick="selectOption(3, 'D')">D. 15 tahun</div>
+                    </div>
+                    <button class="check-btn" onclick="checkFinalAnswer(3, 'B')">Periksa Jawaban</button>
+                    <div class="feedback" id="q3_final_feedback"></div>
                 </div>
             </div>
 
@@ -445,11 +531,20 @@
                             24 ÷ <input type="number" class="math-input" id="q4_step3c" placeholder="?"> = <input type="number" class="math-input" id="q4_step3d" placeholder="?">
                             <button class="check-btn" onclick="checkFiveAnswers('q4_step3_div', 12, 'q4_step3a', 12, 'q4_step3b', 1, 'q4_step3c', 12, 'q4_step3d', 2, 'q4_feedback3')">Periksa</button>
                             <div class="feedback" id="q4_feedback3"></div>
-                            <div style="margin-top: 15px; font-weight: bold; color: #28a745; font-size: 1.2em;">
-                                Jawaban: <span id="q4_final">1 : 2</span>
-                            </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="multiple-choice">
+                    <h4>Pilih jawaban yang benar:</h4>
+                    <div class="options" data-question="4">
+                        <div class="option" data-answer="A" onclick="selectOption(4, 'A')">A. 1 : 2</div>
+                        <div class="option" data-answer="B" onclick="selectOption(4, 'B')">B. 2 : 3</div>
+                        <div class="option" data-answer="C" onclick="selectOption(4, 'C')">C. 3 : 4</div>
+                        <div class="option" data-answer="D" onclick="selectOption(4, 'D')">D. 1 : 3</div>
+                    </div>
+                    <button class="check-btn" onclick="checkFinalAnswer(4, 'A')">Periksa Jawaban</button>
+                    <div class="feedback" id="q4_final_feedback"></div>
                 </div>
             </div>
 
@@ -493,18 +588,18 @@
                             <div class="feedback" id="q5_feedback2"></div>
                         </div>
                     </div>
-                    
-                    <div class="step">
-                        <div class="step-title">Langkah 3: Hasil pembagian</div>
-                        <div class="step-content">
-                            5 ÷ 8 = <input type="text" class="math-input" id="q5_step3" placeholder="0,???">
-                            <button class="check-btn" onclick="checkSingleAnswer('q5_step3', '0,625', 'q5_feedback3', true)">Periksa</button>
-                            <div class="feedback" id="q5_feedback3"></div>
-                            <div style="margin-top: 15px; font-weight: bold; color: #28a745; font-size: 1.2em;">
-                                Jawaban: <span id="q5_final">0,625</span>
-                            </div>
-                        </div>
+                </div>
+
+                <div class="multiple-choice">
+                    <h4>Pilih jawaban yang benar:</h4>
+                    <div class="options" data-question="5">
+                        <div class="option" data-answer="A" onclick="selectOption(5, 'A')">A. 0,525</div>
+                        <div class="option" data-answer="B" onclick="selectOption(5, 'B')">B. 0,625</div>
+                        <div class="option" data-answer="C" onclick="selectOption(5, 'C')">C. 0,725</div>
+                        <div class="option" data-answer="D" onclick="selectOption(5, 'D')">D. 0,825</div>
                     </div>
+                    <button class="check-btn" onclick="checkFinalAnswer(5, 'B')">Periksa Jawaban</button>
+                    <div class="feedback" id="q5_final_feedback"></div>
                 </div>
             </div>
 
@@ -517,6 +612,7 @@
 
     <script>
         let completedExercises = 0;
+        let selectedAnswers = {};
         const totalExercises = 5;
 
         function updateProgress() {
@@ -530,6 +626,37 @@
             feedback.textContent = message;
             feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
             feedback.style.display = 'block';
+        }
+
+        function selectOption(questionNum, answer) {
+            // Remove selection from all options in this question
+            const options = document.querySelectorAll(`[data-question="${questionNum}"] .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selection to clicked option
+            const selectedOption = document.querySelector(`[data-question="${questionNum}"] [data-answer="${answer}"]`);
+            selectedOption.classList.add('selected');
+            
+            // Store the selected answer
+            selectedAnswers[questionNum] = answer;
+        }
+
+        function checkFinalAnswer(questionNum, correctAnswer) {
+            const userAnswer = selectedAnswers[questionNum];
+            const feedbackId = `q${questionNum}_final_feedback`;
+            
+            if (!userAnswer) {
+                showFeedback(feedbackId, '⚠️ Silakan pilih jawaban terlebih dahulu!', false);
+                return;
+            }
+            
+            if (userAnswer === correctAnswer) {
+                showFeedback(feedbackId, '✅ Benar! Jawaban kamu tepat!', true);
+                completedExercises++;
+                updateProgress();
+            } else {
+                showFeedback(feedbackId, '❌ Belum benar. Coba periksa kembali langkah-langkah penyelesaiannya!', false);
+            }
         }
 
         function checkSingleAnswer(inputId, correctAnswer, feedbackId, isText = false) {
@@ -581,29 +708,6 @@
                 document.getElementById(input1Id).style.background = answer1 === correct1 ? '#d4edda' : '#f8d7da';
                 document.getElementById(input2Id).style.background = answer2 === correct2 ? '#d4edda' : '#f8d7da';
                 document.getElementById(input3Id).style.background = answer3 === correct3 ? '#d4edda' : '#f8d7da';
-            }
-        }
-
-        function checkFourAnswers(input1Id, correct1, input2Id, correct2, input3Id, correct3, input4Id, correct4, feedbackId) {
-            const answer1 = parseInt(document.getElementById(input1Id).value);
-            const answer2 = parseInt(document.getElementById(input2Id).value);
-            const answer3 = parseInt(document.getElementById(input3Id).value);
-            const answer4 = parseInt(document.getElementById(input4Id).value);
-            
-            const isCorrect = answer1 === correct1 && answer2 === correct2 && answer3 === correct3 && answer4 === correct4;
-            
-            if (isCorrect) {
-                showFeedback(feedbackId, '✅ Luar biasa! Semua jawaban benar.', true);
-                document.getElementById(input1Id).style.background = '#d4edda';
-                document.getElementById(input2Id).style.background = '#d4edda';
-                document.getElementById(input3Id).style.background = '#d4edda';
-                document.getElementById(input4Id).style.background = '#d4edda';
-            } else {
-                showFeedback(feedbackId, '❌ Ada jawaban yang belum benar. Periksa kembali!', false);
-                document.getElementById(input1Id).style.background = answer1 === correct1 ? '#d4edda' : '#f8d7da';
-                document.getElementById(input2Id).style.background = answer2 === correct2 ? '#d4edda' : '#f8d7da';
-                document.getElementById(input3Id).style.background = answer3 === correct3 ? '#d4edda' : '#f8d7da';
-                document.getElementById(input4Id).style.background = answer4 === correct4 ? '#d4edda' : '#f8d7da';
             }
         }
 
