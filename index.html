@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latihan Matematika Interaktif - Kelas 6</title>
+    <title>Mana AI, Mana Bukan? – Game Edukasi SDN Cisauk</title>
     <style>
+        /* Reset dan Font Dasar */
         * {
             margin: 0;
             padding: 0;
@@ -12,749 +13,637 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Comic Sans MS', 'Poppins', cursive, sans-serif;
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8c0 100%);
             min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
-            text-align: center;
-            padding: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
-        .main-content {
-            padding: 30px;
-        }
-
-        .exercise-section {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-left: 5px solid #4ecdc4;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .exercise-title {
-            color: #667eea;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
-        .exercise-title::before {
-            content: "📚";
-            margin-right: 10px;
-            font-size: 1.5em;
+        /* Robot Dekoratif */
+        .robot-decoration {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 60px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .question-text {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-            color: #333;
-            line-height: 1.8;
-            font-weight: bold;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
-        .solution-steps {
+        /* Container Utama */
+        .game-container {
             background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 15px;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            margin: 20px;
         }
 
-        .step {
-            margin-bottom: 20px;
-            padding: 15px;
-            border-left: 3px solid #2196f3;
-            background: #f8f9fa;
-            border-radius: 5px;
-        }
-
-        .step-title {
-            font-weight: bold;
-            color: #1976d2;
+        /* Judul */
+        .game-title {
+            color: #2d5a87;
+            font-size: 2.5em;
             margin-bottom: 10px;
-            font-size: 1.1em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        .step-content {
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .input-group {
-            display: inline-block;
-            margin: 0 5px;
-        }
-
-        .math-input {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 5px;
-            padding: 5px 10px;
-            font-size: 1em;
-            width: 80px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .math-input.wide {
-            width: 120px;
-        }
-
-        .math-input:focus {
-            outline: none;
-            border-color: #ff6b6b;
-            background: #fff;
-            box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
-        }
-
-        .check-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-left: 10px;
-            transition: background 0.3s;
-        }
-
-        .check-btn:hover {
-            background: #218838;
-        }
-
-        .feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .feedback.correct {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .feedback.incorrect {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .hint-btn {
-            background: #17a2b8;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.9em;
-            margin-left: 10px;
-        }
-
-        .hint {
-            background: #d1ecf1;
-            color: #0c5460;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: none;
-            border-left: 4px solid #17a2b8;
-        }
-
-        .fruit-display {
-            font-size: 1.5em;
-            margin: 10px 0;
-            text-align: center;
-            line-height: 1.8;
-        }
-
-        .division-work {
-            font-family: 'Courier New', monospace;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 10px 0;
-            text-align: center;
-            border: 1px solid #dee2e6;
-        }
-
-        .multiple-choice {
-            margin-top: 20px;
-            padding: 20px;
-            background: #e8f5e8;
-            border-radius: 10px;
-            border-left: 5px solid #28a745;
-        }
-
-        .multiple-choice h4 {
-            color: #28a745;
-            margin-bottom: 15px;
+        .game-subtitle {
+            color: #5a8ab8;
             font-size: 1.2em;
+            margin-bottom: 20px;
         }
 
-        .options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .option {
-            background: white;
-            border: 2px solid #28a745;
-            border-radius: 8px;
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .option:hover {
-            background: #28a745;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .option.selected {
-            background: #28a745;
-            color: white;
-        }
-
-        .final-answer-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: #fff3cd;
-            border-radius: 10px;
-            border-left: 5px solid #ffc107;
-            display: none;
-        }
-
-        .final-answer-section.show {
-            display: block;
-        }
-
-        .progress-bar {
-            background: #e9ecef;
-            border-radius: 10px;
-            height: 20px;
+        /* Progress Bar */
+        .progress-container {
+            background: #e0e0e0;
+            border-radius: 15px;
+            height: 15px;
             margin: 20px 0;
             overflow: hidden;
         }
 
-        .progress-fill {
-            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        .progress-bar {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
             height: 100%;
-            width: 0%;
+            border-radius: 15px;
             transition: width 0.5s ease;
-            border-radius: 10px;
+            width: 0%;
         }
 
         .progress-text {
-            text-align: center;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #667eea;
+            font-size: 1.1em;
+            color: #666;
+            margin: 10px 0;
         }
 
-        @media (max-width: 768px) {
-            .header h1 {
+        /* Area Gambar */
+        .image-container {
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .game-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Tombol Pilihan */
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .choice-btn {
+            font-family: inherit;
+            font-size: 1.3em;
+            font-weight: bold;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            min-width: 160px;
+        }
+
+        .ai-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff5252);
+            color: white;
+        }
+
+        .ai-btn:hover {
+            background: linear-gradient(45deg, #ff5252, #ff1744);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(255,107,107,0.3);
+        }
+
+        .human-btn {
+            background: linear-gradient(45deg, #4ecdc4, #26a69a);
+            color: white;
+        }
+
+        .human-btn:hover {
+            background: linear-gradient(45deg, #26a69a, #00695c);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(78,205,196,0.3);
+        }
+
+        .choice-btn:active {
+            transform: translateY(0);
+        }
+
+        .choice-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Pesan Feedback */
+        .feedback {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feedback.correct {
+            background: linear-gradient(45deg, #c8e6c9, #a5d6a7);
+            color: #2e7d32;
+            border: 3px solid #4caf50;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(45deg, #ffcdd2, #ef9a9a);
+            color: #c62828;
+            border: 3px solid #f44336;
+        }
+
+        /* Layar Hasil */
+        .results-screen {
+            display: none;
+        }
+
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2d5a87;
+            margin: 20px 0;
+        }
+
+        .motivation-message {
+            font-size: 1.4em;
+            color: #666;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        .play-again-btn {
+            font-family: inherit;
+            font-size: 1.3em;
+            font-weight: bold;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #ffa726, #ff9800);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 10px rgba(255,167,38,0.3);
+        }
+
+        .play-again-btn:hover {
+            background: linear-gradient(45deg, #ff9800, #f57c00);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(255,167,38,0.4);
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: #4CAF50;
+            animation: confetti-fall 2s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, 200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .game-title {
                 font-size: 2em;
             }
             
-            .main-content {
-                padding: 20px;
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .exercise-section {
-                padding: 20px;
+            .choice-btn {
+                width: 80%;
+                max-width: 250px;
             }
             
-            .math-input {
-                width: 60px;
-                font-size: 0.9em;
+            .robot-decoration {
+                font-size: 40px;
+                top: 10px;
+                right: 10px;
             }
-            
-            .math-input.wide {
-                width: 100px;
-            }
+        }
 
-            .options {
-                grid-template-columns: 1fr;
-            }
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🧮 Latihan Matematika Interaktif</h1>
-            <p>Belajar Langkah demi Langkah - Kelas 6 SD</p>
+    <!-- Robot Dekoratif -->
+    <div class="robot-decoration">🤖</div>
+
+    <!-- Container Game Utama -->
+    <div class="game-container">
+        <!-- Layar Game -->
+        <div id="game-screen">
+            <h1 class="game-title">Mana AI, Mana Bukan?</h1>
+            <p class="game-subtitle">🎯 Tebak gambar buatan AI atau manusia!</p>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="progress-text" id="progress-text">Gambar ke 1 dari 8</p>
+            
+            <!-- Area Gambar -->
+            <div class="image-container">
+                <img id="game-image" class="game-image" src="" alt="Gambar untuk ditebak">
+            </div>
+            
+            <!-- Pesan Feedback -->
+            <div id="feedback" class="feedback"></div>
+            
+            <!-- Tombol Pilihan -->
+            <div class="buttons-container">
+                <button class="choice-btn ai-btn" id="ai-btn" onclick="makeChoice('ai')">
+                    🤖 Buatan AI
+                </button>
+                <button class="choice-btn human-btn" id="human-btn" onclick="makeChoice('human')">
+                    🎨 Buatan Manusia
+                </button>
+            </div>
         </div>
 
-        <div class="main-content">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="progress-text" id="progressText">Progress: 0/5 soal selesai</div>
-
-            <!-- Contoh Soal 1: Masalah Rasio -->
-            <div class="exercise-section">
-                <div class="exercise-title">CONTOH SOAL 1: Masalah Rasio</div>
-                <div class="question-text">
-                    Soal Contoh: Dalam suatu perpustakaan terdapat 150 pengunjung, yang terdiri dari 30 orang pengunjung dewasa dan sisanya pengunjung anak-anak. Rasio banyak pengunjung anak-anak terhadap seluruh pengunjung adalah...
-                </div>
-                
-                <div class="solution-steps">
-                    <div class="step">
-                        <div class="step-title">Langkah 1: Hitung pengunjung anak-anak</div>
-                        <div class="step-content">
-                            Pengunjung anak-anak = Total pengunjung - Pengunjung dewasa<br>
-                            Pengunjung anak-anak = 150 - <input type="number" class="math-input" id="q1_step1" placeholder="?"> = <input type="number" class="math-input" id="q1_result1" placeholder="?">
-                            <button class="check-btn" onclick="checkAnswer('q1_step1', 30, 'q1_result1', 120, 'q1_feedback1')">Periksa</button>
-                            <button class="hint-btn" onclick="toggleHint('hint1')">💡 Petunjuk</button>
-                            <div class="feedback" id="q1_feedback1"></div>
-                            <div class="hint" id="hint1">Kurangi 150 dengan 30 pengunjung dewasa</div>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-title">Langkah 2: Buat rasio</div>
-                        <div class="step-content">
-                            Rasio = Pengunjung anak-anak : Total pengunjung<br>
-                            Rasio = <input type="number" class="math-input" id="q1_step2" placeholder="?"> : 150
-                            <button class="check-btn" onclick="checkSingleAnswer('q1_step2', 120, 'q1_feedback2')">Periksa</button>
-                            <div class="feedback" id="q1_feedback2"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-title">Langkah 3: Sederhanakan rasio</div>
-                        <div class="step-content">
-                            120 dan 150 dibagi 30<br>
-                            120 ÷ 30 = <input type="number" class="math-input" id="q1_step3a" placeholder="?"><br>
-                            150 ÷ 30 = <input type="number" class="math-input" id="q1_step3b" placeholder="?">
-                            <button class="check-btn" onclick="checkAnswer('q1_step3a', 4, 'q1_step3b', 5, 'q1_feedback3')">Periksa</button>
-                            <div class="feedback" id="q1_feedback3"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="multiple-choice">
-                    <h4>Pilih jawaban yang benar:</h4>
-                    <div class="options" data-question="1">
-                        <div class="option" data-answer="A" onclick="selectOption(1, 'A')">A. 3 : 4</div>
-                        <div class="option" data-answer="B" onclick="selectOption(1, 'B')">B. 4 : 5</div>
-                        <div class="option" data-answer="C" onclick="selectOption(1, 'C')">C. 2 : 3</div>
-                        <div class="option" data-answer="D" onclick="selectOption(1, 'D')">D. 1 : 2</div>
-                    </div>
-                    <button class="check-btn" onclick="checkFinalAnswer(1, 'B')">Periksa Jawaban</button>
-                    <div class="feedback" id="q1_final_feedback"></div>
-                </div>
-            </div>
-
-            <!-- Contoh Soal 2: Masalah Harga Satuan -->
-            <div class="exercise-section">
-                <div class="exercise-title">💰 CONTOH SOAL 2: Masalah Harga Satuan</div>
-                <div class="question-text">
-                    Soal Contoh: Dengan 3 lembar uang dua puluh ribuan Ayah dapat membeli 4 kg beras. Tentukan harga 1 kg beras tersebut..
-                </div>
-                
-                <div class="solution-steps">
-                    <div class="step">
-                        <div class="step-title">Langkah 1: Hitung total uang</div>
-                        <div class="step-content">
-                            Total uang = 3 lembar × Rp. 20.000<br>
-                            Total uang = Rp. <input type="number" class="math-input wide" id="q2_step1" placeholder="?">
-                            <button class="check-btn" onclick="checkSingleAnswer('q2_step1', 60000, 'q2_feedback1')">Periksa</button>
-                            <button class="hint-btn" onclick="toggleHint('hint2')">💡 Petunjuk</button>
-                            <div class="feedback" id="q2_feedback1"></div>
-                            <div class="hint" id="hint2">Kalikan 3 dengan 20.000</div>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-title">Langkah 2: Hitung harga per kg</div>
-                        <div class="step-content">
-                            Harga 1 kg beras = Total uang ÷ Jumlah kg<br>
-                            Harga 1 kg beras = Rp. <input type="number" class="math-input wide" id="q2_step2a" placeholder="?"> ÷ <input type="number" class="math-input" id="q2_step2b" placeholder="?"> kg<br>
-                            Harga 1 kg beras = Rp. <input type="number" class="math-input wide" id="q2_result" placeholder="?">
-                            <button class="check-btn" onclick="checkThreeAnswers('q2_step2a', 60000, 'q2_step2b', 4, 'q2_result', 15000, 'q2_feedback2')">Periksa</button>
-                            <div class="feedback" id="q2_feedback2"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="multiple-choice">
-                    <h4>Pilih jawaban yang benar:</h4>
-                    <div class="options" data-question="2">
-                        <div class="option" data-answer="A" onclick="selectOption(2, 'A')">A. Rp. 10.000,-</div>
-                        <div class="option" data-answer="B" onclick="selectOption(2, 'B')">B. Rp. 12.000,-</div>
-                        <div class="option" data-answer="C" onclick="selectOption(2, 'C')">C. Rp. 15.000,-</div>
-                        <div class="option" data-answer="D" onclick="selectOption(2, 'D')">D. Rp. 18.000,-</div>
-                    </div>
-                    <button class="check-btn" onclick="checkFinalAnswer(2, 'C')">Periksa Jawaban</button>
-                    <div class="feedback" id="q2_final_feedback"></div>
-                </div>
-            </div>
-
-            <!-- Contoh Soal 3: Masalah Perbandingan Umur -->
-            <div class="exercise-section">
-                <div class="exercise-title">👥 CONTOH SOAL 3: Masalah Perbandingan Umur</div>
-                <div class="question-text">
-                    Soal Contoh: Perbandingan umur Sari dan Deni adalah 2 : 5. Jika jumlah umur mereka 35 tahun maka umur Sari adalah....
-                </div>
-                
-                <div class="solution-steps">
-                    <div class="step">
-                        <div class="step-title">Langkah 1: Tentukan total bagian</div>
-                        <div class="step-content">
-                            Perbandingan Sari : Deni = 2 : 5<br>
-                            Total bagian = <input type="number" class="math-input" id="q3_step1a" placeholder="?"> + <input type="number" class="math-input" id="q3_step1b" placeholder="?"> = <input type="number" class="math-input" id="q3_step1c" placeholder="?"> bagian
-                            <button class="check-btn" onclick="checkThreeAnswers('q3_step1a', 2, 'q3_step1b', 5, 'q3_step1c', 7, 'q3_feedback1')">Periksa</button>
-                            <button class="hint-btn" onclick="toggleHint('hint3')">💡 Petunjuk</button>
-                            <div class="feedback" id="q3_feedback1"></div>
-                            <div class="hint" id="hint3">Jumlahkan angka-angka dalam perbandingan: 2 + 5</div>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-title">Langkah 2: Hitung nilai satu bagian</div>
-                        <div class="step-content">
-                            Jumlah umur = 35 tahun<br>
-                            Satu bagian = 35 ÷ <input type="number" class="math-input" id="q3_step2a" placeholder="?"> = <input type="number" class="math-input" id="q3_step2b" placeholder="?"> tahun
-                            <button class="check-btn" onclick="checkAnswer('q3_step2a', 7, 'q3_step2b', 5, 'q3_feedback2')">Periksa</button>
-                            <div class="feedback" id="q3_feedback2"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-title">Langkah 3: Hitung umur Sari</div>
-                        <div class="step-content">
-                            Umur Sari = <input type="number" class="math-input" id="q3_step3a" placeholder="?"> bagian × <input type="number" class="math-input" id="q3_step3b" placeholder="?"> tahun = <input type="number" class="math-input" id="q3_step3c" placeholder="?"> tahun
-                            <button class="check-btn" onclick="checkThreeAnswers('q3_step3a', 2, 'q3_step3b', 5, 'q3_step3c', 10, 'q3_feedback3')">Periksa</button>
-                            <div class="feedback" id="q3_feedback3"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="multiple-choice">
-                    <h4>Pilih jawaban yang benar:</h4>
-                    <div class="options" data-question="3">
-                        <div class="option" data-answer="A" onclick="selectOption(3, 'A')">A. 8 tahun</div>
-                        <div class="option" data-answer="B" onclick="selectOption(3, 'B')">B. 10 tahun</div>
-                        <div class="option" data-answer="C" onclick="selectOption(3, 'C')">C. 12 tahun</div>
-                        <div class="option" data-answer="D" onclick="selectOption(3, 'D')">D. 15 tahun</div>
-                    </div>
-                    <button class="check-btn" onclick="checkFinalAnswer(3, 'B')">Periksa Jawaban</button>
-                    <div class="feedback" id="q3_final_feedback"></div>
-                </div>
-            </div>
-
-            <!-- Contoh Soal 4: Masalah Rasio dari Gambar -->
-            <div class="exercise-section">
-                <div class="exercise-title">🍎 CONTOH SOAL 4: Masalah Rasio dari Gambar</div>
-                <div class="question-text">
-                    Soal Contoh: Perhatikan gambar berikut!
-                </div>
-                
-                <div class="fruit-display">
-                    🍎🍎🍎🍎🍎🍎 (6 apel baris 1)<br>
-                    🍎🍎🍎🍎🍎🍎 (6 apel baris 2)<br>
-                    🍌🍌🍌🍌🍌🍌🍌🍌 (8 pisang baris 1)<br>
-                    🍌🍌🍌🍌🍌🍌🍌🍌 (8 pisang baris 2)<br>
-                    🍌🍌🍌🍌🍌🍌🍌🍌 (8 pisang baris 3)
-                </div>
-                
-                <div class="question-text">
-                    Rasio banyak buah apel dan pisang adalah......
-                </div>
-                
-                <div class="solution-steps">
-                    <div class="step">
-                        <div class="step-title">Langkah 1: Hitung jumlah masing-masing buah</div>
-                        <div class="step-content">
-                            Apel = <input type="number" class="math-input" id="q4_step1a" placeholder="?"> buah (2 baris × 6 buah)<br>
-                            Pisang = <input type="number" class="math-input" id="q4_step1b" placeholder="?"> buah (3 baris × 8 buah)
-                            <button class="check-btn" onclick="checkAnswer('q4_step1a', 12, 'q4_step1b', 24, 'q4_feedback1')">Periksa</button>
-                            <button class="hint-btn" onclick="toggleHint('hint4')">💡 Petunjuk</button>
-                            <div class="feedback" id="q4_feedback1"></div>
-                            <div class="hint" id="hint4">Hitung total buah: Apel = 2×6, Pisang = 3×8</div>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-title">Langkah 2: Buat rasio</div>
-                        <div class="step-content">
-                            Rasio = Apel : Pisang = <input type="number" class="math-input" id="q4_step2a" placeholder="?"> : <input type="number" class="math-input" id="q4_step2b" placeholder="?">
-                            <button class="check-btn" onclick="checkAnswer('q4_step2a', 12, 'q4_step2b', 24, 'q4_feedback2')">Periksa</button>
-                            <div class="feedback" id="q4_feedback2"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-title">Langkah 3: Sederhanakan rasio</div>
-                        <div class="step-content">
-                            12 dan 24 sama-sama dibagi <input type="number" class="math-input" id="q4_step3_div" placeholder="?"><br>
-                            12 ÷ <input type="number" class="math-input" id="q4_step3a" placeholder="?"> = <input type="number" class="math-input" id="q4_step3b" placeholder="?"><br>
-                            24 ÷ <input type="number" class="math-input" id="q4_step3c" placeholder="?"> = <input type="number" class="math-input" id="q4_step3d" placeholder="?">
-                            <button class="check-btn" onclick="checkFiveAnswers('q4_step3_div', 12, 'q4_step3a', 12, 'q4_step3b', 1, 'q4_step3c', 12, 'q4_step3d', 2, 'q4_feedback3')">Periksa</button>
-                            <div class="feedback" id="q4_feedback3"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="multiple-choice">
-                    <h4>Pilih jawaban yang benar:</h4>
-                    <div class="options" data-question="4">
-                        <div class="option" data-answer="A" onclick="selectOption(4, 'A')">A. 1 : 2</div>
-                        <div class="option" data-answer="B" onclick="selectOption(4, 'B')">B. 2 : 3</div>
-                        <div class="option" data-answer="C" onclick="selectOption(4, 'C')">C. 3 : 4</div>
-                        <div class="option" data-answer="D" onclick="selectOption(4, 'D')">D. 1 : 3</div>
-                    </div>
-                    <button class="check-btn" onclick="checkFinalAnswer(4, 'A')">Periksa Jawaban</button>
-                    <div class="feedback" id="q4_final_feedback"></div>
-                </div>
-            </div>
-
-            <!-- Contoh Soal 5: Mengubah Pecahan ke Desimal -->
-            <div class="exercise-section">
-                <div class="exercise-title">🔢 CONTOH SOAL 5: Mengubah Pecahan ke Desimal</div>
-                <div class="question-text">
-                    Soal Contoh: Bentuk desimal dari 5/8 adalah ......
-                </div>
-                
-                <div class="solution-steps">
-                    <div class="step">
-                        <div class="step-title">Langkah 1: Ubah pecahan ke bentuk pembagian</div>
-                        <div class="step-content">
-                            5/8 = <input type="number" class="math-input" id="q5_step1a" placeholder="?"> ÷ <input type="number" class="math-input" id="q5_step1b" placeholder="?">
-                            <button class="check-btn" onclick="checkAnswer('q5_step1a', 5, 'q5_step1b', 8, 'q5_feedback1')">Periksa</button>
-                            <button class="hint-btn" onclick="toggleHint('hint5')">💡 Petunjuk</button>
-                            <div class="feedback" id="q5_feedback1"></div>
-                            <div class="hint" id="hint5">Pecahan a/b sama dengan a ÷ b</div>
-                        </div>
-                    </div>
-                    
-                    <div class="step">
-                        <div class="step-title">Langkah 2: Lakukan pembagian</div>
-                        <div class="step-content">
-                            <div class="division-work">
-                                    0,<input type="text" class="math-input" id="q5_step2" placeholder="???">
-                                  ________
-                                8 │ 5,000
-                                    4 8
-                                    ___
-                                      20
-                                      16
-                                      ___
-                                       40
-                                       40
-                                       ___
-                                        0
-                            </div>
-                            <button class="check-btn" onclick="checkSingleAnswer('q5_step2', '625', 'q5_feedback2', true)">Periksa</button>
-                            <div class="feedback" id="q5_feedback2"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="multiple-choice">
-                    <h4>Pilih jawaban yang benar:</h4>
-                    <div class="options" data-question="5">
-                        <div class="option" data-answer="A" onclick="selectOption(5, 'A')">A. 0,525</div>
-                        <div class="option" data-answer="B" onclick="selectOption(5, 'B')">B. 0,625</div>
-                        <div class="option" data-answer="C" onclick="selectOption(5, 'C')">C. 0,725</div>
-                        <div class="option" data-answer="D" onclick="selectOption(5, 'D')">D. 0,825</div>
-                    </div>
-                    <button class="check-btn" onclick="checkFinalAnswer(5, 'B')">Periksa Jawaban</button>
-                    <div class="feedback" id="q5_final_feedback"></div>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 40px; padding: 20px; background: #e8f5e8; border-radius: 10px;">
-                <h2 style="color: #28a745; margin-bottom: 15px;">🎉 Selamat!</h2>
-                <p style="font-size: 1.2em; color: #333;">Kamu telah menyelesaikan semua latihan matematika! Terus berlatih untuk menjadi lebih mahir! 💪</p>
-            </div>
+        <!-- Layar Hasil -->
+        <div id="results-screen" class="results-screen">
+            <h2 class="game-title">🏆 Hasil Permainan</h2>
+            <div class="score-display" id="final-score">0/8</div>
+            <div class="motivation-message" id="motivation-message"></div>
+            <button class="play-again-btn" onclick="startGame()">
+                🔄 Main Ulang
+            </button>
         </div>
     </div>
 
     <script>
-        let completedExercises = 0;
-        let selectedAnswers = {};
-        const totalExercises = 5;
+        // Data gambar dengan informasi AI/Human dan URL placeholder
+        const gameData = [
+            {
+                url: 'https://picsum.photos/400/300?random=1',
+                type: 'human',
+                description: 'Foto pemandangan alami'
+            },
+            {
+                url: 'https://picsum.photos/400/300?random=2', 
+                type: 'ai',
+                description: 'Gambar dengan detail yang terlalu sempurna'
+            },
+            {
+                url: 'https://picsum.photos/400/300?random=3',
+                type: 'human', 
+                description: 'Foto candid dengan cahaya natural'
+            },
+            {
+                url: 'https://picsum.photos/400/300?random=4',
+                type: 'ai',
+                description: 'Tekstur dan bayangan yang tidak natural'
+            },
+            {
+                url: 'https://picsum.photos/400/300?random=5',
+                type: 'human',
+                description: 'Foto dengan imperfektion natural'
+            },
+            {
+                url: 'https://picsum.photos/400/300?random=6',
+                type: 'ai',
+                description: 'Komposisi yang terlalu simetris'
+            },
+            {
+                url: 'https://picsum.photos/400/300?random=7',
+                type: 'human',
+                description: 'Foto spontan dengan noise natural'
+            },
+            {
+                url: 'https://picsum.photos/400/300?random=8',
+                type: 'ai',
+                description: 'Detail yang berulang secara tidak natural'
+            }
+        ];
 
-        function updateProgress() {
-            const percentage = (completedExercises / totalExercises) * 100;
-            document.getElementById('progressFill').style.width = percentage + '%';
-            document.getElementById('progressText').textContent = `Progress: ${completedExercises}/${totalExercises} soal selesai`;
+        // Variabel game
+        let currentImageIndex = 0;
+        let score = 0;
+        let gameImages = [];
+
+        // Elemen DOM
+        const gameImage = document.getElementById('game-image');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const feedback = document.getElementById('feedback');
+        const aiBtn = document.getElementById('ai-btn');
+        const humanBtn = document.getElementById('human-btn');
+        const gameScreen = document.getElementById('game-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const finalScore = document.getElementById('final-score');
+        const motivationMessage = document.getElementById('motivation-message');
+
+        // Fungsi untuk mengacak array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
         }
 
-        function showFeedback(elementId, message, isCorrect) {
-            const feedback = document.getElementById(elementId);
-            feedback.textContent = message;
-            feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
-            feedback.style.display = 'block';
+        // Fungsi untuk memulai game
+        function startGame() {
+            currentImageIndex = 0;
+            score = 0;
+            
+            // Acak urutan gambar
+            gameImages = shuffleArray(gameData);
+            
+            // Reset tampilan
+            gameScreen.style.display = 'block';
+            resultsScreen.style.display = 'none';
+            feedback.classList.remove('show');
+            
+            // Muat gambar pertama
+            loadCurrentImage();
         }
 
-        function selectOption(questionNum, answer) {
-            // Remove selection from all options in this question
-            const options = document.querySelectorAll(`[data-question="${questionNum}"] .option`);
-            options.forEach(opt => opt.classList.remove('selected'));
-            
-            // Add selection to clicked option
-            const selectedOption = document.querySelector(`[data-question="${questionNum}"] [data-answer="${answer}"]`);
-            selectedOption.classList.add('selected');
-            
-            // Store the selected answer
-            selectedAnswers[questionNum] = answer;
-        }
-
-        function checkFinalAnswer(questionNum, correctAnswer) {
-            const userAnswer = selectedAnswers[questionNum];
-            const feedbackId = `q${questionNum}_final_feedback`;
-            
-            if (!userAnswer) {
-                showFeedback(feedbackId, '⚠️ Silakan pilih jawaban terlebih dahulu!', false);
+        // Fungsi untuk memuat gambar saat ini
+        function loadCurrentImage() {
+            if (currentImageIndex >= gameImages.length) {
+                showResults();
                 return;
             }
+
+            const currentImage = gameImages[currentImageIndex];
             
-            if (userAnswer === correctAnswer) {
-                showFeedback(feedbackId, '✅ Benar! Jawaban kamu tepat!', true);
-                completedExercises++;
-                updateProgress();
-            } else {
-                showFeedback(feedbackId, '❌ Belum benar. Coba periksa kembali langkah-langkah penyelesaiannya!', false);
-            }
+            // Update progress
+            const progress = ((currentImageIndex) / gameImages.length) * 100;
+            progressBar.style.width = progress + '%';
+            progressText.textContent = `Gambar ke ${currentImageIndex + 1} dari ${gameImages.length}`;
+            
+            // Reset tombol dan feedback
+            enableButtons();
+            feedback.classList.remove('show', 'correct', 'incorrect');
+            gameImage.classList.remove('shake');
+            
+            // Muat gambar baru
+            gameImage.src = currentImage.url;
+            
+            // Tambahkan loading effect
+            gameImage.style.opacity = '0.5';
+            gameImage.onload = function() {
+                this.style.opacity = '1';
+            };
         }
 
-        function checkSingleAnswer(inputId, correctAnswer, feedbackId, isText = false) {
-            const userAnswer = document.getElementById(inputId).value.trim();
-            const isCorrect = isText ? 
-                userAnswer.toLowerCase() === correctAnswer.toString().toLowerCase() : 
-                parseInt(userAnswer) === correctAnswer;
+        // Fungsi untuk membuat pilihan
+        function makeChoice(choice) {
+            const currentImage = gameImages[currentImageIndex];
+            const isCorrect = choice === currentImage.type;
+            
+            // Disable tombol
+            disableButtons();
+            
+            // Update score
+            if (isCorrect) {
+                score++;
+                showFeedback(true, currentImage.type);
+                createConfetti();
+            } else {
+                showFeedback(false, currentImage.type);
+                gameImage.classList.add('shake');
+                
+                // Hapus class shake setelah animasi selesai
+                setTimeout(() => {
+                    gameImage.classList.remove('shake');
+                }, 500);
+            }
+            
+            // Lanjut ke gambar berikutnya setelah delay
+            setTimeout(() => {
+                currentImageIndex++;
+                loadCurrentImage();
+            }, 2500);
+        }
+
+        // Fungsi untuk menampilkan feedback
+        function showFeedback(isCorrect, correctType) {
+            const correctLabel = correctType === 'ai' ? 'AI' : 'Manusia';
             
             if (isCorrect) {
-                showFeedback(feedbackId, '✅ Benar! Lanjutkan ke langkah berikutnya.', true);
-                document.getElementById(inputId).style.background = '#d4edda';
+                feedback.textContent = `🎉 Benar! Ini karya buatan ${correctLabel}!`;
+                feedback.className = 'feedback correct show';
             } else {
-                showFeedback(feedbackId, '❌ Belum benar. Coba lagi!', false);
-                document.getElementById(inputId).style.background = '#f8d7da';
+                feedback.textContent = `❌ Salah! Ini karya buatan ${correctLabel}!`;
+                feedback.className = 'feedback incorrect show';
             }
         }
 
-        function checkAnswer(input1Id, correct1, input2Id, correct2, feedbackId) {
-            const answer1 = parseInt(document.getElementById(input1Id).value);
-            const answer2 = parseInt(document.getElementById(input2Id).value);
+        // Fungsi untuk membuat efek confetti
+        function createConfetti() {
+            const colors = ['#4CAF50', '#2196F3', '#FF9800', '#E91E63', '#9C27B0'];
+            const container = document.querySelector('.game-container');
             
-            if (answer1 === correct1 && answer2 === correct2) {
-                showFeedback(feedbackId, '✅ Sempurna! Kedua jawaban benar.', true);
-                document.getElementById(input1Id).style.background = '#d4edda';
-                document.getElementById(input2Id).style.background = '#d4edda';
-            } else {
-                showFeedback(feedbackId, '❌ Ada jawaban yang belum benar. Periksa kembali!', false);
-                if (answer1 !== correct1) document.getElementById(input1Id).style.background = '#f8d7da';
-                if (answer2 !== correct2) document.getElementById(input2Id).style.background = '#f8d7da';
-                if (answer1 === correct1) document.getElementById(input1Id).style.background = '#d4edda';
-                if (answer2 === correct2) document.getElementById(input2Id).style.background = '#d4edda';
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    container.appendChild(confetti);
+                    
+                    // Hapus confetti setelah animasi selesai
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
+                        }
+                    }, 2000);
+                }, i * 50);
             }
         }
 
-        function checkThreeAnswers(input1Id, correct1, input2Id, correct2, input3Id, correct3, feedbackId) {
-            const answer1 = parseInt(document.getElementById(input1Id).value);
-            const answer2 = parseInt(document.getElementById(input2Id).value);
-            const answer3 = parseInt(document.getElementById(input3Id).value);
+        // Fungsi untuk mengaktifkan tombol
+        function enableButtons() {
+            aiBtn.disabled = false;
+            humanBtn.disabled = false;
+        }
+
+        // Fungsi untuk menonaktifkan tombol
+        function disableButtons() {
+            aiBtn.disabled = true;
+            humanBtn.disabled = true;
+        }
+
+        // Fungsi untuk menampilkan hasil
+        function showResults() {
+            gameScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
             
-            const isCorrect = answer1 === correct1 && answer2 === correct2 && answer3 === correct3;
+            finalScore.textContent = `${score}/${gameImages.length}`;
             
-            if (isCorrect) {
-                showFeedback(feedbackId, '✅ Excellent! Semua jawaban benar.', true);
-                document.getElementById(input1Id).style.background = '#d4edda';
-                document.getElementById(input2Id).style.background = '#d4edda';
-                document.getElementById(input3Id).style.background = '#d4edda';
+            let message;
+            if (score >= 6) {
+                message = "🕵️‍♀️ Kamu detektif AI sejati! Hebat sekali! 🎉";
+            } else if (score >= 4) {
+                message = "👍 Bagus! Kamu mulai mengenal dunia AI dengan baik! 🌟";
             } else {
-                showFeedback(feedbackId, '❌ Ada jawaban yang belum benar. Periksa kembali!', false);
-                document.getElementById(input1Id).style.background = answer1 === correct1 ? '#d4edda' : '#f8d7da';
-                document.getElementById(input2Id).style.background = answer2 === correct2 ? '#d4edda' : '#f8d7da';
-                document.getElementById(input3Id).style.background = answer3 === correct3 ? '#d4edda' : '#f8d7da';
+                message = "💪 Tidak apa-apa, terus belajar mengenali AI ya! Kamu pasti bisa! 🚀";
+            }
+            
+            motivationMessage.textContent = message;
+            
+            // Update progress bar ke 100%
+            progressBar.style.width = '100%';
+        }
+
+        // Fungsi untuk efek suara (simulasi dengan console log)
+        function playSound(type) {
+            if (type === 'correct') {
+                console.log('🔊 Ding! (Suara benar)');
+            } else {
+                console.log('🔊 Buzz! (Suara salah)');
             }
         }
 
-        function checkFiveAnswers(input1Id, correct1, input2Id, correct2, input3Id, correct3, input4Id, correct4, input5Id, correct5, feedbackId) {
-            const answer1 = parseInt(document.getElementById(input1Id).value);
-            const answer2 = parseInt(document.getElementById(input2Id).value);
-            const answer3 = parseInt(document.getElementById(input3Id).value);
-            const answer4 = parseInt(document.getElementById(input4Id).value);
-            const answer5 = parseInt(document.getElementById(input5Id).value);
-            
-            const isCorrect = answer1 === correct1 && answer2 === correct2 && answer3 === correct3 && answer4 === correct4 && answer5 === correct5;
-            
-            if (isCorrect) {
-                showFeedback(feedbackId, '✅ Fantastis! Semua jawaban benar.', true);
-                [input1Id, input2Id, input3Id, input4Id, input5Id].forEach(id => {
-                    document.getElementById(id).style.background = '#d4edda';
-                });
-            } else {
-                showFeedback(feedbackId, '❌ Ada jawaban yang belum benar. Periksa kembali!', false);
-                document.getElementById(input1Id).style.background = answer1 === correct1 ? '#d4edda' : '#f8d7da';
-                document.getElementById(input2Id).style.background = answer2 === correct2 ? '#d4edda' : '#f8d7da';
-                document.getElementById(input3Id).style.background = answer3 === correct3 ? '#d4edda' : '#f8d7da';
-                document.getElementById(input4Id).style.background = answer4 === correct4 ? '#d4edda' : '#f8d7da';
-                document.getElementById(input5Id).style.background = answer5 === correct5 ? '#d4edda' : '#f8d7da';
+        // Event listener untuk keyboard
+        document.addEventListener('keydown', function(e) {
+            if (gameScreen.style.display !== 'none') {
+                if (e.key === '1' || e.key.toLowerCase() === 'a') {
+                    makeChoice('ai');
+                } else if (e.key === '2' || e.key.toLowerCase() === 'h') {
+                    makeChoice('human');
+                }
             }
-        }
-
-        function toggleHint(hintId) {
-            const hint = document.getElementById(hintId);
-            hint.style.display = hint.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // Add event listeners for Enter key
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputs = document.querySelectorAll('.math-input');
-            inputs.forEach(input => {
-                input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        const checkBtn = input.parentElement.querySelector('.check-btn');
-                        if (checkBtn) checkBtn.click();
-                    }
-                });
-            });
         });
 
-        // Initialize progress
-        updateProgress();
+        // Mulai game saat halaman dimuat
+        window.onload = function() {
+            startGame();
+        };
+
+        // Service Worker untuk caching (opsional untuk offline play)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('SW registered: ', registration);
+                }).catch(function(registrationError) {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
+        }
     </script>
+
+    <!-- Catatan untuk Guru -->
+    <!--
+    
+    =================================
+    PETUNJUK PENGGUNAAN UNTUK GURU
+    =================================
+    
+    🎮 CARA BERMAIN:
+    1. Siswa akan melihat gambar di tengah layar
+    2. Mereka harus menebak apakah gambar tersebut buatan AI atau manusia
+    3. Klik tombol "🤖 Buatan AI" atau "🎨 Buatan Manusia"
+    4. Feedback langsung akan muncul (benar/salah)
+    5. Setelah 8 gambar, akan muncul skor final
+    
+    ⌨️ KONTROL KEYBOARD:
+    - Tekan "1" atau "A" untuk memilih "Buatan AI"
+    - Tekan "2" atau "H" untuk memilih "Buatan Manusia"
+    
+    🛠️ CUSTOMISASI GAMBAR:
+    Untuk mengganti gambar, edit bagian 'gameData' di dalam script:
+    - Ganti URL gambar sesuai kebutuhan
+    - Ubah 'type' menjadi 'ai' atau 'human'
+    - Tambahkan 'description' untuk penjelasan
+    
+    📱 RESPONSIF:
+    Game ini dapat dimainkan di HP, tablet, dan laptop
+    
+    🌐 UPLOAD KE GITHUB PAGES:
+    1. Buat repository baru di GitHub
+    2. Upload file HTML ini
+    3. Aktifkan GitHub Pages di Settings > Pages
+    4. Pilih source "Deploy from a branch"
+    5. Pilih branch "main" dan folder "/ (root)"
+    6. Game akan dapat diakses di: https://username.github.io/repository-name/
+    
+    💡 TIPS PENGGUNAAN DI KELAS:
+    - Bisa dimainkan individual atau berkelompok
+    - Diskusikan ciri-ciri gambar AI vs manusia setelah bermain
+    - Gunakan sebagai ice breaker sebelum materi AI yang lebih dalam
+    - Bisa dijadikan kompetisi antar siswa
+    
+    🔧 PENGEMBANGAN LANJUTAN:
+    - Tambah level kesulitan
+    - Integrasikan dengan database gambar real
+    - Tambahkan timer untuk challenge
+    - Buat leaderboard siswa
+    
+    -->
 </body>
 </html>
