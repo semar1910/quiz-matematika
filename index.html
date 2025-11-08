@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mana AI, Mana Bukan? – Game Edukasi SDN Cisauk</title>
+    <title>AI Art Detective - Game Interaktif SDN Cisauk</title>
     <style>
-        /* Reset dan Font Dasar */
         * {
             margin: 0;
             padding: 0;
@@ -13,636 +12,928 @@
         }
 
         body {
-            font-family: 'Comic Sans MS', 'Poppins', cursive, sans-serif;
-            background: linear-gradient(135deg, #a8e6cf 0%, #88d8c0 100%);
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Robot Dekoratif */
-        .robot-decoration {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 60px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Container Utama */
-        .game-container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        /* Header Game */
+        .game-header {
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
             text-align: center;
-            max-width: 600px;
-            width: 90%;
-            margin: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* Judul */
         .game-title {
-            color: #2d5a87;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            color: #4a5568;
+            font-size: 2.2em;
+            margin-bottom: 5px;
         }
 
         .game-subtitle {
-            color: #5a8ab8;
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            background: #e0e0e0;
-            border-radius: 15px;
-            height: 15px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            background: linear-gradient(90deg, #4CAF50, #45a049);
-            height: 100%;
-            border-radius: 15px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        .progress-text {
+            color: #718096;
             font-size: 1.1em;
-            color: #666;
-            margin: 10px 0;
         }
 
-        /* Area Gambar */
-        .image-container {
-            margin: 20px 0;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        .game-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .shake {
-            animation: shake 0.5s;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        /* Tombol Pilihan */
-        .buttons-container {
+        /* Status Panel */
+        .status-panel {
             display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 30px 0;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(255,255,255,0.9);
+            margin: 10px;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             flex-wrap: wrap;
         }
 
-        .choice-btn {
-            font-family: inherit;
+        .status-item {
+            text-align: center;
+            margin: 5px;
+        }
+
+        .status-label {
+            display: block;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .status-value {
+            display: block;
             font-size: 1.3em;
             font-weight: bold;
-            padding: 15px 30px;
-            border: none;
+            color: #2d3748;
+        }
+
+        /* Main Game Area */
+        .game-container {
+            display: flex;
+            gap: 15px;
+            margin: 15px;
+            min-height: 70vh;
+        }
+
+        /* Canvas Area */
+        .canvas-area {
+            flex: 2;
+            background: white;
             border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-            min-width: 160px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
         }
 
-        .ai-btn {
-            background: linear-gradient(45deg, #ff6b6b, #ff5252);
-            color: white;
-        }
-
-        .ai-btn:hover {
-            background: linear-gradient(45deg, #ff5252, #ff1744);
-            transform: translateY(-2px);
-            box-shadow: 0 7px 15px rgba(255,107,107,0.3);
-        }
-
-        .human-btn {
-            background: linear-gradient(45deg, #4ecdc4, #26a69a);
-            color: white;
-        }
-
-        .human-btn:hover {
-            background: linear-gradient(45deg, #26a69a, #00695c);
-            transform: translateY(-2px);
-            box-shadow: 0 7px 15px rgba(78,205,196,0.3);
-        }
-
-        .choice-btn:active {
-            transform: translateY(0);
-        }
-
-        .choice-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Pesan Feedback */
-        .feedback {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin: 20px 0;
-            padding: 15px;
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border: 3px dashed #cbd5e0;
             border-radius: 10px;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.5s ease;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: crosshair;
+            overflow: hidden;
         }
 
-        .feedback.show {
-            opacity: 1;
+        .detective-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .zoom-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Magnifying Glass */
+        .magnifying-glass {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 4px solid #4a90e2;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(0px);
+            cursor: none;
+            pointer-events: none;
+            z-index: 10;
+            display: none;
+            box-shadow: 0 0 20px rgba(74,144,226,0.5);
+        }
+
+        .magnifying-glass::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            right: -15px;
+            width: 40px;
+            height: 8px;
+            background: #4a90e2;
+            border-radius: 4px;
+            transform: rotate(45deg);
+        }
+
+        /* Tools Panel */
+        .tools-panel {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            max-width: 300px;
+        }
+
+        .tool-section {
+            margin-bottom: 25px;
+        }
+
+        .tool-title {
+            font-size: 1.3em;
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Detective Tools */
+        .detective-tool {
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            margin: 8px 4px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .detective-tool:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79,172,254,0.4);
+        }
+
+        .detective-tool:active {
             transform: translateY(0);
         }
 
-        .feedback.correct {
-            background: linear-gradient(45deg, #c8e6c9, #a5d6a7);
-            color: #2e7d32;
-            border: 3px solid #4caf50;
+        .detective-tool.active {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            box-shadow: 0 0 20px rgba(255,107,107,0.5);
         }
 
-        .feedback.incorrect {
-            background: linear-gradient(45deg, #ffcdd2, #ef9a9a);
-            color: #c62828;
-            border: 3px solid #f44336;
+        /* Evidence Collection */
+        .evidence-container {
+            min-height: 120px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            padding: 15px;
+            background: #f8f9fa;
         }
 
-        /* Layar Hasil */
-        .results-screen {
+        .evidence-item {
+            background: linear-gradient(45deg, #ffeaa7, #fdcb6e);
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 15px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Clue Markers */
+        .clue-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ff6b6b, #ee5a52);
+            border: 3px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 8;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px rgba(255,107,107,0.6);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Analysis Panel */
+        .analysis-result {
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 5px solid #4a90e2;
             display: none;
         }
 
-        .score-display {
-            font-size: 3em;
-            font-weight: bold;
-            color: #2d5a87;
-            margin: 20px 0;
+        .analysis-result.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
         }
 
-        .motivation-message {
-            font-size: 1.4em;
-            color: #666;
-            margin: 20px 0;
-            line-height: 1.5;
-        }
-
-        .play-again-btn {
-            font-family: inherit;
-            font-size: 1.3em;
-            font-weight: bold;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 15px;
-            background: linear-gradient(45deg, #ffa726, #ff9800);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 10px rgba(255,167,38,0.3);
-        }
-
-        .play-again-btn:hover {
-            background: linear-gradient(45deg, #ff9800, #f57c00);
-            transform: translateY(-2px);
-            box-shadow: 0 7px 15px rgba(255,167,38,0.4);
-        }
-
-        /* Confetti Animation */
-        .confetti {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 10px;
-            height: 10px;
-            background: #4CAF50;
-            animation: confetti-fall 2s linear infinite;
-        }
-
-        @keyframes confetti-fall {
-            0% {
-                transform: translate(-50%, -50%) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, 200px) rotate(360deg);
+        @keyframes fadeInUp {
+            from {
                 opacity: 0;
+                transform: translateY(20px);
             }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+            margin-top: 15px;
+        }
+
+        .gallery-item {
+            min-width: 80px;
+            height: 60px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            object-fit: cover;
+        }
+
+        .gallery-item:hover {
+            border-color: #4a90e2;
+            transform: scale(1.05);
+        }
+
+        .gallery-item.active {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 15px rgba(255,107,107,0.5);
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .score-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
         }
 
         /* Responsive Design */
-        @media (max-width: 600px) {
-            .game-title {
-                font-size: 2em;
-            }
-            
-            .buttons-container {
+        @media (max-width: 768px) {
+            .game-container {
                 flex-direction: column;
+            }
+            
+            .tools-panel {
+                max-width: none;
+                order: -1;
+            }
+            
+            .status-panel {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .status-item {
+                display: flex;
                 align-items: center;
-            }
-            
-            .choice-btn {
-                width: 80%;
-                max-width: 250px;
-            }
-            
-            .robot-decoration {
-                font-size: 40px;
-                top: 10px;
-                right: 10px;
+                gap: 15px;
             }
         }
 
         /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4a90e2;
             border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: auto;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Achievement Notifications */
+        .achievement {
+            position: fixed;
+            top: 20px;
+            right: -300px;
+            background: linear-gradient(45deg, #feca57, #ff9ff3);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: right 0.5s ease;
+            max-width: 280px;
+        }
+
+        .achievement.show {
+            right: 20px;
+        }
+
+        .achievement-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .achievement-desc {
+            font-size: 0.9em;
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
-    <!-- Robot Dekoratif -->
-    <div class="robot-decoration">🤖</div>
+    <!-- Header -->
+    <div class="game-header">
+        <h1 class="game-title">🕵️‍♀️ AI Art Detective</h1>
+        <p class="game-subtitle">Selidiki gambar dan temukan petunjuk AI vs Manusia!</p>
+    </div>
 
-    <!-- Container Game Utama -->
-    <div class="game-container">
-        <!-- Layar Game -->
-        <div id="game-screen">
-            <h1 class="game-title">Mana AI, Mana Bukan?</h1>
-            <p class="game-subtitle">🎯 Tebak gambar buatan AI atau manusia!</p>
-            
-            <!-- Progress Bar -->
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-            <p class="progress-text" id="progress-text">Gambar ke 1 dari 8</p>
-            
-            <!-- Area Gambar -->
-            <div class="image-container">
-                <img id="game-image" class="game-image" src="" alt="Gambar untuk ditebak">
-            </div>
-            
-            <!-- Pesan Feedback -->
-            <div id="feedback" class="feedback"></div>
-            
-            <!-- Tombol Pilihan -->
-            <div class="buttons-container">
-                <button class="choice-btn ai-btn" id="ai-btn" onclick="makeChoice('ai')">
-                    🤖 Buatan AI
-                </button>
-                <button class="choice-btn human-btn" id="human-btn" onclick="makeChoice('human')">
-                    🎨 Buatan Manusia
-                </button>
-            </div>
+    <!-- Status Panel -->
+    <div class="status-panel">
+        <div class="status-item">
+            <span class="status-label">Petunjuk Ditemukan</span>
+            <span class="status-value" id="clues-found">0</span>
         </div>
-
-        <!-- Layar Hasil -->
-        <div id="results-screen" class="results-screen">
-            <h2 class="game-title">🏆 Hasil Permainan</h2>
-            <div class="score-display" id="final-score">0/8</div>
-            <div class="motivation-message" id="motivation-message"></div>
-            <button class="play-again-btn" onclick="startGame()">
-                🔄 Main Ulang
-            </button>
+        <div class="status-item">
+            <span class="status-label">Waktu Investigasi</span>
+            <span class="status-value" id="investigation-time">00:00</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">Tingkat Detektif</span>
+            <span class="status-value" id="detective-level">Pemula</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">Kasus Diselesaikan</span>
+            <span class="status-value" id="cases-solved">0</span>
         </div>
     </div>
 
+    <!-- Main Game Container -->
+    <div class="game-container">
+        <!-- Canvas Area -->
+        <div class="canvas-area">
+            <div class="image-container" id="image-container">
+                <div class="loading-spinner" id="loading-spinner"></div>
+                <img id="detective-image" class="detective-image" style="display:none;">
+                <div class="magnifying-glass" id="magnifying-glass"></div>
+                <div class="zoom-overlay" id="zoom-overlay"></div>
+            </div>
+            
+            <!-- Image Gallery -->
+            <div class="image-gallery" id="image-gallery">
+                <!-- Gallery items will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Tools Panel -->
+        <div class="tools-panel">
+            <!-- Detective Tools -->
+            <div class="tool-section">
+                <h3 class="tool-title">🔍 Alat Detektif</h3>
+                <button class="detective-tool" id="magnify-tool" onclick="activateTool('magnify')">
+                    🔍 Kaca Pembesar
+                </button>
+                <button class="detective-tool" id="scan-tool" onclick="activateTool('scan')">
+                    📊 Scan Detail
+                </button>
+                <button class="detective-tool" id="compare-tool" onclick="activateTool('compare')">
+                    ⚖️ Mode Perbandingan
+                </button>
+                <button class="detective-tool" id="analyze-tool" onclick="analyzeImage()">
+                    🧪 Analisis Akhir
+                </button>
+            </div>
+
+            <!-- Evidence Collection -->
+            <div class="tool-section">
+                <h3 class="tool-title">📋 Bukti Terkumpul</h3>
+                <div class="evidence-container" id="evidence-container">
+                    <p style="color: #666; font-style: italic; text-align: center;">
+                        Gunakan alat detektif untuk mencari petunjuk...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Score -->
+            <div class="score-container">
+                <span class="score-number" id="detective-score">0</span>
+                <span>Poin Detektif</span>
+            </div>
+
+            <!-- Analysis Result -->
+            <div class="analysis-result" id="analysis-result"></div>
+        </div>
+    </div>
+
+    <!-- Achievement Notification -->
+    <div class="achievement" id="achievement">
+        <div class="achievement-title" id="achievement-title"></div>
+        <div class="achievement-desc" id="achievement-desc"></div>
+    </div>
+
     <script>
-        // Data gambar dengan informasi AI/Human dan URL placeholder
-        const gameData = [
+        // Game State
+        let currentTool = null;
+        let cluesFound = 0;
+        let score = 0;
+        let startTime = Date.now();
+        let casesSolved = 0;
+        let currentImageIndex = 0;
+        let investigationActive = false;
+
+        // Game Data - Mix of AI and Human images with clues
+        const gameImages = [
             {
-                url: 'https://picsum.photos/400/300?random=1',
+                url: 'https://picsum.photos/600/400?random=1',
                 type: 'human',
-                description: 'Foto pemandangan alami'
+                clues: [
+                    { x: 20, y: 30, hint: 'Cahaya natural yang tidak sempurna', points: 10 },
+                    { x: 60, y: 70, hint: 'Tekstur alami dengan imperfektion', points: 15 },
+                    { x: 80, y: 20, hint: 'Bayangan yang realistis', points: 20 }
+                ],
+                description: 'Foto landscape dengan karakteristik natural'
             },
             {
-                url: 'https://picsum.photos/400/300?random=2', 
+                url: 'https://picsum.photos/600/400?random=2',
                 type: 'ai',
-                description: 'Gambar dengan detail yang terlalu sempurna'
+                clues: [
+                    { x: 40, y: 40, hint: 'Pola berulang yang terlalu teratur', points: 15 },
+                    { x: 25, y: 65, hint: 'Detail yang terlalu sempurna', points: 20 },
+                    { x: 75, y: 25, hint: 'Warna yang tidak natural', points: 25 }
+                ],
+                description: 'Gambar dengan ciri-ciri AI generation'
             },
             {
-                url: 'https://picsum.photos/400/300?random=3',
-                type: 'human', 
-                description: 'Foto candid dengan cahaya natural'
-            },
-            {
-                url: 'https://picsum.photos/400/300?random=4',
-                type: 'ai',
-                description: 'Tekstur dan bayangan yang tidak natural'
-            },
-            {
-                url: 'https://picsum.photos/400/300?random=5',
+                url: 'https://picsum.photos/600/400?random=3',
                 type: 'human',
-                description: 'Foto dengan imperfektion natural'
+                clues: [
+                    { x: 35, y: 55, hint: 'Noise kamera yang autentik', points: 10 },
+                    { x: 70, y: 80, hint: 'Komposisi spontan', points: 15 },
+                    { x: 15, y: 25, hint: 'Fokus yang tidak sempurna', points: 18 }
+                ],
+                description: 'Foto candid dengan karakteristik manusia'
             },
             {
-                url: 'https://picsum.photos/400/300?random=6',
+                url: 'https://picsum.photos/600/400?random=4',
                 type: 'ai',
-                description: 'Komposisi yang terlalu simetris'
-            },
-            {
-                url: 'https://picsum.photos/400/300?random=7',
-                type: 'human',
-                description: 'Foto spontan dengan noise natural'
-            },
-            {
-                url: 'https://picsum.photos/400/300?random=8',
-                type: 'ai',
-                description: 'Detail yang berulang secara tidak natural'
+                clues: [
+                    { x: 50, y: 30, hint: 'Simetri yang berlebihan', points: 20 },
+                    { x: 30, y: 70, hint: 'Artefak digital yang aneh', points: 25 },
+                    { x: 85, y: 45, hint: 'Transisi warna yang tidak wajar', points: 22 }
+                ],
+                description: 'AI artwork dengan pola khas machine learning'
             }
         ];
 
-        // Variabel game
-        let currentImageIndex = 0;
-        let score = 0;
-        let gameImages = [];
+        // DOM Elements
+        const imageContainer = document.getElementById('image-container');
+        const detectiveImage = document.getElementById('detective-image');
+        const magnifyingGlass = document.getElementById('magnifying-glass');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const evidenceContainer = document.getElementById('evidence-container');
+        const imageGallery = document.getElementById('image-gallery');
+        const analysisResult = document.getElementById('analysis-result');
 
-        // Elemen DOM
-        const gameImage = document.getElementById('game-image');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const feedback = document.getElementById('feedback');
-        const aiBtn = document.getElementById('ai-btn');
-        const humanBtn = document.getElementById('human-btn');
-        const gameScreen = document.getElementById('game-screen');
-        const resultsScreen = document.getElementById('results-screen');
-        const finalScore = document.getElementById('final-score');
-        const motivationMessage = document.getElementById('motivation-message');
-
-        // Fungsi untuk mengacak array
-        function shuffleArray(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-            }
-            return newArray;
+        // Initialize Game
+        function initGame() {
+            createImageGallery();
+            loadImage(0);
+            updateStats();
+            startTimer();
         }
 
-        // Fungsi untuk memulai game
-        function startGame() {
-            currentImageIndex = 0;
-            score = 0;
-            
-            // Acak urutan gambar
-            gameImages = shuffleArray(gameData);
-            
-            // Reset tampilan
-            gameScreen.style.display = 'block';
-            resultsScreen.style.display = 'none';
-            feedback.classList.remove('show');
-            
-            // Muat gambar pertama
-            loadCurrentImage();
+        // Create Image Gallery
+        function createImageGallery() {
+            imageGallery.innerHTML = '';
+            gameImages.forEach((img, index) => {
+                const galleryItem = document.createElement('img');
+                galleryItem.src = img.url;
+                galleryItem.className = 'gallery-item';
+                galleryItem.onclick = () => loadImage(index);
+                imageGallery.appendChild(galleryItem);
+            });
         }
 
-        // Fungsi untuk memuat gambar saat ini
-        function loadCurrentImage() {
-            if (currentImageIndex >= gameImages.length) {
-                showResults();
-                return;
-            }
+        // Load Image with Clues
+        function loadImage(index) {
+            currentImageIndex = index;
+            loadingSpinner.style.display = 'block';
+            detectiveImage.style.display = 'none';
+            
+            // Clear previous clues
+            document.querySelectorAll('.clue-marker').forEach(marker => marker.remove());
+            
+            // Update gallery selection
+            document.querySelectorAll('.gallery-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
 
-            const currentImage = gameImages[currentImageIndex];
-            
-            // Update progress
-            const progress = ((currentImageIndex) / gameImages.length) * 100;
-            progressBar.style.width = progress + '%';
-            progressText.textContent = `Gambar ke ${currentImageIndex + 1} dari ${gameImages.length}`;
-            
-            // Reset tombol dan feedback
-            enableButtons();
-            feedback.classList.remove('show', 'correct', 'incorrect');
-            gameImage.classList.remove('shake');
-            
-            // Muat gambar baru
-            gameImage.src = currentImage.url;
-            
-            // Tambahkan loading effect
-            gameImage.style.opacity = '0.5';
-            gameImage.onload = function() {
-                this.style.opacity = '1';
+            detectiveImage.onload = function() {
+                loadingSpinner.style.display = 'none';
+                this.style.display = 'block';
+                createClueMarkers(gameImages[index]);
             };
+            
+            detectiveImage.src = gameImages[index].url;
+            clearEvidence();
+            analysisResult.classList.remove('show');
         }
 
-        // Fungsi untuk membuat pilihan
-        function makeChoice(choice) {
-            const currentImage = gameImages[currentImageIndex];
-            const isCorrect = choice === currentImage.type;
+        // Create Clue Markers
+        function createClueMarkers(imageData) {
+            imageData.clues.forEach((clue, index) => {
+                const marker = document.createElement('div');
+                marker.className = 'clue-marker';
+                marker.style.left = clue.x + '%';
+                marker.style.top = clue.y + '%';
+                marker.dataset.clueIndex = index;
+                marker.onclick = (e) => {
+                    e.stopPropagation();
+                    collectClue(clue, marker);
+                };
+                imageContainer.appendChild(marker);
+            });
+        }
+
+        // Activate Detective Tool
+        function activateTool(tool) {
+            // Remove active class from all tools
+            document.querySelectorAll('.detective-tool').forEach(btn => btn.classList.remove('active'));
             
-            // Disable tombol
-            disableButtons();
+            currentTool = tool;
             
-            // Update score
-            if (isCorrect) {
-                score++;
-                showFeedback(true, currentImage.type);
-                createConfetti();
-            } else {
-                showFeedback(false, currentImage.type);
-                gameImage.classList.add('shake');
+            switch(tool) {
+                case 'magnify':
+                    document.getElementById('magnify-tool').classList.add('active');
+                    imageContainer.style.cursor = 'none';
+                    break;
+                case 'scan':
+                    document.getElementById('scan-tool').classList.add('active');
+                    performScan();
+                    break;
+                case 'compare':
+                    document.getElementById('compare-tool').classList.add('active');
+                    compareMode();
+                    break;
+            }
+        }
+
+        // Magnifying Glass Effect
+        imageContainer.addEventListener('mousemove', function(e) {
+            if (currentTool === 'magnify') {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
                 
-                // Hapus class shake setelah animasi selesai
-                setTimeout(() => {
-                    gameImage.classList.remove('shake');
-                }, 500);
-            }
-            
-            // Lanjut ke gambar berikutnya setelah delay
-            setTimeout(() => {
-                currentImageIndex++;
-                loadCurrentImage();
-            }, 2500);
-        }
-
-        // Fungsi untuk menampilkan feedback
-        function showFeedback(isCorrect, correctType) {
-            const correctLabel = correctType === 'ai' ? 'AI' : 'Manusia';
-            
-            if (isCorrect) {
-                feedback.textContent = `🎉 Benar! Ini karya buatan ${correctLabel}!`;
-                feedback.className = 'feedback correct show';
-            } else {
-                feedback.textContent = `❌ Salah! Ini karya buatan ${correctLabel}!`;
-                feedback.className = 'feedback incorrect show';
-            }
-        }
-
-        // Fungsi untuk membuat efek confetti
-        function createConfetti() {
-            const colors = ['#4CAF50', '#2196F3', '#FF9800', '#E91E63', '#9C27B0'];
-            const container = document.querySelector('.game-container');
-            
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                    container.appendChild(confetti);
-                    
-                    // Hapus confetti setelah animasi selesai
-                    setTimeout(() => {
-                        if (confetti.parentNode) {
-                            confetti.parentNode.removeChild(confetti);
-                        }
-                    }, 2000);
-                }, i * 50);
-            }
-        }
-
-        // Fungsi untuk mengaktifkan tombol
-        function enableButtons() {
-            aiBtn.disabled = false;
-            humanBtn.disabled = false;
-        }
-
-        // Fungsi untuk menonaktifkan tombol
-        function disableButtons() {
-            aiBtn.disabled = true;
-            humanBtn.disabled = true;
-        }
-
-        // Fungsi untuk menampilkan hasil
-        function showResults() {
-            gameScreen.style.display = 'none';
-            resultsScreen.style.display = 'block';
-            
-            finalScore.textContent = `${score}/${gameImages.length}`;
-            
-            let message;
-            if (score >= 6) {
-                message = "🕵️‍♀️ Kamu detektif AI sejati! Hebat sekali! 🎉";
-            } else if (score >= 4) {
-                message = "👍 Bagus! Kamu mulai mengenal dunia AI dengan baik! 🌟";
-            } else {
-                message = "💪 Tidak apa-apa, terus belajar mengenali AI ya! Kamu pasti bisa! 🚀";
-            }
-            
-            motivationMessage.textContent = message;
-            
-            // Update progress bar ke 100%
-            progressBar.style.width = '100%';
-        }
-
-        // Fungsi untuk efek suara (simulasi dengan console log)
-        function playSound(type) {
-            if (type === 'correct') {
-                console.log('🔊 Ding! (Suara benar)');
-            } else {
-                console.log('🔊 Buzz! (Suara salah)');
-            }
-        }
-
-        // Event listener untuk keyboard
-        document.addEventListener('keydown', function(e) {
-            if (gameScreen.style.display !== 'none') {
-                if (e.key === '1' || e.key.toLowerCase() === 'a') {
-                    makeChoice('ai');
-                } else if (e.key === '2' || e.key.toLowerCase() === 'h') {
-                    makeChoice('human');
-                }
+                magnifyingGlass.style.display = 'block';
+                magnifyingGlass.style.left = (x - 60) + 'px';
+                magnifyingGlass.style.top = (y - 60) + 'px';
+                
+                // Create zoom effect
+                const zoomLevel = 1.5;
+                detectiveImage.style.transform = `scale(${zoomLevel})`;
+                detectiveImage.style.transformOrigin = `${(x/rect.width)*100}% ${(y/rect.height)*100}%`;
             }
         });
 
-        // Mulai game saat halaman dimuat
+        imageContainer.addEventListener('mouseleave', function() {
+            magnifyingGlass.style.display = 'none';
+            detectiveImage.style.transform = 'scale(1)';
+        });
+
+        // Perform Scan
+        function performScan() {
+            showAchievement('🔍 Scan Aktif!', 'Mencari pola dan anomali dalam gambar...');
+            
+            // Highlight suspicious areas
+            const currentImage = gameImages[currentImageIndex];
+            let scanResults = [];
+            
+            if (currentImage.type === 'ai') {
+                scanResults = [
+                    'Terdeteksi: Pola generative yang berulang',
+                    'Analisis: Konsistensi warna yang tidak natural',
+                    'Indikasi: Artefak machine learning'
+                ];
+            } else {
+                scanResults = [
+                    'Terdeteksi: Variasi natural dalam tekstur',
+                    'Analisis: Noise kamera yang autentik',
+                    'Indikasi: Karakteristik fotografi real'
+                ];
+            }
+            
+            setTimeout(() => {
+                scanResults.forEach((result, index) => {
+                    setTimeout(() => addEvidence(result, 5), index * 1000);
+                });
+            }, 1000);
+        }
+
+        // Compare Mode
+        function compareMode() {
+            showAchievement('⚖️ Mode Perbandingan', 'Bandingkan dengan gambar referensi!');
+            addEvidence('Mode perbandingan aktif - cari perbedaan mencolok', 8);
+        }
+
+        // Collect Clue
+        function collectClue(clue, markerElement) {
+            markerElement.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+            markerElement.onclick = null;
+            
+            addEvidence(clue.hint, clue.points);
+            cluesFound++;
+            score += clue.points;
+            updateStats();
+            
+            showAchievement('🎯 Petunjuk Ditemukan!', clue.hint);
+            
+            setTimeout(() => {
+                markerElement.remove();
+            }, 500);
+        }
+
+        // Add Evidence
+        function addEvidence(text, points = 0) {
+            const evidenceItem = document.createElement('div');
+            evidenceItem.className = 'evidence-item';
+            evidenceItem.innerHTML = `
+                <span>🔍</span>
+                <span>${text}</span>
+                ${points > 0 ? `<span style="margin-left: auto; color: #27ae60;">+${points}</span>` : ''}
+            `;
+            evidenceContainer.appendChild(evidenceItem);
+            
+            // Remove placeholder text
+            const placeholder = evidenceContainer.querySelector('p');
+            if (placeholder) placeholder.remove();
+        }
+
+        // Clear Evidence
+        function clearEvidence() {
+            evidenceContainer.innerHTML = `
+                <p style="color: #666; font-style: italic; text-align: center;">
+                    Gunakan alat detektif untuk mencari petunjuk...
+                </p>
+            `;
+        }
+
+        // Analyze Image
+        function analyzeImage() {
+            const currentImage = gameImages[currentImageIndex];
+            const evidenceItems = document.querySelectorAll('.evidence-item').length;
+            
+            if (evidenceItems < 2) {
+                showAchievement('❓ Bukti Kurang', 'Kumpulkan lebih banyak petunjuk sebelum analisis!');
+                return;
+            }
+            
+            let conclusion = '';
+            let confidence = Math.min(95, 60 + (evidenceItems * 10));
+            
+            if (currentImage.type === 'ai') {
+                conclusion = `
+                    <h4>🤖 HASIL ANALISIS: BUATAN AI</h4>
+                    <p><strong>Tingkat Keyakinan:</strong> ${confidence}%</p>
+                    <p><strong>Alasan Utama:</strong></p>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Pola geometris yang terlalu sempurna</li>
+                        <li>Konsistensi detail yang tidak natural</li>
+                        <li>Artefak khas machine learning</li>
+                    </ul>
+                    <p><em>${currentImage.description}</em></p>
+                `;
+            } else {
+                conclusion = `
+                    <h4>🎨 HASIL ANALISIS: BUATAN MANUSIA</h4>
+                    <p><strong>Tingkat Keyakinan:</strong> ${confidence}%</p>
+                    <p><strong>Alasan Utama:</strong></p>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Imperfektion natural yang autentik</li>
+                        <li>Variasi cahaya yang realistis</li>
+                        <li>Karakteristik fotografi analog/digital</li>
+                    </ul>
+                    <p><em>${currentImage.description}</em></p>
+                `;
+            }
+            
+            analysisResult.innerHTML = conclusion;
+            analysisResult.classList.add('show');
+            
+            // Award completion points
+            const completionBonus = evidenceItems * 5;
+            score += completionBonus;
+            casesSolved++;
+            updateStats();
+            
+            showAchievement('🏆 Kasus Selesai!', `Bonus penyelesaian: +${completionBonus} poin`);
+        }
+
+        // Update Statistics
+        function updateStats() {
+            document.getElementById('clues-found').textContent = cluesFound;
+            document.getElementById('cases-solved').textContent = casesSolved;
+            document.getElementById('detective-score').textContent = score;
+            
+            // Update detective level
+            let level = 'Pemula';
+            if (score >= 200) level = 'Master Detektif';
+            else if (score >= 100) level = 'Detektif Senior';
+            else if (score >= 50) level = 'Detektif Junior';
+            
+            document.getElementById('detective-level').textContent = level;
+        }
+
+        // Start Timer
+        function startTimer() {
+            setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                document.getElementById('investigation-time').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Show Achievement
+        function showAchievement(title, description) {
+            const achievement = document.getElementById('achievement');
+            document.getElementById('achievement-title').textContent = title;
+            document.getElementById('achievement-desc').textContent = description;
+            
+            achievement.classList.add('show');
+            
+            setTimeout(() => {
+                achievement.classList.remove('show');
+            }, 3000);
+        }
+
+        // Click outside to deactivate tool
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.detective-tool') && !e.target.closest('.image-container')) {
+                document.querySelectorAll('.detective-tool').forEach(btn => btn.classList.remove('active'));
+                currentTool = null;
+                imageContainer.style.cursor = 'crosshair';
+                magnifyingGlass.style.display = 'none';
+                detectiveImage.style.transform = 'scale(1)';
+            }
+        });
+
+        // Initialize game when page loads
         window.onload = function() {
-            startGame();
+            initGame();
+            showAchievement('🕵️‍♀️ Selamat Datang, Detektif!', 'Mulai investigasi dengan memilih alat detektif');
         };
 
-        // Service Worker untuk caching (opsional untuk offline play)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                    console.log('SW registered: ', registration);
-                }).catch(function(registrationError) {
-                    console.log('SW registration failed: ', registrationError);
-                });
-            });
-        }
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case '1':
+                    activateTool('magnify');
+                    break;
+                case '2':
+                    activateTool('scan');
+                    break;
+                case '3':
+                    activateTool('compare');
+                    break;
+                case 'Enter':
+                    analyzeImage();
+                    break;
+                case 'ArrowLeft':
+                    if (currentImageIndex > 0) loadImage(currentImageIndex - 1);
+                    break;
+                case 'ArrowRight':
+                    if (currentImageIndex < gameImages.length - 1) loadImage(currentImageIndex + 1);
+                    break;
+            }
+        });
     </script>
 
-    <!-- Catatan untuk Guru -->
     <!--
     
-    =================================
-    PETUNJUK PENGGUNAAN UNTUK GURU
-    =================================
+    ================================
+    PETUNJUK GAME INTERAKTIF UNTUK GURU
+    ================================
     
     🎮 CARA BERMAIN:
-    1. Siswa akan melihat gambar di tengah layar
-    2. Mereka harus menebak apakah gambar tersebut buatan AI atau manusia
-    3. Klik tombol "🤖 Buatan AI" atau "🎨 Buatan Manusia"
-    4. Feedback langsung akan muncul (benar/salah)
-    5. Setelah 8 gambar, akan muncul skor final
+    1. Pilih gambar dari galeri di bawah area utama
+    2. Gunakan alat detektif:
+       - 🔍 Kaca Pembesar: Gerakkan mouse untuk memperbesar area
+       - 📊 Scan Detail: Otomatis mencari pola AI/human
+       - ⚖️ Mode Perbandingan: Bandingkan dengan referensi
+    3. Klik titik merah (clue markers) untuk mengumpulkan petunjuk
+    4. Setelah mengumpulkan bukti, klik "🧪 Analisis Akhir"
     
-    ⌨️ KONTROL KEYBOARD:
-    - Tekan "1" atau "A" untuk memilih "Buatan AI"
-    - Tekan "2" atau "H" untuk memilih "Buatan Manusia"
+    ⌨️ SHORTCUT KEYBOARD:
+    - Tekan "1" untuk Kaca Pembesar
+    - Tekan "2" untuk Scan Detail  
+    - Tekan "3" untuk Mode Perbandingan
+    - Tekan "Enter" untuk Analisis Akhir
+    - Panah kiri/kanan untuk ganti gambar
     
-    🛠️ CUSTOMISASI GAMBAR:
-    Untuk mengganti gambar, edit bagian 'gameData' di dalam script:
-    - Ganti URL gambar sesuai kebutuhan
-    - Ubah 'type' menjadi 'ai' atau 'human'
-    - Tambahkan 'description' untuk penjelasan
+    🎯 SISTEM POIN:
+    - Setiap petunjuk diberikan poin berbeda (10-25 poin)
+    - Bonus penyelesaian kasus berdasarkan jumlah bukti
+    - Level detektif naik seiring akumulasi poin
+    
+    🔧 FITUR INTERAKTIF:
+    ✅ Kaca pembesar dengan efek zoom real-time
+    ✅ Scan otomatis dengan feedback visual
+    ✅ Sistema achievement dengan notifikasi
+    ✅ Timer investigasi untuk tracking waktu
+    ✅ Galeri gambar untuk navigasi mudah
+    ✅ Drag-and-drop style evidence collection
     
     📱 RESPONSIF:
-    Game ini dapat dimainkan di HP, tablet, dan laptop
+    - Layout otomatis menyesuaikan mobile/desktop
+    - Touch-friendly untuk perangkat sentuh
+    - Optimized untuk penggunaan kelas
     
     🌐 UPLOAD KE GITHUB PAGES:
-    1. Buat repository baru di GitHub
-    2. Upload file HTML ini
-    3. Aktifkan GitHub Pages di Settings > Pages
-    4. Pilih source "Deploy from a branch"
-    5. Pilih branch "main" dan folder "/ (root)"
-    6. Game akan dapat diakses di: https://username.github.io/repository-name/
+    1. Buat repository baru: "ai-detective-game"
+    2. Upload file HTML ini dengan nama "index.html"
+    3. Settings > Pages > Source: "Deploy from a branch"
+    4. Branch: "main", Folder: "/ (root)"
+    5. Game accessible di: https://username.github.io/ai-detective-game/
     
-    💡 TIPS PENGGUNAAN DI KELAS:
-    - Bisa dimainkan individual atau berkelompok
-    - Diskusikan ciri-ciri gambar AI vs manusia setelah bermain
-    - Gunakan sebagai ice breaker sebelum materi AI yang lebih dalam
-    - Bisa dijadikan kompetisi antar siswa
+    💡 TIPS PENGGUNAAN KELAS:
+    - Bagi siswa dalam tim detektif (3-4 orang)
+    - Set target waktu untuk setiap investigasi
+    - Diskusikan temuan sebelum analisis akhir
+    - Gunakan untuk memahami karakteristik AI vs human art
+    - Kompetisi skor antar tim
     
-    🔧 PENGEMBANGAN LANJUTAN:
-    - Tambah level kesulitan
-    - Integrasikan dengan database gambar real
-    - Tambahkan timer untuk challenge
-    - Buat leaderboard siswa
+    🎓 NILAI EDUKASI:
+    - Melatih observasi detail dan analytical thinking
+    - Memahami perbedaan karya AI vs manusia
+    - Pengenalan konsep machine learning secara visual
+    - Keterampilan investigasi dan deduksi logis
     
     -->
 </body>
