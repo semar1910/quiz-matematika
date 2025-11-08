@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Art Detective - Game Interaktif SDN Cisauk</title>
+    <title>Jelajahi AI di Sekitarku - Pak Rizki SDN Cisauk Kelas 6</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Comic Sans MS', cursive;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -27,263 +27,261 @@
         }
 
         .game-title {
-            color: #4a5568;
+            color: #2d3436;
             font-size: 2.2em;
             margin-bottom: 5px;
         }
 
         .game-subtitle {
-            color: #718096;
+            color: #636e72;
             font-size: 1.1em;
         }
 
-        /* Status Panel */
-        .status-panel {
+        /* Level Selector */
+        .level-selector {
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: rgba(255,255,255,0.9);
-            margin: 10px;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            justify-content: center;
+            gap: 20px;
+            margin: 15px;
             flex-wrap: wrap;
         }
 
-        .status-item {
-            text-align: center;
-            margin: 5px;
-        }
-
-        .status-label {
-            display: block;
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .status-value {
-            display: block;
-            font-size: 1.3em;
+        .level-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 1.1em;
             font-weight: bold;
-            color: #2d3748;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        /* Main Game Area */
+        .level-btn.school {
+            background: linear-gradient(45deg, #fd79a8, #fdcb6e);
+            color: white;
+        }
+
+        .level-btn.home {
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            color: white;
+        }
+
+        .level-btn.city {
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            color: white;
+        }
+
+        .level-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .level-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(116, 185, 255, 0.6);
+        }
+
+        /* Game Container */
         .game-container {
             display: flex;
-            gap: 15px;
-            margin: 15px;
+            gap: 20px;
+            margin: 20px;
             min-height: 70vh;
         }
 
-        /* Canvas Area */
-        .canvas-area {
+        /* Scene Area */
+        .scene-area {
             flex: 2;
             background: white;
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 20px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
         }
 
-        .image-container {
+        .scene-container {
             position: relative;
             width: 100%;
-            height: 400px;
-            border: 3px dashed #cbd5e0;
-            border-radius: 10px;
-            background: #f8f9fa;
+            height: 500px;
+            border-radius: 15px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* AI Items in Scene */
+        .ai-item {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #00cec9, #0984e3);
+            border: 4px solid white;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: crosshair;
-            overflow: hidden;
-        }
-
-        .detective-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-
-        .zoom-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        /* Magnifying Glass */
-        .magnifying-glass {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            border: 4px solid #4a90e2;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(0px);
-            cursor: none;
-            pointer-events: none;
+            font-size: 24px;
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 4px 15px rgba(0,206,201,0.4);
+            transition: all 0.3s ease;
             z-index: 10;
-            display: none;
-            box-shadow: 0 0 20px rgba(74,144,226,0.5);
         }
 
-        .magnifying-glass::after {
-            content: '';
-            position: absolute;
-            bottom: -30px;
-            right: -15px;
-            width: 40px;
-            height: 8px;
-            background: #4a90e2;
-            border-radius: 4px;
-            transform: rotate(45deg);
+        .ai-item:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 20px rgba(0,206,201,0.6);
         }
 
-        /* Tools Panel */
-        .tools-panel {
+        .ai-item.found {
+            background: radial-gradient(circle, #00b894, #55a3ff);
+            animation: collected 0.5s ease-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes collected {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* Side Panel */
+        .side-panel {
             flex: 1;
             background: white;
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 20px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            max-width: 300px;
+            max-width: 350px;
         }
 
-        .tool-section {
+        /* Progress Section */
+        .progress-section {
             margin-bottom: 25px;
         }
 
-        .tool-title {
+        .progress-title {
             font-size: 1.3em;
-            color: #2d3748;
+            color: #2d3436;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        /* Detective Tools */
-        .detective-tool {
-            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
-            border: none;
-            color: white;
-            padding: 12px 16px;
-            margin: 8px 4px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-            justify-content: center;
+        .progress-bar-container {
+            background: #ddd;
+            border-radius: 15px;
+            height: 20px;
+            overflow: hidden;
+            margin: 10px 0;
         }
 
-        .detective-tool:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(79,172,254,0.4);
+        .progress-bar {
+            background: linear-gradient(90deg, #00b894, #00cec9);
+            height: 100%;
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            width: 0%;
         }
 
-        .detective-tool:active {
-            transform: translateY(0);
+        .progress-text {
+            text-align: center;
+            color: #636e72;
+            font-size: 0.9em;
+            margin-top: 5px;
         }
 
-        .detective-tool.active {
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
-            box-shadow: 0 0 20px rgba(255,107,107,0.5);
+        /* AI Collection Box */
+        .ai-collection {
+            margin-bottom: 25px;
         }
 
-        /* Evidence Collection */
-        .evidence-container {
-            min-height: 120px;
-            border: 2px dashed #cbd5e0;
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .collection-item {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
             border-radius: 10px;
             padding: 15px;
-            background: #f8f9fa;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .evidence-item {
-            background: linear-gradient(45deg, #ffeaa7, #fdcb6e);
-            padding: 8px 12px;
-            margin: 5px 0;
+        .collection-item.filled {
+            background: linear-gradient(45deg, #fd79a8, #fdcb6e);
+            color: white;
+            border-color: #fd79a8;
+            transform: scale(1.05);
+        }
+
+        .collection-item:hover {
+            border-color: #74b9ff;
+            background: #e3f2fd;
+        }
+
+        .item-icon {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .item-name {
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        /* AI Benefits Panel */
+        .benefits-panel {
+            background: #f8f9fa;
             border-radius: 15px;
-            font-size: 0.9em;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 5px solid #74b9ff;
+        }
+
+        .benefit-item {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
-            gap: 8px;
-            animation: slideIn 0.3s ease;
+            gap: 10px;
+            animation: slideIn 0.5s ease;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Clue Markers */
-        .clue-marker {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle, #ff6b6b, #ee5a52);
-            border: 3px solid white;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 8;
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 15px rgba(255,107,107,0.6);
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 0.7;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        /* Analysis Panel */
-        .analysis-result {
-            background: linear-gradient(45deg, #a8edea, #fed6e3);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-            border-left: 5px solid #4a90e2;
-            display: none;
-        }
-
-        .analysis-result.show {
-            display: block;
-            animation: fadeInUp 0.5s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(-10px);
             }
             to {
                 opacity: 1;
@@ -291,49 +289,119 @@
             }
         }
 
-        /* Image Gallery */
-        .image-gallery {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding: 10px 0;
-            margin-top: 15px;
-        }
-
-        .gallery-item {
-            min-width: 80px;
-            height: 60px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: all 0.3s ease;
-            object-fit: cover;
-        }
-
-        .gallery-item:hover {
-            border-color: #4a90e2;
-            transform: scale(1.05);
-        }
-
-        .gallery-item.active {
-            border-color: #ff6b6b;
-            box-shadow: 0 0 15px rgba(255,107,107,0.5);
-        }
-
-        /* Score Display */
-        .score-container {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+        .benefit-icon {
+            font-size: 1.5em;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
             color: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            margin-top: 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .score-number {
-            font-size: 2em;
+        .benefit-text {
+            flex: 1;
+        }
+
+        .benefit-title {
             font-weight: bold;
-            display: block;
+            color: #2d3436;
+            margin-bottom: 2px;
+        }
+
+        .benefit-desc {
+            font-size: 0.8em;
+            color: #636e72;
+        }
+
+        /* Modal for AI Details */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .modal-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.8em;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .modal-description {
+            color: #636e72;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(116,185,255,0.4);
+        }
+
+        /* Achievement Badge */
+        .achievement {
+            position: fixed;
+            top: 20px;
+            right: -350px;
+            background: linear-gradient(45deg, #00b894, #00cec9);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 1500;
+            transition: right 0.5s ease;
+            max-width: 320px;
+        }
+
+        .achievement.show {
+            right: 20px;
+        }
+
+        .achievement-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .achievement-desc {
+            font-size: 0.9em;
+            opacity: 0.9;
         }
 
         /* Responsive Design */
@@ -342,482 +410,469 @@
                 flex-direction: column;
             }
             
-            .tools-panel {
+            .side-panel {
                 max-width: none;
                 order: -1;
             }
             
-            .status-panel {
-                flex-direction: column;
-                gap: 10px;
+            .scene-container {
+                height: 300px;
             }
             
-            .status-item {
-                display: flex;
+            .level-selector {
+                flex-direction: column;
                 align-items: center;
-                gap: 15px;
+            }
+            
+            .ai-item {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
             }
         }
 
-        /* Loading Animation */
-        .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #4a90e2;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: auto;
+        /* Scene Backgrounds */
+        .scene-school {
+            background-image: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)), 
+                            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%23e3f2fd" width="800" height="600"/><rect fill="%23bbdefb" x="50" y="400" width="700" height="200"/><rect fill="%234fc3f7" x="200" y="200" width="400" height="200"/><rect fill="%23039be5" x="250" y="150" width="100" height="50"/><rect fill="%23039be5" x="450" y="150" width="100" height="50"/><polygon fill="%23f44336" points="200,200 400,100 600,200"/><circle fill="%23ffeb3b" cx="150" cy="150" r="40"/><rect fill="%234caf50" x="0" y="500" width="800" height="100"/></svg>');
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .scene-home {
+            background-image: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)), 
+                            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%23fff3e0" width="800" height="600"/><rect fill="%23ffcc02" x="0" y="500" width="800" height="100"/><rect fill="%238d6e63" x="150" y="250" width="500" height="250"/><polygon fill="%23d32f2f" points="150,250 400,150 650,250"/><rect fill="%23795548" x="300" y="350" width="60" height="100"/><rect fill="%234fc3f7" x="200" y="300" width="60" height="60"/><rect fill="%234fc3f7" x="500" y="300" width="60" height="60"/><circle fill="%23ffeb3b" cx="100" cy="100" r="50"/><rect fill="%234caf50" x="0" y="450" width="200" height="50"/><rect fill="%234caf50" x="600" y="400" width="200" height="100"/></svg>');
         }
 
-        /* Achievement Notifications */
-        .achievement {
-            position: fixed;
-            top: 20px;
-            right: -300px;
-            background: linear-gradient(45deg, #feca57, #ff9ff3);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            z-index: 1000;
-            transition: right 0.5s ease;
-            max-width: 280px;
-        }
-
-        .achievement.show {
-            right: 20px;
-        }
-
-        .achievement-title {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 5px;
-        }
-
-        .achievement-desc {
-            font-size: 0.9em;
-            opacity: 0.9;
+        .scene-city {
+            background-image: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)), 
+                            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect fill="%23e1f5fe" width="800" height="600"/><rect fill="%23757575" x="0" y="500" width="800" height="100"/><rect fill="%23424242" x="100" y="200" width="80" height="300"/><rect fill="%23616161" x="220" y="150" width="100" height="350"/><rect fill="%23424242" x="360" y="180" width="90" height="320"/><rect fill="%23616161" x="490" y="120" width="110" height="380"/><rect fill="%23424242" x="640" y="160" width="85" height="340"/><circle fill="%23ffeb3b" cx="750" cy="80" r="40"/><rect fill="%23ffeb3b" x="110" y="220" width="15" height="15"/><rect fill="%23ffeb3b" x="140" y="250" width="15" height="15"/><rect fill="%23ffeb3b" x="230" y="180" width="20" height="20"/><rect fill="%23ffeb3b" x="270" y="220" width="20" height="20"/></svg>');
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <div class="game-header">
-        <h1 class="game-title">🕵️‍♀️ AI Art Detective</h1>
-        <p class="game-subtitle">Selidiki gambar dan temukan petunjuk AI vs Manusia!</p>
+        <h1 class="game-title">🤖 Jelajahi AI di Sekitarku</h1>
+        <p class="game-subtitle">Temukan manfaat Kecerdasan Artifisial dalam kehidupan sehari-hari!</p>
+        <p style="font-size: 0.9em; color: #666; margin-top: 8px;">
+            📚 Dibuat oleh <strong>Pak Rizki</strong> - Guru Kelas 6 SD Negeri Cisauk
+        </p>
     </div>
 
-    <!-- Status Panel -->
-    <div class="status-panel">
-        <div class="status-item">
-            <span class="status-label">Petunjuk Ditemukan</span>
-            <span class="status-value" id="clues-found">0</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">Waktu Investigasi</span>
-            <span class="status-value" id="investigation-time">00:00</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">Tingkat Detektif</span>
-            <span class="status-value" id="detective-level">Pemula</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">Kasus Diselesaikan</span>
-            <span class="status-value" id="cases-solved">0</span>
-        </div>
+    <!-- Level Selector -->
+    <div class="level-selector">
+        <button class="level-btn school active" onclick="changeScene('school')">
+            🏫 Di Sekolah
+        </button>
+        <button class="level-btn home" onclick="changeScene('home')">
+            🏠 Di Rumah
+        </button>
+        <button class="level-btn city" onclick="changeScene('city')">
+            🏙️ Di Kota
+        </button>
     </div>
 
     <!-- Main Game Container -->
     <div class="game-container">
-        <!-- Canvas Area -->
-        <div class="canvas-area">
-            <div class="image-container" id="image-container">
-                <div class="loading-spinner" id="loading-spinner"></div>
-                <img id="detective-image" class="detective-image" style="display:none;">
-                <div class="magnifying-glass" id="magnifying-glass"></div>
-                <div class="zoom-overlay" id="zoom-overlay"></div>
-            </div>
-            
-            <!-- Image Gallery -->
-            <div class="image-gallery" id="image-gallery">
-                <!-- Gallery items will be populated by JavaScript -->
+        <!-- Scene Area -->
+        <div class="scene-area">
+            <div class="scene-container scene-school" id="scene-container">
+                <!-- AI items will be populated by JavaScript -->
             </div>
         </div>
 
-        <!-- Tools Panel -->
-        <div class="tools-panel">
-            <!-- Detective Tools -->
-            <div class="tool-section">
-                <h3 class="tool-title">🔍 Alat Detektif</h3>
-                <button class="detective-tool" id="magnify-tool" onclick="activateTool('magnify')">
-                    🔍 Kaca Pembesar
-                </button>
-                <button class="detective-tool" id="scan-tool" onclick="activateTool('scan')">
-                    📊 Scan Detail
-                </button>
-                <button class="detective-tool" id="compare-tool" onclick="activateTool('compare')">
-                    ⚖️ Mode Perbandingan
-                </button>
-                <button class="detective-tool" id="analyze-tool" onclick="analyzeImage()">
-                    🧪 Analisis Akhir
-                </button>
+        <!-- Side Panel -->
+        <div class="side-panel">
+            <!-- Progress Section -->
+            <div class="progress-section">
+                <h3 class="progress-title">📊 Progress Eksplorasi</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <p class="progress-text" id="progress-text">0 dari 6 AI ditemukan</p>
             </div>
 
-            <!-- Evidence Collection -->
-            <div class="tool-section">
-                <h3 class="tool-title">📋 Bukti Terkumpul</h3>
-                <div class="evidence-container" id="evidence-container">
-                    <p style="color: #666; font-style: italic; text-align: center;">
-                        Gunakan alat detektif untuk mencari petunjuk...
-                    </p>
+            <!-- AI Collection -->
+            <div class="ai-collection">
+                <h3 class="progress-title">🎯 Koleksi AI</h3>
+                <div class="collection-grid" id="collection-grid">
+                    <!-- Collection items will be populated by JavaScript -->
                 </div>
             </div>
 
-            <!-- Score -->
-            <div class="score-container">
-                <span class="score-number" id="detective-score">0</span>
-                <span>Poin Detektif</span>
+            <!-- AI Benefits Panel -->
+            <div class="benefits-panel">
+                <h4 style="color: #2d3436; margin-bottom: 15px;">💡 Manfaat AI yang Ditemukan</h4>
+                <div id="benefits-list">
+                    <p style="color: #636e72; font-style: italic; text-align: center;">
+                        Mulai jelajahi untuk menemukan manfaat AI!
+                    </p>
+                </div>
             </div>
-
-            <!-- Analysis Result -->
-            <div class="analysis-result" id="analysis-result"></div>
         </div>
     </div>
 
-    <!-- Achievement Notification -->
+    <!-- Modal for AI Details -->
+    <div class="modal" id="ai-modal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modal-icon">🤖</div>
+            <h2 class="modal-title" id="modal-title">AI Ditemukan!</h2>
+            <p class="modal-description" id="modal-description">Deskripsi AI...</p>
+            <button class="modal-close" onclick="closeModal()">Mengerti! 👍</button>
+        </div>
+    </div>
+
+    <!-- Achievement Badge -->
     <div class="achievement" id="achievement">
         <div class="achievement-title" id="achievement-title"></div>
         <div class="achievement-desc" id="achievement-desc"></div>
     </div>
 
     <script>
-        // Game State
-        let currentTool = null;
-        let cluesFound = 0;
-        let score = 0;
-        let startTime = Date.now();
-        let casesSolved = 0;
-        let currentImageIndex = 0;
-        let investigationActive = false;
-
-        // Game Data - Mix of AI and Human images with clues
-        const gameImages = [
-            {
-                url: 'https://picsum.photos/600/400?random=1',
-                type: 'human',
-                clues: [
-                    { x: 20, y: 30, hint: 'Cahaya natural yang tidak sempurna', points: 10 },
-                    { x: 60, y: 70, hint: 'Tekstur alami dengan imperfektion', points: 15 },
-                    { x: 80, y: 20, hint: 'Bayangan yang realistis', points: 20 }
-                ],
-                description: 'Foto landscape dengan karakteristik natural'
+        // Game Data - AI yang bisa ditemukan di setiap scene
+        const gameData = {
+            school: {
+                name: "Sekolah",
+                items: [
+                    {
+                        id: 'smartboard',
+                        icon: '📺',
+                        name: 'Smart Board',
+                        position: { x: 45, y: 35 },
+                        benefit: 'Pembelajaran Interaktif',
+                        description: 'Smart board menggunakan AI untuk mengenali tulisan tangan guru dan mengubahnya menjadi teks digital. Membuat pembelajaran lebih menarik dengan gambar dan video interaktif!',
+                        category: 'Pendidikan'
+                    },
+                    {
+                        id: 'camera',
+                        icon: '📷',
+                        name: 'Kamera Keamanan',
+                        position: { x: 75, y: 25 },
+                        benefit: 'Keamanan Sekolah',
+                        description: 'AI dalam kamera membantu mengenali wajah siswa dan guru, serta mendeteksi aktivitas mencurigakan untuk menjaga keamanan sekolah.',
+                        category: 'Keamanan'
+                    },
+                    {
+                        id: 'library',
+                        icon: '📚',
+                        name: 'Sistem Perpustakaan',
+                        position: { x: 20, y: 60 },
+                        benefit: 'Pencarian Buku Cerdas',
+                        description: 'AI membantu mencari buku yang tepat berdasarkan minat dan tingkat membaca siswa. Juga memberikan rekomendasi bacaan yang sesuai.',
+                        category: 'Pendidikan'
+                    },
+                    {
+                        id: 'attendance',
+                        icon: '✅',
+                        name: 'Absensi Otomatis',
+                        position: { x: 60, y: 70 },
+                        benefit: 'Pencatatan Kehadiran',
+                        description: 'Sistem absensi menggunakan pengenalan wajah untuk mencatat kehadiran siswa secara otomatis dan akurat.',
+                        category: 'Administrasi'
+                    },
+                    {
+                        id: 'translator',
+                        icon: '🗣️',
+                        name: 'Penerjemah Bahasa',
+                        position: { x: 25, y: 40 },
+                        benefit: 'Komunikasi Global',
+                        description: 'AI penerjemah membantu siswa berkomunikasi dengan teman dari negara lain dan mempelajari bahasa asing dengan lebih mudah.',
+                        category: 'Komunikasi'
+                    },
+                    {
+                        id: 'aircon',
+                        icon: '❄️',
+                        name: 'AC Pintar',
+                        position: { x: 80, y: 50 },
+                        benefit: 'Kenyamanan Belajar',
+                        description: 'AC pintar menggunakan AI untuk mengatur suhu ruangan secara otomatis berdasarkan cuaca dan jumlah orang di kelas.',
+                        category: 'Kenyamanan'
+                    }
+                ]
             },
-            {
-                url: 'https://picsum.photos/600/400?random=2',
-                type: 'ai',
-                clues: [
-                    { x: 40, y: 40, hint: 'Pola berulang yang terlalu teratur', points: 15 },
-                    { x: 25, y: 65, hint: 'Detail yang terlalu sempurna', points: 20 },
-                    { x: 75, y: 25, hint: 'Warna yang tidak natural', points: 25 }
-                ],
-                description: 'Gambar dengan ciri-ciri AI generation'
+            home: {
+                name: "Rumah",
+                items: [
+                    {
+                        id: 'assistant',
+                        icon: '🎤',
+                        name: 'Asisten Virtual',
+                        position: { x: 30, y: 45 },
+                        benefit: 'Bantuan Sehari-hari',
+                        description: 'Asisten virtual seperti Google Assistant atau Alexa membantu menjawab pertanyaan, mengatur jadwal, dan mengingatkan tugas sekolah.',
+                        category: 'Produktivitas'
+                    },
+                    {
+                        id: 'tv',
+                        icon: '📺',
+                        name: 'Smart TV',
+                        position: { x: 40, y: 55 },
+                        benefit: 'Hiburan Pintar',
+                        description: 'Smart TV menggunakan AI untuk merekomendasikan film dan acara yang sesuai dengan selera keluarga berdasarkan riwayat tontonan.',
+                        category: 'Hiburan'
+                    },
+                    {
+                        id: 'fridge',
+                        icon: '🧊',
+                        name: 'Kulkas Pintar',
+                        position: { x: 70, y: 50 },
+                        benefit: 'Manajemen Makanan',
+                        description: 'Kulkas pintar menggunakan AI untuk melacak tanggal kedaluwarsa makanan dan menyarankan resep berdasarkan bahan yang tersedia.',
+                        category: 'Makanan'
+                    },
+                    {
+                        id: 'security',
+                        icon: '🚪',
+                        name: 'Kunci Pintar',
+                        position: { x: 55, y: 65 },
+                        benefit: 'Keamanan Rumah',
+                        description: 'Kunci pintar menggunakan pengenalan wajah atau sidik jari untuk membuka pintu, serta memberi notifikasi saat ada yang datang.',
+                        category: 'Keamanan'
+                    },
+                    {
+                        id: 'light',
+                        icon: '💡',
+                        name: 'Lampu Otomatis',
+                        position: { x: 20, y: 30 },
+                        benefit: 'Hemat Energi',
+                        description: 'Lampu pintar menggunakan AI untuk menyala dan mati otomatis berdasarkan keberadaan orang dan waktu, menghemat listrik.',
+                        category: 'Lingkungan'
+                    },
+                    {
+                        id: 'cleaner',
+                        icon: '🤖',
+                        name: 'Robot Pembersih',
+                        position: { x: 45, y: 75 },
+                        benefit: 'Kebersihan Otomatis',
+                        description: 'Robot vacuum menggunakan AI untuk membuat peta rumah dan membersihkan lantai secara efisien tanpa menabrak furnitur.',
+                        category: 'Kebersihan'
+                    }
+                ]
             },
-            {
-                url: 'https://picsum.photos/600/400?random=3',
-                type: 'human',
-                clues: [
-                    { x: 35, y: 55, hint: 'Noise kamera yang autentik', points: 10 },
-                    { x: 70, y: 80, hint: 'Komposisi spontan', points: 15 },
-                    { x: 15, y: 25, hint: 'Fokus yang tidak sempurna', points: 18 }
-                ],
-                description: 'Foto candid dengan karakteristik manusia'
-            },
-            {
-                url: 'https://picsum.photos/600/400?random=4',
-                type: 'ai',
-                clues: [
-                    { x: 50, y: 30, hint: 'Simetri yang berlebihan', points: 20 },
-                    { x: 30, y: 70, hint: 'Artefak digital yang aneh', points: 25 },
-                    { x: 85, y: 45, hint: 'Transisi warna yang tidak wajar', points: 22 }
-                ],
-                description: 'AI artwork dengan pola khas machine learning'
+            city: {
+                name: "Kota",
+                items: [
+                    {
+                        id: 'traffic',
+                        icon: '🚦',
+                        name: 'Lampu Lalu Lintas Pintar',
+                        position: { x: 50, y: 85 },
+                        benefit: 'Kelancaran Lalu Lintas',
+                        description: 'AI menganalisis kepadatan lalu lintas dan mengatur waktu lampu merah-hijau untuk mengurangi kemacetan dan polusi.',
+                        category: 'Transportasi'
+                    },
+                    {
+                        id: 'maps',
+                        icon: '🗺️',
+                        name: 'GPS Navigation',
+                        position: { x: 25, y: 70 },
+                        benefit: 'Navigasi Cerdas',
+                        description: 'Google Maps menggunakan AI untuk memberikan rute tercepat, menghindari kemacetan, dan memperkirakan waktu perjalanan secara real-time.',
+                        category: 'Transportasi'
+                    },
+                    {
+                        id: 'surveillance',
+                        icon: '👁️',
+                        name: 'CCTV Kota',
+                        position: { x: 40, y: 25 },
+                        benefit: 'Keamanan Publik',
+                        description: 'Kamera CCTV menggunakan AI untuk mendeteksi aktivitas kriminal, mencari orang hilang, dan memantau keselamatan publik.',
+                        category: 'Keamanan'
+                    },
+                    {
+                        id: 'weather',
+                        icon: '🌤️',
+                        name: 'Prediksi Cuaca',
+                        position: { x: 75, y: 15 },
+                        benefit: 'Informasi Cuaca',
+                        description: 'AI menganalisis data atmosfer untuk memprediksi cuaca dengan akurat, membantu petani, pilot, dan aktivitas sehari-hari.',
+                        category: 'Informasi'
+                    },
+                    {
+                        id: 'emergency',
+                        icon: '🚑',
+                        name: 'Sistem Darurat',
+                        position: { x: 60, y: 60 },
+                        benefit: 'Respons Darurat',
+                        description: 'AI membantu ambulans dan pemadam kebakaran menemukan rute tercepat ke lokasi darurat dan memprediksi kebutuhan medis.',
+                        category: 'Kesehatan'
+                    },
+                    {
+                        id: 'waste',
+                        icon: '🗑️',
+                        name: 'Manajemen Sampah',
+                        position: { x: 80, y: 75 },
+                        benefit: 'Lingkungan Bersih',
+                        description: 'AI membantu mengoptimalkan rute pengumpulan sampah dan memilah jenis sampah untuk daur ulang yang lebih efektif.',
+                        category: 'Lingkungan'
+                    }
+                ]
             }
-        ];
+        };
+
+        // Game State
+        let currentScene = 'school';
+        let foundItems = new Set();
+        let totalItems = 6;
 
         // DOM Elements
-        const imageContainer = document.getElementById('image-container');
-        const detectiveImage = document.getElementById('detective-image');
-        const magnifyingGlass = document.getElementById('magnifying-glass');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const evidenceContainer = document.getElementById('evidence-container');
-        const imageGallery = document.getElementById('image-gallery');
-        const analysisResult = document.getElementById('analysis-result');
+        const sceneContainer = document.getElementById('scene-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const collectionGrid = document.getElementById('collection-grid');
+        const benefitsList = document.getElementById('benefits-list');
+        const modal = document.getElementById('ai-modal');
 
         // Initialize Game
         function initGame() {
-            createImageGallery();
-            loadImage(0);
-            updateStats();
-            startTimer();
+            changeScene('school');
+            updateProgress();
+            showAchievement('🎮 Selamat Datang di Kelas Pak Rizki!', 'Mari jelajahi teknologi AI di sekitar kita bersama-sama!');
         }
 
-        // Create Image Gallery
-        function createImageGallery() {
-            imageGallery.innerHTML = '';
-            gameImages.forEach((img, index) => {
-                const galleryItem = document.createElement('img');
-                galleryItem.src = img.url;
-                galleryItem.className = 'gallery-item';
-                galleryItem.onclick = () => loadImage(index);
-                imageGallery.appendChild(galleryItem);
+        // Change Scene
+        function changeScene(sceneName) {
+            currentScene = sceneName;
+            
+            // Update active button
+            document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.level-btn.${sceneName}`).classList.add('active');
+            
+            // Update scene background
+            sceneContainer.className = `scene-container scene-${sceneName}`;
+            
+            // Clear and populate AI items
+            sceneContainer.innerHTML = '';
+            const sceneData = gameData[sceneName];
+            
+            sceneData.items.forEach(item => {
+                createAIItem(item);
             });
+            
+            // Reset progress for new scene
+            foundItems.clear();
+            updateProgress();
+            updateCollectionGrid();
+            clearBenefits();
+            
+            showAchievement(`🔍 Menjelajahi ${sceneData.name}`, `Temukan ${sceneData.items.length} teknologi AI tersembunyi!`);
         }
 
-        // Load Image with Clues
-        function loadImage(index) {
-            currentImageIndex = index;
-            loadingSpinner.style.display = 'block';
-            detectiveImage.style.display = 'none';
+        // Create AI Item in Scene
+        function createAIItem(item) {
+            const aiElement = document.createElement('div');
+            aiElement.className = 'ai-item';
+            aiElement.style.left = item.position.x + '%';
+            aiElement.style.top = item.position.y + '%';
+            aiElement.innerHTML = item.icon;
+            aiElement.dataset.itemId = item.id;
+            aiElement.onclick = () => discoverAI(item);
             
-            // Clear previous clues
-            document.querySelectorAll('.clue-marker').forEach(marker => marker.remove());
-            
-            // Update gallery selection
-            document.querySelectorAll('.gallery-item').forEach((item, i) => {
-                item.classList.toggle('active', i === index);
-            });
-
-            detectiveImage.onload = function() {
-                loadingSpinner.style.display = 'none';
-                this.style.display = 'block';
-                createClueMarkers(gameImages[index]);
-            };
-            
-            detectiveImage.src = gameImages[index].url;
-            clearEvidence();
-            analysisResult.classList.remove('show');
+            sceneContainer.appendChild(aiElement);
         }
 
-        // Create Clue Markers
-        function createClueMarkers(imageData) {
-            imageData.clues.forEach((clue, index) => {
-                const marker = document.createElement('div');
-                marker.className = 'clue-marker';
-                marker.style.left = clue.x + '%';
-                marker.style.top = clue.y + '%';
-                marker.dataset.clueIndex = index;
-                marker.onclick = (e) => {
-                    e.stopPropagation();
-                    collectClue(clue, marker);
-                };
-                imageContainer.appendChild(marker);
-            });
-        }
-
-        // Activate Detective Tool
-        function activateTool(tool) {
-            // Remove active class from all tools
-            document.querySelectorAll('.detective-tool').forEach(btn => btn.classList.remove('active'));
+        // Discover AI Item
+        function discoverAI(item) {
+            const aiElement = document.querySelector(`[data-item-id="${item.id}"]`);
             
-            currentTool = tool;
+            if (foundItems.has(item.id)) return;
             
-            switch(tool) {
-                case 'magnify':
-                    document.getElementById('magnify-tool').classList.add('active');
-                    imageContainer.style.cursor = 'none';
-                    break;
-                case 'scan':
-                    document.getElementById('scan-tool').classList.add('active');
-                    performScan();
-                    break;
-                case 'compare':
-                    document.getElementById('compare-tool').classList.add('active');
-                    compareMode();
-                    break;
+            foundItems.add(item.id);
+            aiElement.classList.add('found');
+            aiElement.onclick = null;
+            
+            // Show modal with AI details
+            showAIModal(item);
+            
+            // Update UI
+            updateProgress();
+            updateCollectionGrid();
+            addBenefit(item);
+            
+            // Achievement
+            showAchievement('🎯 AI Ditemukan!', `${item.name} - ${item.benefit}`);
+            
+            // Check if scene completed
+            if (foundItems.size === gameData[currentScene].items.length) {
+                setTimeout(() => {
+                    showAchievement('🏆 Scene Completed!', `Semua AI di ${gameData[currentScene].name} telah ditemukan!`);
+                }, 1000);
             }
         }
 
-        // Magnifying Glass Effect
-        imageContainer.addEventListener('mousemove', function(e) {
-            if (currentTool === 'magnify') {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+        // Show AI Modal
+        function showAIModal(item) {
+            document.getElementById('modal-icon').textContent = item.icon;
+            document.getElementById('modal-title').textContent = item.name;
+            document.getElementById('modal-description').textContent = item.description;
+            modal.style.display = 'flex';
+        }
+
+        // Close Modal
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Update Progress
+        function updateProgress() {
+            const progress = (foundItems.size / totalItems) * 100;
+            progressBar.style.width = progress + '%';
+            progressText.textContent = `${foundItems.size} dari ${totalItems} AI ditemukan`;
+        }
+
+        // Update Collection Grid
+        function updateCollectionGrid() {
+            collectionGrid.innerHTML = '';
+            const sceneData = gameData[currentScene];
+            
+            sceneData.items.forEach(item => {
+                const collectionItem = document.createElement('div');
+                collectionItem.className = 'collection-item';
                 
-                magnifyingGlass.style.display = 'block';
-                magnifyingGlass.style.left = (x - 60) + 'px';
-                magnifyingGlass.style.top = (y - 60) + 'px';
+                if (foundItems.has(item.id)) {
+                    collectionItem.classList.add('filled');
+                    collectionItem.innerHTML = `
+                        <div class="item-icon">${item.icon}</div>
+                        <div class="item-name">${item.name}</div>
+                    `;
+                    collectionItem.onclick = () => showAIModal(item);
+                } else {
+                    collectionItem.innerHTML = `
+                        <div class="item-icon">❓</div>
+                        <div class="item-name">???</div>
+                    `;
+                }
                 
-                // Create zoom effect
-                const zoomLevel = 1.5;
-                detectiveImage.style.transform = `scale(${zoomLevel})`;
-                detectiveImage.style.transformOrigin = `${(x/rect.width)*100}% ${(y/rect.height)*100}%`;
-            }
-        });
-
-        imageContainer.addEventListener('mouseleave', function() {
-            magnifyingGlass.style.display = 'none';
-            detectiveImage.style.transform = 'scale(1)';
-        });
-
-        // Perform Scan
-        function performScan() {
-            showAchievement('🔍 Scan Aktif!', 'Mencari pola dan anomali dalam gambar...');
-            
-            // Highlight suspicious areas
-            const currentImage = gameImages[currentImageIndex];
-            let scanResults = [];
-            
-            if (currentImage.type === 'ai') {
-                scanResults = [
-                    'Terdeteksi: Pola generative yang berulang',
-                    'Analisis: Konsistensi warna yang tidak natural',
-                    'Indikasi: Artefak machine learning'
-                ];
-            } else {
-                scanResults = [
-                    'Terdeteksi: Variasi natural dalam tekstur',
-                    'Analisis: Noise kamera yang autentik',
-                    'Indikasi: Karakteristik fotografi real'
-                ];
-            }
-            
-            setTimeout(() => {
-                scanResults.forEach((result, index) => {
-                    setTimeout(() => addEvidence(result, 5), index * 1000);
-                });
-            }, 1000);
+                collectionGrid.appendChild(collectionItem);
+            });
         }
 
-        // Compare Mode
-        function compareMode() {
-            showAchievement('⚖️ Mode Perbandingan', 'Bandingkan dengan gambar referensi!');
-            addEvidence('Mode perbandingan aktif - cari perbedaan mencolok', 8);
-        }
-
-        // Collect Clue
-        function collectClue(clue, markerElement) {
-            markerElement.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
-            markerElement.onclick = null;
-            
-            addEvidence(clue.hint, clue.points);
-            cluesFound++;
-            score += clue.points;
-            updateStats();
-            
-            showAchievement('🎯 Petunjuk Ditemukan!', clue.hint);
-            
-            setTimeout(() => {
-                markerElement.remove();
-            }, 500);
-        }
-
-        // Add Evidence
-        function addEvidence(text, points = 0) {
-            const evidenceItem = document.createElement('div');
-            evidenceItem.className = 'evidence-item';
-            evidenceItem.innerHTML = `
-                <span>🔍</span>
-                <span>${text}</span>
-                ${points > 0 ? `<span style="margin-left: auto; color: #27ae60;">+${points}</span>` : ''}
-            `;
-            evidenceContainer.appendChild(evidenceItem);
-            
-            // Remove placeholder text
-            const placeholder = evidenceContainer.querySelector('p');
+        // Add Benefit to List
+        function addBenefit(item) {
+            // Remove placeholder if exists
+            const placeholder = benefitsList.querySelector('p');
             if (placeholder) placeholder.remove();
+            
+            const benefitElement = document.createElement('div');
+            benefitElement.className = 'benefit-item';
+            benefitElement.innerHTML = `
+                <div class="benefit-icon">${item.icon}</div>
+                <div class="benefit-text">
+                    <div class="benefit-title">${item.benefit}</div>
+                    <div class="benefit-desc">${item.category}</div>
+                </div>
+            `;
+            benefitElement.onclick = () => showAIModal(item);
+            
+            benefitsList.appendChild(benefitElement);
         }
 
-        // Clear Evidence
-        function clearEvidence() {
-            evidenceContainer.innerHTML = `
-                <p style="color: #666; font-style: italic; text-align: center;">
-                    Gunakan alat detektif untuk mencari petunjuk...
+        // Clear Benefits
+        function clearBenefits() {
+            benefitsList.innerHTML = `
+                <p style="color: #636e72; font-style: italic; text-align: center;">
+                    Mulai jelajahi untuk menemukan manfaat AI!
                 </p>
             `;
-        }
-
-        // Analyze Image
-        function analyzeImage() {
-            const currentImage = gameImages[currentImageIndex];
-            const evidenceItems = document.querySelectorAll('.evidence-item').length;
-            
-            if (evidenceItems < 2) {
-                showAchievement('❓ Bukti Kurang', 'Kumpulkan lebih banyak petunjuk sebelum analisis!');
-                return;
-            }
-            
-            let conclusion = '';
-            let confidence = Math.min(95, 60 + (evidenceItems * 10));
-            
-            if (currentImage.type === 'ai') {
-                conclusion = `
-                    <h4>🤖 HASIL ANALISIS: BUATAN AI</h4>
-                    <p><strong>Tingkat Keyakinan:</strong> ${confidence}%</p>
-                    <p><strong>Alasan Utama:</strong></p>
-                    <ul style="margin: 10px 0; padding-left: 20px;">
-                        <li>Pola geometris yang terlalu sempurna</li>
-                        <li>Konsistensi detail yang tidak natural</li>
-                        <li>Artefak khas machine learning</li>
-                    </ul>
-                    <p><em>${currentImage.description}</em></p>
-                `;
-            } else {
-                conclusion = `
-                    <h4>🎨 HASIL ANALISIS: BUATAN MANUSIA</h4>
-                    <p><strong>Tingkat Keyakinan:</strong> ${confidence}%</p>
-                    <p><strong>Alasan Utama:</strong></p>
-                    <ul style="margin: 10px 0; padding-left: 20px;">
-                        <li>Imperfektion natural yang autentik</li>
-                        <li>Variasi cahaya yang realistis</li>
-                        <li>Karakteristik fotografi analog/digital</li>
-                    </ul>
-                    <p><em>${currentImage.description}</em></p>
-                `;
-            }
-            
-            analysisResult.innerHTML = conclusion;
-            analysisResult.classList.add('show');
-            
-            // Award completion points
-            const completionBonus = evidenceItems * 5;
-            score += completionBonus;
-            casesSolved++;
-            updateStats();
-            
-            showAchievement('🏆 Kasus Selesai!', `Bonus penyelesaian: +${completionBonus} poin`);
-        }
-
-        // Update Statistics
-        function updateStats() {
-            document.getElementById('clues-found').textContent = cluesFound;
-            document.getElementById('cases-solved').textContent = casesSolved;
-            document.getElementById('detective-score').textContent = score;
-            
-            // Update detective level
-            let level = 'Pemula';
-            if (score >= 200) level = 'Master Detektif';
-            else if (score >= 100) level = 'Detektif Senior';
-            else if (score >= 50) level = 'Detektif Junior';
-            
-            document.getElementById('detective-level').textContent = level;
-        }
-
-        // Start Timer
-        function startTimer() {
-            setInterval(() => {
-                const elapsed = Date.now() - startTime;
-                const minutes = Math.floor(elapsed / 60000);
-                const seconds = Math.floor((elapsed % 60000) / 1000);
-                document.getElementById('investigation-time').textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
         }
 
         // Show Achievement
@@ -830,110 +885,160 @@
             
             setTimeout(() => {
                 achievement.classList.remove('show');
-            }, 3000);
+            }, 4000);
         }
 
-        // Click outside to deactivate tool
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.detective-tool') && !e.target.closest('.image-container')) {
-                document.querySelectorAll('.detective-tool').forEach(btn => btn.classList.remove('active'));
-                currentTool = null;
-                imageContainer.style.cursor = 'crosshair';
-                magnifyingGlass.style.display = 'none';
-                detectiveImage.style.transform = 'scale(1)';
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case '1':
+                    changeScene('school');
+                    break;
+                case '2':
+                    changeScene('home');
+                    break;
+                case '3':
+                    changeScene('city');
+                    break;
+                case 'Escape':
+                    closeModal();
+                    break;
+            }
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
             }
         });
 
         // Initialize game when page loads
         window.onload = function() {
             initGame();
-            showAchievement('🕵️‍♀️ Selamat Datang, Detektif!', 'Mulai investigasi dengan memilih alat detektif');
         };
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            switch(e.key) {
-                case '1':
-                    activateTool('magnify');
-                    break;
-                case '2':
-                    activateTool('scan');
-                    break;
-                case '3':
-                    activateTool('compare');
-                    break;
-                case 'Enter':
-                    analyzeImage();
-                    break;
-                case 'ArrowLeft':
-                    if (currentImageIndex > 0) loadImage(currentImageIndex - 1);
-                    break;
-                case 'ArrowRight':
-                    if (currentImageIndex < gameImages.length - 1) loadImage(currentImageIndex + 1);
-                    break;
-            }
+        // Add some random floating animation delays
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const aiItems = document.querySelectorAll('.ai-item');
+                aiItems.forEach((item, index) => {
+                    item.style.animationDelay = (index * 0.5) + 's';
+                });
+            }, 500);
         });
+
+        // Show creator info in console
+        console.log('🎓 Game Edukasi AI - Dibuat oleh Pak Rizki, Guru Kelas 6 SDN Cisauk');
+        console.log('📚 Untuk pembelajaran Teknologi & Literasi Digital siswa SD');
     </script>
+
+    <!-- Footer Credits -->
+    <div style="background: rgba(255,255,255,0.9); text-align: center; padding: 15px; margin-top: 20px; color: #666;">
+        <p style="margin: 0; font-size: 0.9em;">
+            🎓 <strong>Game Edukasi AI</strong> | 
+            👨‍🏫 Pak Rizki - Guru Kelas 6 | 
+            🏫 SD Negeri Cisauk | 
+            📚 Program SUNDA CODE
+        </p>
+        <p style="margin: 5px 0 0 0; font-size: 0.8em; color: #888;">
+            Pembelajaran Interaktif Teknologi AI untuk Siswa SD Kelas 6
+        </p>
+    </div>
 
     <!--
     
-    ================================
+    ========================================
+    GAME EDUKASI AI UNTUK SISWA KELAS 6 SD
+    ========================================
+    
+    👨‍🏫 PEMBUAT: PAK RIZKI
+    🏫 SEKOLAH: SD NEGERI CISAUK  
+    📚 KELAS: 6 (ENAM)
+    🎯 MATA PELAJARAN: Teknologi & Literasi Digital
+    
+    ========================================
     PETUNJUK GAME INTERAKTIF UNTUK GURU
-    ================================
+    ========================================
     
     🎮 CARA BERMAIN:
-    1. Pilih gambar dari galeri di bawah area utama
-    2. Gunakan alat detektif:
-       - 🔍 Kaca Pembesar: Gerakkan mouse untuk memperbesar area
-       - 📊 Scan Detail: Otomatis mencari pola AI/human
-       - ⚖️ Mode Perbandingan: Bandingkan dengan referensi
-    3. Klik titik merah (clue markers) untuk mengumpulkan petunjuk
-    4. Setelah mengumpulkan bukti, klik "🧪 Analisis Akhir"
+    1. Pilih lingkungan: 🏫 Sekolah, 🏠 Rumah, atau 🏙️ Kota
+    2. Klik objek yang berkedip untuk menemukan teknologi AI
+    3. Baca penjelasan manfaat AI dalam modal pop-up
+    4. Kumpulkan semua 6 AI di setiap lingkungan
+    5. Lihat koleksi dan manfaat di panel samping
     
-    ⌨️ SHORTCUT KEYBOARD:
-    - Tekan "1" untuk Kaca Pembesar
-    - Tekan "2" untuk Scan Detail  
-    - Tekan "3" untuk Mode Perbandingan
-    - Tekan "Enter" untuk Analisis Akhir
-    - Panah kiri/kanan untuk ganti gambar
+    🎯 TUJUAN PEMBELAJARAN:
+    ✅ Mengenali teknologi AI dalam kehidupan sehari-hari
+    ✅ Memahami manfaat konkret AI untuk siswa SD
+    ✅ Mengembangkan literasi digital dan teknologi
+    ✅ Melatih observasi dan eksplorasi interaktif
     
-    🎯 SISTEM POIN:
-    - Setiap petunjuk diberikan poin berbeda (10-25 poin)
-    - Bonus penyelesaian kasus berdasarkan jumlah bukti
-    - Level detektif naik seiring akumulasi poin
+    🔍 FITUR INTERAKTIF:
+    - 3 lingkungan berbeda dengan 18 teknologi AI total
+    - Animasi floating dan visual feedback yang menarik
+    - Progress tracking untuk setiap scene
+    - Collection system untuk review yang ditemukan
+    - Modal pop-up dengan penjelasan detail
+    - Achievement notifications untuk motivasi
     
-    🔧 FITUR INTERAKTIF:
-    ✅ Kaca pembesar dengan efek zoom real-time
-    ✅ Scan otomatis dengan feedback visual
-    ✅ Sistema achievement dengan notifikasi
-    ✅ Timer investigasi untuk tracking waktu
-    ✅ Galeri gambar untuk navigasi mudah
-    ✅ Drag-and-drop style evidence collection
+    📱 KONTROL:
+    - Klik objek berkedip untuk menemukan AI
+    - Klik item di koleksi untuk review ulang
+    - Tekan "1", "2", "3" untuk ganti scene
+    - Tekan "Escape" untuk tutup modal
     
-    📱 RESPONSIF:
-    - Layout otomatis menyesuaikan mobile/desktop
-    - Touch-friendly untuk perangkat sentuh
-    - Optimized untuk penggunaan kelas
+    🏆 TEKNOLOGI AI YANG DIPELAJARI:
     
-    🌐 UPLOAD KE GITHUB PAGES:
-    1. Buat repository baru: "ai-detective-game"
-    2. Upload file HTML ini dengan nama "index.html"
-    3. Settings > Pages > Source: "Deploy from a branch"
-    4. Branch: "main", Folder: "/ (root)"
-    5. Game accessible di: https://username.github.io/ai-detective-game/
+    DI SEKOLAH:
+    - Smart Board untuk pembelajaran interaktif
+    - Kamera keamanan dengan face recognition
+    - Sistem perpustakaan dengan rekomendasi cerdas
+    - Absensi otomatis dengan pengenalan wajah
+    - Penerjemah bahasa real-time
+    - AC pintar dengan kontrol suhu otomatis
+    
+    DI RUMAH:
+    - Asisten virtual (Google/Alexa)
+    - Smart TV dengan rekomendasi tontonan
+    - Kulkas pintar dengan manajemen makanan
+    - Kunci pintar dengan biometrik
+    - Lampu otomatis hemat energi
+    - Robot pembersih dengan pemetaan AI
+    
+    DI KOTA:
+    - Traffic light pintar anti-macet
+    - GPS navigation dengan rute optimal
+    - CCTV dengan deteksi kejahatan
+    - Sistem prediksi cuaca
+    - Respons darurat otomatis
+    - Manajemen sampah dengan AI
     
     💡 TIPS PENGGUNAAN KELAS:
-    - Bagi siswa dalam tim detektif (3-4 orang)
-    - Set target waktu untuk setiap investigasi
-    - Diskusikan temuan sebelum analisis akhir
-    - Gunakan untuk memahami karakteristik AI vs human art
-    - Kompetisi skor antar tim
+    - Buat tim eksplorasi 3-4 siswa per grup
+    - Diskusikan setiap penemuan sebelum lanjut
+    - Hubungkan dengan pengalaman siswa
+    - Tanyakan AI mana yang sudah mereka gunakan
+    - Diskusi dampak positif vs kekhawatiran AI
     
-    🎓 NILAI EDUKASI:
-    - Melatih observasi detail dan analytical thinking
-    - Memahami perbedaan karya AI vs manusia
-    - Pengenalan konsep machine learning secara visual
-    - Keterampilan investigasi dan deduksi logis
+    🌐 UPLOAD KE GITHUB PAGES:
+    1. Repository name: "ai-explorer-game"  
+    2. Upload sebagai "index.html"
+    3. Settings > Pages > Deploy from branch
+    4. Akses: https://username.github.io/ai-explorer-game/
+    
+    🔧 CUSTOMISASI MUDAH:
+    - Edit bagian 'gameData' untuk tambah/kurangi AI
+    - Ganti icon emoji di properti 'icon'
+    - Ubah posisi dengan 'position: {x, y}' (persen)
+    - Modifikasi deskripsi di 'description'
+    - Tambah kategori baru di 'category'
+    
+    📊 ASSESSMENT:
+    - Observasi proses eksplorasi siswa
+    - Diskusi refleksi setelah bermain
+    - Quiz singkat tentang AI yang ditemukan
+    - Project: gambar lingkungan dengan AI
     
     -->
 </body>
