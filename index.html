@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soal Matematika - Masalah Rasio Set 2</title>
+    <title>Latihan Soal Matematika - Rasio & Perbandingan</title>
     <style>
         * {
             margin: 0;
@@ -23,32 +23,25 @@
             margin: 0 auto;
             background: white;
             border-radius: 20px;
+            padding: 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
         }
 
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
+        h1 {
+            color: #667eea;
             text-align: center;
-        }
-
-        .header h1 {
-            font-size: 28px;
             margin-bottom: 10px;
+            font-size: 2em;
         }
 
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
         }
 
-        .content {
-            padding: 30px;
-        }
-
-        .soal-section {
+        .question-set {
             margin-bottom: 40px;
             border: 2px solid #e0e0e0;
             border-radius: 15px;
@@ -56,607 +49,519 @@
             background: #f9f9f9;
         }
 
-        .soal-title {
-            font-size: 22px;
-            color: #667eea;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .question-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: -25px -25px 20px -25px;
+            font-size: 1.3em;
+            font-weight: bold;
         }
 
-        .soal-subtitle {
-            font-size: 18px;
+        .question {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .question-title {
+            font-weight: bold;
             color: #333;
-            margin: 20px 0 15px 0;
-            padding: 10px;
-            background: #fff;
-            border-left: 4px solid #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .question-content {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .steps {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
             border-radius: 5px;
         }
 
-        .clue-badge {
-            background: #4CAF50;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .no-clue-badge {
-            background: #FF9800;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .langkah {
-            background: white;
+        .steps-interactive {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
             padding: 15px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border-left: 4px solid #764ba2;
-        }
-
-        .langkah-title {
-            font-weight: bold;
-            color: #764ba2;
-            margin-bottom: 8px;
-        }
-
-        .isian-input {
-            min-width: 80px;
-            height: 30px;
-            border: none;
-            border-bottom: 2px solid #667eea;
-            margin: 0 5px;
-            text-align: center;
-            font-weight: bold;
-            color: #333;
-            font-size: 16px;
-            background: #f0f4ff;
-            padding: 2px 5px;
-        }
-
-        .isian-input:focus {
-            outline: none;
-            border-bottom: 2px solid #764ba2;
-            background: #e3ecff;
-        }
-
-        .isian-input.correct {
-            border-bottom: 2px solid #4CAF50;
-            background: #e8f5e9;
-        }
-
-        .isian-input.incorrect {
-            border-bottom: 2px solid #f44336;
-            background: #ffebee;
-        }
-
-        .pilihan {
             margin: 15px 0;
+            border-radius: 5px;
         }
 
-        .pilihan-item {
-            display: block;
-            padding: 12px 20px;
-            margin: 8px 0;
+        .step {
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .input-box {
+            display: inline-block;
+            width: 80px;
+            padding: 5px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            text-align: center;
             background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+        }
+
+        .input-field {
+            display: inline-block;
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #17a2b8;
+            border-radius: 5px;
+            text-align: center;
+            background: white;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+        }
+
+        .input-field.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .input-field.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .option {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 16px;
+            text-align: center;
+            font-weight: 500;
         }
 
-        .pilihan-item:hover {
+        .option:hover {
             background: #f0f0f0;
             border-color: #667eea;
-            transform: translateX(5px);
         }
 
-        .pilihan-item.selected {
-            background: #e3ecff;
+        .option.selected {
+            background: #667eea;
+            color: white;
             border-color: #667eea;
         }
 
-        .pilihan-item.correct-answer {
-            background: #e8f5e9;
-            border-color: #4CAF50;
-            font-weight: bold;
+        .option.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
         }
 
-        .pilihan-item.wrong-answer {
-            background: #ffebee;
-            border-color: #f44336;
+        .option.incorrect {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+
+        .check-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .check-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .result.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+
+        .result.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
         }
 
         .emoji {
-            font-size: 24px;
-            margin-right: 10px;
+            font-size: 2em;
+            margin-bottom: 10px;
         }
 
-        .gambar-soal {
-            font-size: 32px;
-            text-align: center;
+        .score-board {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             padding: 20px;
-            background: white;
-            border-radius: 10px;
-            margin: 15px 0;
-            line-height: 1.8;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.2em;
         }
 
-        .jawaban-box {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border: 2px solid #4CAF50;
+        .hint {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #0d47a1;
         }
 
-        .jawaban-box strong {
-            color: #2e7d32;
-        }
-
-        .button-container {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
-            flex: 1;
-            min-width: 120px;
-        }
-
-        .btn-check {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-check:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-reset {
-            background: #ff9800;
-            color: white;
-        }
-
-        .btn-reset:hover {
-            background: #e68900;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
-        }
-
-        .btn-show {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .btn-show:hover {
-            background: #45a049;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
-        }
-
-        .feedback {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .feedback.show {
-            display: block;
-        }
-
-        .feedback.success {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 2px solid #4CAF50;
-        }
-
-        .feedback.error {
-            background: #ffebee;
-            color: #c62828;
-            border: 2px solid #f44336;
-        }
-
-        .feedback.partial {
-            background: #fff3e0;
-            color: #e65100;
-            border: 2px solid #ff9800;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 22px;
-            }
-            
-            .content {
+        @media (max-width: 600px) {
+            .container {
                 padding: 20px;
             }
-            
-            .soal-section {
-                padding: 15px;
-            }
-            
-            .soal-title {
-                font-size: 18px;
+
+            h1 {
+                font-size: 1.5em;
             }
 
-            .isian-input {
-                min-width: 60px;
-                font-size: 14px;
+            .options {
+                grid-template-columns: 1fr;
             }
 
-            .button-container {
-                flex-direction: column;
+            .input-field {
+                width: 60px;
+                padding: 6px;
             }
-
-            .btn {
-                width: 100%;
-            }
-        }
-
-        .footer {
-            background: #f5f5f5;
-            padding: 20px;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>📚 Soal Matematika - Set Baru 2</h1>
-            <p>Masalah Rasio, Harga Satuan, dan Perbandingan</p>
+        <h1>📚 Latihan Soal Matematika</h1>
+        <p class="subtitle">Rasio, Perbandingan & Pecahan</p>
+
+        <!-- SOAL 1 -->
+        <div class="question-set">
+            <div class="question-header">📚 SOAL 1 — Masalah Rasio</div>
+            
+            <div class="question" id="q1a">
+                <div class="question-title">SOAL 1A (Dengan Clue)</div>
+                <div class="question-content">
+                    Di sebuah kelas terdapat 54 siswa, terdiri atas 18 siswa laki-laki dan sisanya perempuan.<br>
+                    <strong>Rasio banyak siswa perempuan terhadap seluruh siswa adalah...</strong>
+                </div>
+                <div class="steps">
+                    <div class="step"><strong>Langkah 1:</strong> Hitung siswa perempuan<br>
+                    Siswa perempuan = 54 – <span class="input-box">18</span> = <span class="input-box">36</span><br>
+                    Jadi, siswa perempuan ada = <span class="input-box">36</span> siswa</div>
+                    
+                    <div class="step"><strong>Langkah 2:</strong> Buat rasio<br>
+                    Rasio = <span class="input-box">36</span> : 54</div>
+                    
+                    <div class="step"><strong>Langkah 3:</strong> Sederhanakan rasio<br>
+                    Kedua bilangan dibagi <span class="input-box">18</span><br>
+                    36 ÷ 18 = <span class="input-box">2</span><br>
+                    54 ÷ 18 = <span class="input-box">3</span></div>
+                </div>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 2 : 3</div>
+                    <div class="option" data-answer="B">B. 4 : 9</div>
+                    <div class="option" data-answer="C">C. 6 : 9</div>
+                    <div class="option" data-answer="D">D. 3 : 4</div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q1a', 'A')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
+            </div>
+
+            <div class="question" id="q1b">
+                <div class="question-title">SOAL 1B (Tanpa Clue – Latihan Mandiri)</div>
+                <div class="question-content">
+                    Di sebuah taman terdapat 72 anak, terdiri atas 30 anak laki-laki dan sisanya perempuan.<br>
+                    <strong>Rasio banyak anak perempuan terhadap seluruh anak adalah...</strong>
+                </div>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 3 : 8</div>
+                    <div class="option" data-answer="B">B. 7 : 12</div>
+                    <div class="option" data-answer="C">C. 5 : 12</div>
+                    <div class="option" data-answer="D">D. 7 : 14</div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q1b', 'B')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
+            </div>
+
+            <div class="question" id="q1c">
+                <div class="question-title">SOAL 1C (Interaktif – Isi Langkah-langkah)</div>
+                <div class="question-content">
+                    Di sebuah perpustakaan terdapat 48 buku, terdiri atas 20 buku fiksi dan sisanya non-fiksi.<br>
+                    <strong>Rasio banyak buku non-fiksi terhadap seluruh buku adalah...</strong>
+                </div>
+                <div class="steps-interactive">
+                    <div class="hint">💡 Isi setiap kotak dengan jawaban yang tepat, lalu klik "Cek Langkah-langkah"</div>
+                    
+                    <div class="step"><strong>Langkah 1:</strong> Hitung buku non-fiksi<br>
+                    Buku non-fiksi = 48 – <input type="number" class="input-field" data-answer="20"> = <input type="number" class="input-field" data-answer="28"><br>
+                    Jadi, buku non-fiksi ada = <input type="number" class="input-field" data-answer="28"> buku</div>
+                    
+                    <div class="step"><strong>Langkah 2:</strong> Buat rasio<br>
+                    Rasio = <input type="number" class="input-field" data-answer="28"> : 48</div>
+                    
+                    <div class="step"><strong>Langkah 3:</strong> Sederhanakan rasio<br>
+                    Kedua bilangan dibagi <input type="number" class="input-field" data-answer="4"><br>
+                    28 ÷ <input type="number" class="input-field" data-answer="4"> = <input type="number" class="input-field" data-answer="7"><br>
+                    48 ÷ <input type="number" class="input-field" data-answer="4"> = <input type="number" class="input-field" data-answer="12"></div>
+                    
+                    <button class="check-btn" onclick="checkSteps('q1c')">Cek Langkah-langkah</button>
+                </div>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 5 : 12</div>
+                    <div class="option" data-answer="B">B. 7 : 12</div>
+                    <div class="option" data-answer="C">C. 7 : 10</div>
+                    <div class="option" data-answer="D">D. 4 : 7</div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q1c', 'B')">Cek Jawaban Akhir</button>
+                <div class="result" style="display:none;"></div>
+            </div>
         </div>
 
-        <div class="content">
-            <!-- SOAL 1 -->
-            <div class="soal-section" id="soal1">
-                <div class="soal-title">
-                    <span class="emoji">📚</span>
-                    <span>SOAL 1 — Masalah Rasio</span>
+        <!-- SOAL 2 -->
+        <div class="question-set">
+            <div class="question-header">💰 SOAL 2 — Masalah Harga Satuan</div>
+            
+            <div class="question" id="q2a">
+                <div class="question-title">SOAL 2A (Dengan Clue)</div>
+                <div class="question-content">
+                    Dengan 6 lembar uang dua puluh ribuan, Bu Rani membeli 12 kg beras.<br>
+                    <strong>Tentukan harga 1 kg beras!</strong>
                 </div>
-
-                <div class="soal-subtitle">
-                    SOAL 1A <span class="clue-badge">Dengan Clue</span>
+                <div class="steps">
+                    <div class="step"><strong>Langkah 1:</strong> Hitung total uang<br>
+                    Total uang = 6 × Rp20.000 = Rp <span class="input-box">120.000</span></div>
+                    
+                    <div class="step"><strong>Langkah 2:</strong> Hitung harga per kg<br>
+                    Harga 1 kg = Rp120.000 ÷ 12 kg = Rp <span class="input-box">10.000</span></div>
                 </div>
-                <p style="margin-bottom: 15px; line-height: 1.6;">
-                    Di sebuah kelas terdapat 60 siswa, terdiri atas 24 siswa laki-laki dan sisanya perempuan. 
-                    Rasio banyak siswa perempuan terhadap seluruh siswa adalah...
-                </p>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 1: Hitung siswa perempuan</div>
-                    <p>Siswa perempuan = Total siswa – Siswa laki-laki</p>
-                    <p>Siswa perempuan = 60 – <input type="text" class="isian-input" data-answer="24"> = <input type="text" class="isian-input" data-answer="36"></p>
-                    <p>Jadi, siswa perempuan ada = <input type="text" class="isian-input" data-answer="36"> siswa</p>
+                <div class="options">
+                    <div class="option" data-answer="A">A. Rp8.000</div>
+                    <div class="option" data-answer="B">B. Rp10.000</div>
+                    <div class="option" data-answer="C">C. Rp12.000</div>
+                    <div class="option" data-answer="D">D. Rp15.000</div>
                 </div>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 2: Buat rasio</div>
-                    <p>Rasio = Siswa perempuan : Total siswa</p>
-                    <p>Rasio = <input type="text" class="isian-input" data-answer="36"> : 60</p>
-                </div>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 3: Sederhanakan rasio</div>
-                    <p>Kedua bilangan dibagi <input type="text" class="isian-input" data-answer="12"></p>
-                    <p><input type="text" class="isian-input" data-answer="36"> ÷ <input type="text" class="isian-input" data-answer="12"> = <input type="text" class="isian-input" data-answer="3"></p>
-                    <p>60 ÷ <input type="text" class="isian-input" data-answer="12"> = <input type="text" class="isian-input" data-answer="5"></p>
-                </div>
-
-                <div class="jawaban-box">
-                    <strong>Jawaban: <input type="text" class="isian-input" data-answer="3"> : <input type="text" class="isian-input" data-answer="5"></strong>
-                </div>
-
-                <div class="pilihan">
-                    <div class="pilihan-item" data-value="A">A. 2 : 3</div>
-                    <div class="pilihan-item" data-value="B" data-correct="true">B. 3 : 5</div>
-                    <div class="pilihan-item" data-value="C">C. 6 : 10</div>
-                    <div class="pilihan-item" data-value="D">D. 4 : 9</div>
-                </div>
-
-                <div class="button-container">
-                    <button class="btn btn-check" onclick="checkSoal1A()">✓ Cek Jawaban</button>
-                    <button class="btn btn-show" onclick="showSoal1A()">👁 Lihat Jawaban</button>
-                    <button class="btn btn-reset" onclick="resetSoal1A()">↻ Reset</button>
-                </div>
-
-                <div class="feedback" id="feedback1A"></div>
-
-                <div class="soal-subtitle" style="margin-top: 30px;">
-                    SOAL 1B <span class="no-clue-badge">Tanpa Clue – Latihan Mandiri</span>
-                </div>
-                <p style="margin-bottom: 15px; line-height: 1.6;">
-                    Di sebuah taman terdapat 80 anak, terdiri atas 35 anak laki-laki dan sisanya perempuan. 
-                    Rasio banyak anak perempuan terhadap seluruh anak adalah...
-                </p>
-
-                <div class="pilihan">
-                    <div class="pilihan-item" data-value="A" data-correct="true">A. 9 : 16</div>
-                    <div class="pilihan-item" data-value="B">B. 7 : 9</div>
-                    <div class="pilihan-item" data-value="C">C. 5 : 9</div>
-                    <div class="pilihan-item" data-value="D">D. 9 : 14</div>
-                </div>
-
-                <div class="button-container">
-                    <button class="btn btn-check" onclick="checkSoal1B()">✓ Cek Jawaban</button>
-                    <button class="btn btn-show" onclick="showSoal1B()">👁 Lihat Pembahasan</button>
-                    <button class="btn btn-reset" onclick="resetSoal1B()">↻ Reset</button>
-                </div>
-
-                <div class="feedback" id="feedback1B"></div>
+                <button class="check-btn" onclick="checkAnswer('q2a', 'B')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
             </div>
 
-            <!-- SOAL 2 -->
-            <div class="soal-section" id="soal2">
-                <div class="soal-title">
-                    <span class="emoji">💰</span>
-                    <span>SOAL 2 — Masalah Harga Satuan</span>
+            <div class="question" id="q2b">
+                <div class="question-title">SOAL 2B (Tanpa Clue – Latihan Mandiri)</div>
+                <div class="question-content">
+                    Dengan 3 lembar uang lima puluh ribuan, Pak Dani membeli 5 kg mangga.<br>
+                    <strong>Berapa harga 1 kg mangga?</strong>
                 </div>
-
-                <div class="soal-subtitle">
-                    SOAL 2A <span class="clue-badge">Dengan Clue</span>
+                <div class="options">
+                    <div class="option" data-answer="A">A. Rp25.000</div>
+                    <div class="option" data-answer="B">B. Rp30.000</div>
+                    <div class="option" data-answer="C">C. Rp35.000</div>
+                    <div class="option" data-answer="D">D. Rp40.000</div>
                 </div>
-                <p style="margin-bottom: 15px; line-height: 1.6;">
-                    Dengan 5 lembar uang dua puluh ribuan, Bu Dina membeli 10 kg gula. 
-                    Tentukan harga 1 kg gula!
-                </p>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 1: Hitung total uang</div>
-                    <p>Total uang = 5 × Rp20.000 = Rp <input type="text" class="isian-input" data-answer="100000" style="min-width: 120px;"></p>
-                </div>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 2: Hitung harga per kg</div>
-                    <p>Harga 1 kg = Rp <input type="text" class="isian-input" data-answer="100000" style="min-width: 100px;"> ÷ <input type="text" class="isian-input" data-answer="10"> kg = Rp <input type="text" class="isian-input" data-answer="10000" style="min-width: 100px;"></p>
-                </div>
-
-                <div class="jawaban-box">
-                    <strong>Jawaban: Rp <input type="text" class="isian-input" data-answer="10000" style="min-width: 100px;"></strong>
-                </div>
-
-                <div class="pilihan">
-                    <div class="pilihan-item" data-value="A">A. Rp8.000</div>
-                    <div class="pilihan-item" data-value="B" data-correct="true">B. Rp10.000</div>
-                    <div class="pilihan-item" data-value="C">C. Rp12.000</div>
-                    <div class="pilihan-item" data-value="D">D. Rp14.000</div>
-                </div>
-
-                <div class="button-container">
-                    <button class="btn btn-check" onclick="checkSoal2A()">✓ Cek Jawaban</button>
-                    <button class="btn btn-show" onclick="showSoal2A()">👁 Lihat Jawaban</button>
-                    <button class="btn btn-reset" onclick="resetSoal2A()">↻ Reset</button>
-                </div>
-
-                <div class="feedback" id="feedback2A"></div>
-
-                <div class="soal-subtitle" style="margin-top: 30px;">
-                    SOAL 2B <span class="no-clue-badge">Tanpa Clue – Latihan Mandiri</span>
-                </div>
-                <p style="margin-bottom: 15px; line-height: 1.6;">
-                    Dengan 4 lembar uang lima puluh ribuan, Pak Rio membeli 8 kg jeruk. 
-                    Berapa harga 1 kg jeruk?
-                </p>
-
-                <div class="pilihan">
-                    <div class="pilihan-item" data-value="A">A. Rp20.000</div>
-                    <div class="pilihan-item" data-value="B">B. Rp22.000</div>
-                    <div class="pilihan-item" data-value="C" data-correct="true">C. Rp25.000</div>
-                    <div class="pilihan-item" data-value="D">D. Rp30.000</div>
-                </div>
-
-                <div class="button-container">
-                    <button class="btn btn-check" onclick="checkSoal2B()">✓ Cek Jawaban</button>
-                    <button class="btn btn-show" onclick="showSoal2B()">👁 Lihat Pembahasan</button>
-                    <button class="btn btn-reset" onclick="resetSoal2B()">↻ Reset</button>
-                </div>
-
-                <div class="feedback" id="feedback2B"></div>
+                <button class="check-btn" onclick="checkAnswer('q2b', 'B')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
             </div>
 
-            <!-- SOAL 3 -->
-            <div class="soal-section" id="soal3">
-                <div class="soal-title">
-                    <span class="emoji">👦</span>
-                    <span>SOAL 3 — Perbandingan Umur</span>
+            <div class="question" id="q2c">
+                <div class="question-title">SOAL 2C (Interaktif – Isi Langkah-langkah)</div>
+                <div class="question-content">
+                    Dengan 4 lembar uang dua puluh lima ribuan, Ibu Ani membeli 8 kg gula.<br>
+                    <strong>Tentukan harga 1 kg gula!</strong>
                 </div>
-
-                <div class="soal-subtitle">
-                    SOAL 3A <span class="clue-badge">Dengan Clue</span>
+                <div class="steps-interactive">
+                    <div class="hint">💡 Isi setiap kotak dengan jawaban yang tepat</div>
+                    
+                    <div class="step"><strong>Langkah 1:</strong> Hitung total uang<br>
+                    Total uang = <input type="number" class="input-field" data-answer="4"> × Rp25.000 = Rp <input type="number" class="input-field" data-answer="100000"></div>
+                    
+                    <div class="step"><strong>Langkah 2:</strong> Hitung harga per kg<br>
+                    Harga 1 kg = Rp<input type="number" class="input-field" data-answer="100000"> ÷ <input type="number" class="input-field" data-answer="8"> kg = Rp <input type="number" class="input-field" data-answer="12500"></div>
+                    
+                    <button class="check-btn" onclick="checkSteps('q2c')">Cek Langkah-langkah</button>
                 </div>
-                <p style="margin-bottom: 15px; line-height: 1.6;">
-                    Perbandingan umur Lia dan Nita adalah 3 : 4. 
-                    Jika jumlah umur mereka 56 tahun, berapa umur Lia?
-                </p>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 1:</div>
-                    <p>Total bagian = 3 + 4 = <input type="text" class="isian-input" data-answer="7"></p>
+                <div class="options">
+                    <div class="option" data-answer="A">A. Rp10.500</div>
+                    <div class="option" data-answer="B">B. Rp12.000</div>
+                    <div class="option" data-answer="C">C. Rp12.500</div>
+                    <div class="option" data-answer="D">D. Rp15.000</div>
                 </div>
+                <button class="check-btn" onclick="checkAnswer('q2c', 'C')">Cek Jawaban Akhir</button>
+                <div class="result" style="display:none;"></div>
+            </div>
+        </div>
 
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 2:</div>
-                    <p>Satu bagian = 56 ÷ <input type="text" class="isian-input" data-answer="7"> = <input type="text" class="isian-input" data-answer="8"> tahun</p>
+        <!-- SOAL 3 -->
+        <div class="question-set">
+            <div class="question-header">👦 SOAL 3 — Perbandingan Umur</div>
+            
+            <div class="question" id="q3a">
+                <div class="question-title">SOAL 3A (Dengan Clue)</div>
+                <div class="question-content">
+                    Perbandingan umur Raka dan Fina adalah 4 : 5.<br>
+                    <strong>Jika jumlah umur mereka 45 tahun, berapa umur Raka?</strong>
                 </div>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 3:</div>
-                    <p>Umur Lia = <input type="text" class="isian-input" data-answer="3"> × <input type="text" class="isian-input" data-answer="8"> = <input type="text" class="isian-input" data-answer="24"> tahun</p>
-                    <p>Umur Nita = <input type="text" class="isian-input" data-answer="4"> × <input type="text" class="isian-input" data-answer="8"> = <input type="text" class="isian-input" data-answer="32"> tahun</p>
+                <div class="steps">
+                    <div class="step"><strong>Langkah 1:</strong> Total bagian = 4 + 5 = <span class="input-box">9</span></div>
+                    
+                    <div class="step"><strong>Langkah 2:</strong> Satu bagian = 45 ÷ <span class="input-box">9</span> = <span class="input-box">5</span> tahun</div>
+                    
+                    <div class="step"><strong>Langkah 3:</strong><br>
+                    Umur Raka = 4 × <span class="input-box">5</span> = <span class="input-box">20</span> tahun<br>
+                    Umur Fina = 5 × <span class="input-box">5</span> = <span class="input-box">25</span> tahun</div>
                 </div>
-
-                <div class="jawaban-box">
-                    <strong>Jawaban: <input type="text" class="isian-input" data-answer="24"> tahun</strong>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 16 tahun</div>
+                    <div class="option" data-answer="B">B. 18 tahun</div>
+                    <div class="option" data-answer="C">C. 20 tahun</div>
+                    <div class="option" data-answer="D">D. 25 tahun</div>
                 </div>
-
-                <div class="pilihan">
-                    <div class="pilihan-item" data-value="A">A. 20 tahun</div>
-                    <div class="pilihan-item" data-value="B">B. 21 tahun</div>
-                    <div class="pilihan-item" data-value="C" data-correct="true">C. 24 tahun</div>
-                    <div class="pilihan-item" data-value="D">D. 28 tahun</div>
-                </div>
-
-                <div class="button-container">
-                    <button class="btn btn-check" onclick="checkSoal3A()">✓ Cek Jawaban</button>
-                    <button class="btn btn-show" onclick="showSoal3A()">👁 Lihat Jawaban</button>
-                    <button class="btn btn-reset" onclick="resetSoal3A()">↻ Reset</button>
-                </div>
-
-                <div class="feedback" id="feedback3A"></div>
-
-                <div class="soal-subtitle" style="margin-top: 30px;">
-                    SOAL 3B <span class="no-clue-badge">Tanpa Clue – Latihan Mandiri</span>
-                </div>
-                <p style="margin-bottom: 15px; line-height: 1.6;">
-                    Perbandingan umur Roni dan Rika adalah 7 : 5. 
-                    Jika jumlah umur mereka 60 tahun, berapa umur Roni?
-                </p>
-
-                <div class="pilihan">
-                    <div class="pilihan-item" data-value="A">A. 25 tahun</div>
-                    <div class="pilihan-item" data-value="B">B. 30 tahun</div>
-                    <div class="pilihan-item" data-value="C">C. 35 tahun</div>
-                    <div class="pilihan-item" data-value="D">D. 40 tahun</div>
-                </div>
-
-                <div class="button-container">
-                    <button class="btn btn-check" onclick="checkSoal3B()">✓ Cek Jawaban</button>
-                    <button class="btn btn-show" onclick="showSoal3B()">👁 Lihat Pembahasan</button>
-                    <button class="btn btn-reset" onclick="resetSoal3B()">↻ Reset</button>
-                </div>
-
-                <div class="feedback" id="feedback3B"></div>
+                <button class="check-btn" onclick="checkAnswer('q3a', 'C')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
             </div>
 
-            <!-- SOAL 4 -->
-            <div class="soal-section" id="soal4">
-                <div class="soal-title">
-                    <span class="emoji">🍎</span>
-                    <span>SOAL 4 — Rasio dari Gambar</span>
+            <div class="question" id="q3b">
+                <div class="question-title">SOAL 3B (Tanpa Clue – Latihan Mandiri)</div>
+                <div class="question-content">
+                    Perbandingan umur Dodi dan Arman adalah 6 : 5.<br>
+                    <strong>Jika jumlah umur mereka 55 tahun, berapa umur Dodi?</strong>
                 </div>
-
-                <div class="soal-subtitle">
-                    SOAL 4A <span class="clue-badge">Dengan Clue</span>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 25 tahun</div>
+                    <div class="option" data-answer="B">B. 30 tahun</div>
+                    <div class="option" data-answer="C">C. 33 tahun</div>
+                    <div class="option" data-answer="D">D. 36 tahun</div>
                 </div>
-
-                <div class="gambar-soal">
-                    🍎🍎🍎🍎 🍎🍎🍎🍎<br>
-                    🍐🍐🍐🍐🍐 🍐🍐🍐🍐🍐
-                </div>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 1:</div>
-                    <p>Apel = <input type="text" class="isian-input" data-answer="8"> buah</p>
-                    <p>Pir = <input type="text" class="isian-input" data-answer="10"> buah</p>
-                </div>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 2:</div>
-                    <p>Rasio = Apel : Pir = <input type="text" class="isian-input" data-answer="8"> : <input type="text" class="isian-input" data-answer="10"></p>
-                </div>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 3:</div>
-                    <p>Kedua bilangan dibagi <input type="text" class="isian-input" data-answer="2"></p>
-                    <p><input type="text" class="isian-input" data-answer="8"> ÷ <input type="text" class="isian-input" data-answer="2"> = <input type="text" class="isian-input" data-answer="4"></p>
-                    <p><input type="text" class="isian-input" data-answer="10"> ÷ <input type="text" class="isian-input" data-answer="2"> = <input type="text" class="isian-input" data-answer="5"></p>
-                </div>
-
-                <div class="jawaban-box">
-                    <strong>Jawaban: <input type="text" class="isian-input" data-answer="4"> : <input type="text" class="isian-input" data-answer="5"></strong>
-                </div>
-
-                <div class="pilihan">
-                    <div class="pilihan-item" data-value="A" data-correct="true">A. 4 : 5</div>
-                    <div class="pilihan-item" data-value="B">B. 2 : 3</div>
-                    <div class="pilihan-item" data-value="C">C. 1 : 2</div>
-                    <div class="pilihan-item" data-value="D">D. 3 : 4</div>
-                </div>
-
-                <div class="button-container">
-                    <button class="btn btn-check" onclick="checkSoal4A()">✓ Cek Jawaban</button>
-                    <button class="btn btn-show" onclick="showSoal4A()">👁 Lihat Jawaban</button>
-                    <button class="btn btn-reset" onclick="resetSoal4A()">↻ Reset</button>
-                </div>
-
-                <div class="feedback" id="feedback4A"></div>
-
-                <div class="soal-subtitle" style="margin-top: 30px;">
-                    SOAL 4B <span class="no-clue-badge">Tanpa Clue – Latihan Mandiri</span>
-                </div>
-
-                <div class="gambar-soal">
-                    🍌🍌🍌🍌🍌 🍌🍌🍌🍌🍌<br>
-                    🍇🍇🍇🍇🍇🍇 🍇🍇🍇🍇🍇🍇
-                </div>
-
-                <p style="margin: 15px 0; line-height: 1.6;">
-                    Rasio banyak buah pisang dan anggur adalah...
-                </p>
-
-                <div class="pilihan">
-                    <div class="pilihan-item" data-value="A">A. 5 : 6</div>
-                    <div class="pilihan-item" data-value="B">B. 1 : 1</div>
-                    <div class="pilihan-item" data-value="C">C. 2 : 3</div>
-                    <div class="pilihan-item" data-value="D">D. 3 : 4</div>
-                </div>
-
-                <div class="button-container">
-                    <button class="btn btn-check" onclick="checkSoal4B()">✓ Cek Jawaban</button>
-                    <button class="btn btn-show" onclick="showSoal4B()">👁 Lihat Pembahasan</button>
-                    <button class="btn btn-reset" onclick="resetSoal4B()">↻ Reset</button>
-                </div>
-
-                <div class="feedback" id="feedback4B"></div>
+                <button class="check-btn" onclick="checkAnswer('q3b', 'B')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
             </div>
 
-            <!-- SOAL 5 -->
-            <div class="soal-section" id="soal5">
-                <div class="soal-title">
-                    <span class="emoji">🔢</span>
-                    <span>SOAL 5 — Pecahan ke Desimal</span>
+            <div class="question" id="q3c">
+                <div class="question-title">SOAL 3C (Interaktif – Isi Langkah-langkah)</div>
+                <div class="question-content">
+                    Perbandingan umur Budi dan Santi adalah 3 : 4.<br>
+                    <strong>Jika jumlah umur mereka 42 tahun, berapa umur Budi?</strong>
                 </div>
-
-                <div class="soal-subtitle">
-                    SOAL 5A <span class="clue-badge">Dengan Clue</span>
+                <div class="steps-interactive">
+                    <div class="hint">💡 Isi setiap kotak dengan jawaban yang tepat</div>
+                    
+                    <div class="step"><strong>Langkah 1:</strong> Total bagian = <input type="number" class="input-field" data-answer="3"> + <input type="number" class="input-field" data-answer="4"> = <input type="number" class="input-field" data-answer="7"></div>
+                    
+                    <div class="step"><strong>Langkah 2:</strong> Satu bagian = <input type="number" class="input-field" data-answer="42"> ÷ <input type="number" class="input-field" data-answer="7"> = <input type="number" class="input-field" data-answer="6"> tahun</div>
+                    
+                    <div class="step"><strong>Langkah 3:</strong><br>
+                    Umur Budi = <input type="number" class="input-field" data-answer="3"> × <input type="number" class="input-field" data-answer="6"> = <input type="number" class="input-field" data-answer="18"> tahun<br>
+                    Umur Santi = <input type="number" class="input-field" data-answer="4"> × <input type="number" class="input-field" data-answer="6"> = <input type="number" class="input-field" data-answer="24"> tahun</div>
+                    
+                    <button class="check-btn" onclick="checkSteps('q3c')">Cek Langkah-langkah</button>
                 </div>
-                <p style="margin-bottom: 15px; line-height: 1.6;">
-                    Bentuk desimal dari 2/5 adalah...
-                </p>
-
-                <div class="langkah">
-                    <div class="langkah-title">Langkah 1:</div>
-                    <p>2/5 = 2 ÷ 5 = <input type="text" class="isian-input" data-answer="0.4"></p>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 15 tahun</div>
+                    <div class="option" data-answer="B">B. 18 tahun</div>
+                    <div class="option" data-answer="C">C. 21 tahun</div>
+                    <div class="option" data-answer="D">D. 24 tahun</div>
                 </div>
+                <button class="check-btn" onclick="checkAnswer('q3c', 'B')">Cek Jawaban Akhir</button>
+                <div class="result" style="display:none;"></div>
+            </div>
+        </div>
 
-                <div class="jawaban-box">
-                    <strong>Jawaban: <input type="text" class="isian-input" data-answer="0.4"></strong>
+        <!-- SOAL 4 -->
+        <div class="question-set">
+            <div class="question-header">🍎 SOAL 4 — Rasio dari Gambar</div>
+            
+            <div class="question" id="q4a">
+                <div class="question-title">SOAL 4A (Dengan Clue)</div>
+                <div class="question-content">
+                    <div class="emoji">🍏🍏🍏🍏🍏<br>🍏🍏🍏🍏🍏<br>🍐🍐🍐🍐🍐🍐<br>🍐🍐🍐🍐🍐🍐</div>
+                    <strong>Rasio banyak buah apel dan pir adalah...</strong>
                 </div>
+                <div class="steps">
+                    <div class="step"><strong>Langkah 1:</strong><br>
+                    Apel = <span class="input-box">10</span> buah<br>
+                    Pir = <span class="input-box">12</span> buah</div>
+                    
+                    <div class="step"><strong>Langkah 2:</strong><br>
+                    Rasio = Apel : Pir = <span class="input-box">10</span> : <span class="input-box">12</span></div>
+                    
+                    <div class="step"><strong>Langkah 3:</strong><br>
+                    Kedua bilangan dibagi <span class="input-box">2</span><br>
+                    10 ÷ 2 = <span class="input-box">5</span><br>
+                    12 ÷ 2 = <span class="input-box">6</span></div>
+                </div>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 5 : 6</div>
+                    <div class="option" data-answer="B">B. 1 : 2</div>
+                    <div class="option" data-answer="C">C. 2 : 3</div>
+                    <div class="option" data-answer="D">D. 3 : 4</div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q4a', 'A')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
+            </div>
 
-                <div class="pilihan">
-                    <div class="pilihan-item" data-value="A">A. 0,2</div>
-                    <div class="pilihan-item" data-value="B
+            <div class="question" id="q4b">
+                <div class="question-title">SOAL 4B (Tanpa Clue – Latihan Mandiri)</div>
+                <div class="question-content">
+                    <div class="emoji">🍌🍌🍌🍌🍌🍌🍌<br>🍌🍌🍌🍌🍌🍌🍌<br>🍇🍇🍇🍇🍇🍇🍇🍇<br>🍇🍇🍇🍇🍇🍇🍇🍇</div>
+                    <strong>Rasio banyak buah pisang dan anggur adalah...</strong>
+                </div>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 7 : 8</div>
+                    <div class="option" data-answer="B">B. 1 : 1</div>
+                    <div class="option" data-answer="C">C. 3 : 4</div>
+                    <div class="option" data-answer="D">D. 5 : 6</div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q4b', 'A')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
+            </div>
+
+            <div class="question" id="q4c">
+                <div class="question-title">SOAL 4C (Interaktif – Isi Langkah-langkah)</div>
+                <div class="question-content">
+                    <div class="emoji">🍓🍓🍓🍓🍓🍓<br>🍓🍓🍓🍓🍓🍓<br>🍊🍊🍊🍊🍊🍊🍊🍊<br>🍊🍊🍊🍊🍊🍊🍊🍊</div>
+                    <strong>Rasio banyak buah stroberi dan jeruk adalah...</strong>
+                </div>
+                <div class="steps-interactive">
+                    <div class="hint">💡 Hitung jumlah buah dan isi langkah-langkahnya</div>
+                    
+                    <div class="step"><strong>Langkah 1:</strong><br>
+                    Stroberi = <input type="number" class="input-field" data-answer="12"> buah<br>
+                    Jeruk = <input type="number" class="input-field" data-answer="16"> buah</div>
+                    
+                    <div class="step"><strong>Langkah 2:</strong><br>
+                    Rasio = Stroberi : Jeruk = <input type="number" class="input-field" data-answer="12"> :
