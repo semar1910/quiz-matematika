@@ -564,4 +564,207 @@
                     Jeruk = <input type="number" class="input-field" data-answer="16"> buah</div>
                     
                     <div class="step"><strong>Langkah 2:</strong><br>
-                    Rasio = Stroberi : Jeruk = <input type="number" class="input-field" data-answer="12"> :
+                    Rasio = Stroberi : Jeruk = <input type="number" class="input-field" data-answer="12"> : <input type="number" class="input-field" data-answer="16"></div>
+                    
+                    <div class="step"><strong>Langkah 3:</strong><br>
+                    Kedua bilangan dibagi <input type="number" class="input-field" data-answer="4"><br>
+                    <input type="number" class="input-field" data-answer="12"> ÷ <input type="number" class="input-field" data-answer="4"> = <input type="number" class="input-field" data-answer="3"><br>
+                    <input type="number" class="input-field" data-answer="16"> ÷ <input type="number" class="input-field" data-answer="4"> = <input type="number" class="input-field" data-answer="4"></div>
+                    
+                    <button class="check-btn" onclick="checkSteps('q4c')">Cek Langkah-langkah</button>
+                </div>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 3 : 4</div>
+                    <div class="option" data-answer="B">B. 2 : 3</div>
+                    <div class="option" data-answer="C">C. 4 : 5</div>
+                    <div class="option" data-answer="D">D. 6 : 8</div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q4c', 'A')">Cek Jawaban Akhir</button>
+                <div class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- SOAL 5 -->
+        <div class="question-set">
+            <div class="question-header">🔢 SOAL 5 — Pecahan ke Desimal</div>
+            
+            <div class="question" id="q5a">
+                <div class="question-title">SOAL 5A (Dengan Clue)</div>
+                <div class="question-content">
+                    <strong>Bentuk desimal dari 3/4 adalah...</strong>
+                </div>
+                <div class="steps">
+                    <div class="step"><strong>Langkah 1:</strong><br>
+                    3/4 = 3 ÷ 4 = <span class="input-box">0,75</span></div>
+                </div>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 0,25</div>
+                    <div class="option" data-answer="B">B. 0,5</div>
+                    <div class="option" data-answer="C">C. 0,6</div>
+                    <div class="option" data-answer="D">D. 0,75</div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q5a', 'D')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
+            </div>
+
+            <div class="question" id="q5b">
+                <div class="question-title">SOAL 5B (Tanpa Clue – Latihan Mandiri)</div>
+                <div class="question-content">
+                    <strong>Bentuk desimal dari 9/20 adalah...</strong>
+                </div>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 0,35</div>
+                    <div class="option" data-answer="B">B. 0,45</div>
+                    <div class="option" data-answer="C">C. 0,5</div>
+                    <div class="option" data-answer="D">D. 0,6</div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q5b', 'B')">Cek Jawaban</button>
+                <div class="result" style="display:none;"></div>
+            </div>
+
+            <div class="question" id="q5c">
+                <div class="question-title">SOAL 5C (Interaktif – Isi Langkah-langkah)</div>
+                <div class="question-content">
+                    <strong>Bentuk desimal dari 7/10 adalah...</strong>
+                </div>
+                <div class="steps-interactive">
+                    <div class="hint">💡 Untuk mengubah pecahan ke desimal, bagi pembilang dengan penyebut</div>
+                    
+                    <div class="step"><strong>Langkah 1:</strong><br>
+                    7/10 = <input type="number" class="input-field" data-answer="7"> ÷ <input type="number" class="input-field" data-answer="10"> = <input type="number" step="0.01" class="input-field" data-answer="0.7"></div>
+                    
+                    <button class="check-btn" onclick="checkSteps('q5c')">Cek Langkah-langkah</button>
+                </div>
+                <div class="options">
+                    <div class="option" data-answer="A">A. 0,5</div>
+                    <div class="option" data-answer="B">B. 0,6</div>
+                    <div class="option" data-answer="C">C. 0,7</div>
+                    <div class="option" data-answer="D">D. 0,8</div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q5c', 'C')">Cek Jawaban Akhir</button>
+                <div class="result" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="score-board">
+            <h2>📊 Skor Anda</h2>
+            <p id="score">0 / 15 Soal Dijawab</p>
+        </div>
+    </div>
+
+    <script>
+        let correctAnswers = 0;
+        let totalAnswered = 0;
+
+        function checkSteps(questionId) {
+            const question = document.getElementById(questionId);
+            const inputs = question.querySelectorAll('.input-field');
+            let allCorrect = true;
+            
+            inputs.forEach(input => {
+                const userAnswer = parseFloat(input.value);
+                const correctAnswer = parseFloat(input.getAttribute('data-answer'));
+                
+                if (userAnswer === correctAnswer) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+            
+            const result = question.querySelector('.result');
+            if (allCorrect) {
+                result.className = 'result correct';
+                result.innerHTML = '✅ <strong>Sempurna!</strong> Semua langkah sudah benar!';
+            } else {
+                result.className = 'result incorrect';
+                result.innerHTML = '❌ <strong>Ada yang kurang tepat.</strong> Periksa kembali kotak yang berwarna merah.';
+            }
+            result.style.display = 'block';
+        }
+
+        function checkAnswer(questionId, correctAnswer) {
+            const question = document.getElementById(questionId);
+            const options = question.querySelectorAll('.option');
+            const checkBtns = question.querySelectorAll('.check-btn');
+            const result = question.querySelector('.result');
+            
+            let selectedAnswer = null;
+            
+            options.forEach(option => {
+                if (option.classList.contains('selected')) {
+                    selectedAnswer = option.getAttribute('data-answer');
+                }
+            });
+            
+            if (!selectedAnswer) {
+                alert('Silakan pilih jawaban terlebih dahulu!');
+                return;
+            }
+            
+            checkBtns.forEach(btn => {
+                if (btn.textContent.includes('Jawaban Akhir') || btn.textContent.includes('Cek Jawaban')) {
+                    btn.disabled = true;
+                }
+            });
+            
+            totalAnswered++;
+            
+            if (selectedAnswer === correctAnswer) {
+                correctAnswers++;
+                result.className = 'result correct';
+                result.innerHTML = '✅ <strong>Benar!</strong> Jawaban Anda tepat!';
+                options.forEach(option => {
+                    if (option.getAttribute('data-answer') === correctAnswer) {
+                        option.classList.add('correct');
+                    }
+                });
+            } else {
+                result.className = 'result incorrect';
+                result.innerHTML = '❌ <strong>Kurang tepat.</strong> Jawaban yang benar adalah <strong>' + correctAnswer + '</strong>';
+                options.forEach(option => {
+                    if (option.classList.contains('selected')) {
+                        option.classList.add('incorrect');
+                    }
+                    if (option.getAttribute('data-answer') === correctAnswer) {
+                        option.classList.add('correct');
+                    }
+                });
+            }
+            
+            result.style.display = 'block';
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = 
+                correctAnswers + ' Benar dari ' + totalAnswered + ' Soal Dijawab';
+        }
+        
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.question');
+                const checkBtns = question.querySelectorAll('.check-btn');
+                
+                let isDisabled = false;
+                checkBtns.forEach(btn => {
+                    if (btn.disabled && (btn.textContent.includes('Jawaban Akhir') || btn.textContent.includes('Cek Jawaban'))) {
+                        isDisabled = true;
+                    }
+                });
+                
+                if (isDisabled) return;
+                
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>
